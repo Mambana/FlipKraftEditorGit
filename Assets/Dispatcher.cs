@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class Dispatcher : MonoBehaviour {
     [SerializeField]
+    private GameObject LoginUi;
+    [SerializeField]
     private GameObject HomeUi;
 
     [SerializeField]
@@ -41,6 +43,7 @@ public class Dispatcher : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         UiMap = new Dictionary<string, GameObject>();
+        UiMap["LoginUi"] = LoginUi;
         UiMap["HomeUi"] = HomeUi;
         UiMap["NewProjUi"] = NewProjUi;
         UiMap["DescProjUi"] = DescProjUi;
@@ -53,7 +56,7 @@ public class Dispatcher : MonoBehaviour {
         UiMap["ModifyCardUi"] = ModifyCardUi;
 
 
-       dispatch("HomeUi", "EdtHomeControl", new Dictionary<string, string>());
+       dispatch("LoginUi", "LoginController", new Dictionary<string, string>());
         //dispatch("NewProjUi", "NewProjController", new List<string>());
 
     }
