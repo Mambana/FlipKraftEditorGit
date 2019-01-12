@@ -11,7 +11,8 @@ public class LoginButton : MonoBehaviour
     private GameObject inputEmail;
     [SerializeField]
     private GameObject inputPswd;
-    
+    [SerializeField]
+    private GameObject loginMessage;
     private GameObject session;
 
     void Start()
@@ -30,8 +31,23 @@ public class LoginButton : MonoBehaviour
     {
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
         SessionData data = session.GetComponent<SessionData>();
+        TMP_Text msg = loginMessage.GetComponent<TMP_Text>();
+        string email = inputEmail.GetComponent<TMP_InputField>().text;
+        string pswd = inputPswd.GetComponent<TMP_InputField>().text;
 
-        data.updateData("email", inputEmail.GetComponent<TMP_InputField>().text);
+        if (email.IndexOf(".") <= 0 || email.IndexOf(".") == email.Length
+            || email.IndexOf("@") <= 0 || email.IndexOf("@") == email.Length)
+        {
+            msg.text = "Please, enter a valide email address";
+            return;
+        }
+        else if (pswd.Length < 6)
+        {
+            msg.text = "Please, enter a valide password";
+            return;
+        }
+        data.updateData("email", email);
+        data.updateData("id", "1");
         print(data.access("email"));
         but.SendToDispatch();
     }
