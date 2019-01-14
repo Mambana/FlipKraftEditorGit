@@ -143,8 +143,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 1744281796}
   - {fileID: 1971625821}
+  - {fileID: 1744281796}
   - {fileID: 1067266570}
   - {fileID: 1757214957}
   m_Father: {fileID: 689373613}
@@ -244,6 +244,8 @@ MonoBehaviour:
     type: 3}
   CardListUi: {fileID: 1882746103814758, guid: bdd6913f0f7bd494d8d74bb4b0bc79d2, type: 3}
   ModifyCardUi: {fileID: 1498933761887678, guid: 5912ade2e7d1a7f4b83d5d8dd55f12bb,
+    type: 3}
+  EditVisualCardUi: {fileID: 1660480561978382, guid: 33bd984f147e4c14c997ed748ecc043f,
     type: 3}
 --- !u!1 &689373609
 GameObject:
@@ -536,7 +538,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 194789049}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2037757285472823123
 PrefabInstance:
@@ -588,7 +590,7 @@ PrefabInstance:
     - target: {fileID: 2037757283892840343, guid: ff7b89c2112bd7e4ba3a17fec54592fd,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2037757283892840343, guid: ff7b89c2112bd7e4ba3a17fec54592fd,
         type: 3}
