@@ -24,7 +24,6 @@ public class ApiButton : MonoBehaviour
         //Dictionary<string, string> test = new Dictionary<string, string>();
 
         //test["testKey"] = "testValue";
-        string test = "test";
-        www.Put("https://ptsv2.com/t/y6qvl-1547042899/post", Encoding.ASCII.GetBytes(test), Debug.Log);
+        www.Get("https://ptsv2.com/t/b2jqq-1547487986/post", Debug.Log);
     }
 }

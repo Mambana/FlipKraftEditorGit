@@ -48,6 +48,7 @@ public class LoginButton : MonoBehaviour
         }
         data.updateData("email", email);
         data.updateData("id", "1");
+        data.updateData("pwd", pswd);
         print(data.access("email"));
         but.SendToDispatch();
     }
