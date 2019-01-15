@@ -13,6 +13,8 @@ public class LoginButton : MonoBehaviour
     private GameObject inputPswd;
     [SerializeField]
     private GameObject loginMessage;
+    [SerializeField]
+    private GameObject apiAddressInput;
     private GameObject session;
 
     void Start()
@@ -34,7 +36,7 @@ public class LoginButton : MonoBehaviour
         TMP_Text msg = loginMessage.GetComponent<TMP_Text>();
         string email = inputEmail.GetComponent<TMP_InputField>().text;
         string pswd = inputPswd.GetComponent<TMP_InputField>().text;
-
+        string apiAdress = apiAddressInput.GetComponent<TMP_InputField>().text;
         if (email.IndexOf(".") <= 0 || email.IndexOf(".") == email.Length
             || email.IndexOf("@") <= 0 || email.IndexOf("@") == email.Length)
         {
@@ -47,7 +49,9 @@ public class LoginButton : MonoBehaviour
             return;
         }
         data.updateData("email", email);
+        data.updateData("pswd", pswd);
         data.updateData("id", "1");
+        data.updateData("api_address", apiAdress);
         print(data.access("email"));
         but.SendToDispatch();
     }
