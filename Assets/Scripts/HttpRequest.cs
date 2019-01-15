@@ -6,10 +6,13 @@ using System;
 
 public class HttpRequest : MonoBehaviour
 {
+    private GameObject session;
+    private SessionData data;
     // Start is called before the first frame update
     void Start()
     {
-
+        session = GameObject.Find("Session");
+        data = session.GetComponent<SessionData>();
     }
 
     // Update is called once per frame
@@ -36,6 +39,8 @@ public class HttpRequest : MonoBehaviour
     private IEnumerator _Get(string url, Action<string> callback)
     {
         UnityWebRequest www = UnityWebRequest.Get(url);
+
+        AddLogInformation(ref www);
         yield return www.SendWebRequest();
         if (www.isNetworkError || www.isHttpError)
         {
@@ -55,8 +60,8 @@ public class HttpRequest : MonoBehaviour
         {
             arg_data.Add(new MultipartFormDataSection(item.Key, item.Value));
         }
-
         UnityWebRequest www = UnityWebRequest.Post(url, arg_data);
+        AddLogInformation(ref www);
         yield return www.SendWebRequest();
 
         if (www.isNetworkError || www.isHttpError)
@@ -73,6 +78,7 @@ public class HttpRequest : MonoBehaviour
     {
         UnityWebRequest www = UnityWebRequest.Put(url, data);
 
+        AddLogInformation(ref www);
         yield return www.SendWebRequest();
         if (www.isNetworkError || www.isHttpError)
         {
@@ -82,5 +88,15 @@ public class HttpRequest : MonoBehaviour
         {
             callback("It worked");
         }
+    }
+
+    private void AddLogInformation(ref UnityWebRequest www)
+    {
+        string login = data.access("email");
+        string pwd = data.access("pwd");
+
+        print("email : " + login + ", pwd : " + pwd);
+        www.SetRequestHeader("login", login);
+        www.SetRequestHeader("password", pwd);
     }
 }

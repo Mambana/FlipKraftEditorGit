@@ -21,9 +21,7 @@ public class EdtHomeControl : BasicController{
     // Update is called once per frame
     override public void apply()
     {
-        
-        //testTxt.GetComponent<TextMeshProUGUI>().text = args[0];   
-
+        //testTxt.GetComponent<TextMeshProUGUI>().text = args[0];
     }
     void Update () {
 		
