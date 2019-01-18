@@ -51,13 +51,13 @@ public class OverviewController : BasicController
         ressourceButton.GetComponent<RessourceListButton>().setCurrentProjectId(id);
         cardButton.GetComponent<CardListButton>().setCurrentProjectId(id);
         ModelTest ModelScript = Model.GetComponent<ModelTest>();
-        projNameTitle.GetComponent<TextMeshProUGUI>().text = ModelScript.find(id, "name");
-        projName.GetComponent<TextMeshProUGUI>().text += " "+ ModelScript.find(id, "name");
-        min.GetComponent<TextMeshProUGUI>().text += " " + ModelScript.find(id, "min");
-        max.GetComponent<TextMeshProUGUI>().text += " " + ModelScript.find(id, "max");
-        desc.GetComponent<TextMeshProUGUI>().text += " " + ModelScript.find(id, "description");
-        nb_cards.GetComponent<TextMeshProUGUI>().text += " " + ModelScript.find(id, "nb_cards");
-        nb_ressources.GetComponent<TextMeshProUGUI>().text += " " + ModelScript.find(id, "nb_ressources");
+        Dictionary<string, string> projectData = ModelScript.find(id);
+        projNameTitle.GetComponent<TextMeshProUGUI>().text = projectData["name"];
+        projName.GetComponent<TextMeshProUGUI>().text += " "+ projectData["name"];
+        min.GetComponent<TextMeshProUGUI>().text += " " + projectData["min_player"];
+        max.GetComponent<TextMeshProUGUI>().text += " " + projectData["max_player"];
+        desc.GetComponent<TextMeshProUGUI>().text += " " + projectData["description"];
+     
     }
 
     

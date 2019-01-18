@@ -25,7 +25,6 @@ public class ProjectListController : BasicController {
     override public void apply()
     {
         model = GameObject.Find("Model");
-        print("model" + model.GetComponent<ModelTest>().getAll());
         ModelTest modelScript = model.GetComponent<ModelTest>();
         Dictionary<int, Dictionary<string, string>> all = modelScript.getAll();
      

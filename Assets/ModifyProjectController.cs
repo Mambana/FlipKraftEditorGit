@@ -38,13 +38,14 @@ public class ModifyProjectController : BasicController {
         int id = int.Parse(args["id"]);
         model = GameObject.Find("Model");
         ModelTest modelScr = model.GetComponent<ModelTest>();
+        Dictionary<string, string> projectData = modelScr.find(id);
 
-        projNameTitle.GetComponent<TextMeshProUGUI>().text = modelScr.find(id, "name");
+        projNameTitle.GetComponent<TextMeshProUGUI>().text = projectData["name"];
 
-        inputName.GetComponent<TMP_InputField>().text = modelScr.find(id, "name");
-        inputMin.GetComponent<TMP_InputField>().text = modelScr.find(id, "min");
-        inputMax.GetComponent<TMP_InputField>().text = modelScr.find(id, "max");
-        inputDesc.GetComponent<TMP_InputField>().text = modelScr.find(id, "description");
+        inputName.GetComponent<TMP_InputField>().text = projectData["name"];
+        inputMin.GetComponent<TMP_InputField>().text = projectData["min_player"];
+        inputMax.GetComponent<TMP_InputField>().text = projectData["max_player"];
+        inputDesc.GetComponent<TMP_InputField>().text = projectData["description"];
 
         ConfirmModifyButton butScr = confirmButton.GetComponent<ConfirmModifyButton>();
         butScr.setIdToModify(id);

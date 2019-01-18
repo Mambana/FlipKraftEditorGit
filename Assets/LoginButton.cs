@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Net;
+using System;
+using System.Text;
 
 public class LoginButton : MonoBehaviour
 {
@@ -37,13 +40,13 @@ public class LoginButton : MonoBehaviour
         string email = inputEmail.GetComponent<TMP_InputField>().text;
         string pswd = inputPswd.GetComponent<TMP_InputField>().text;
         string apiAdress = apiAddressInput.GetComponent<TMP_InputField>().text;
-        if (email.IndexOf(".") <= 0 || email.IndexOf(".") == email.Length
+      /*  if (email.IndexOf(".") <= 0 || email.IndexOf(".") == email.Length
             || email.IndexOf("@") <= 0 || email.IndexOf("@") == email.Length)
         {
             msg.text = "Please, enter a valide email address";
             return;
-        }
-        else if (pswd.Length < 6)
+        }*/
+        if (pswd.Length < 6)
         {
             msg.text = "Please, enter a valide password";
             return;
@@ -52,7 +55,11 @@ public class LoginButton : MonoBehaviour
         data.updateData("id", "1");
         data.updateData("api_address", apiAdress);
         data.updateData("pwd", pswd);
-        print(data.access("email"));
+        
+
+        /*var request = (HttpWebRequest)WebRequest.Create(apiAdress);
+        string svcCredentials = Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(email + ":" + pswd));*/
+
         but.SendToDispatch();
     }
 }
