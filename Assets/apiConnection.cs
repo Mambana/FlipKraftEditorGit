@@ -36,14 +36,14 @@ public class apiConnection : MonoBehaviour
         request.Headers.Add("Authorization", "Basic " + svcCredentials);
         request.ContentType = "application/json";
         request.Method = method;
-
-        if (method.Equals("POST"))
+        print(scrData.access("api_address") + route + " "+method);
+        if (method.Equals("POST") || method.Equals("PUT"))
         {
             using (var streamWriter = new StreamWriter(request.GetRequestStream()))
             {
                 string json = JsonConvert.SerializeObject(toAdd);
-                print(json);
                 streamWriter.Write(json);
+                print(json);
                 streamWriter.Flush();
                 streamWriter.Close();
             }
@@ -53,10 +53,11 @@ public class apiConnection : MonoBehaviour
          using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
          {
              result = streamReader.ReadToEnd();
-           
-           
-         }
+            print(result);
+
+        }
         httpResponse.Close();
+       
         return (result);
         /*  using (Stream stream = httpResponse.GetResponseStream())
           {

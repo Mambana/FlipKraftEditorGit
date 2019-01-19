@@ -12,6 +12,15 @@ public class ModifyVisualCardController : BasicController
 
     [SerializeField]
     GameObject listOfProj;
+
+    [SerializeField]
+    GameObject inputName;
+
+    [SerializeField]
+    GameObject inputDesc;
+
+    [SerializeField]
+    GameObject confirmButton;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,24 +35,31 @@ public class ModifyVisualCardController : BasicController
 
     public override void apply()
     {
-        GameObject model;
+        GameObject modelRessource;
+        GameObject modelCard;
 
         projectId = int.Parse(args["project_id"]);
-        model = GameObject.Find("ModelRessource");
-        ModelRessource modelScript = model.GetComponent<ModelRessource>();
-        Dictionary<int, Dictionary<string, string>> all = modelScript.getAll();
-        foreach (KeyValuePair<int, Dictionary<string, string>> project in all)
+        int cardId = int.Parse(args["id"]);
+        modelRessource = GameObject.Find("ModelRessource");
+        modelCard = GameObject.Find("ModelCard");
+        ModelRessource modelResScr = modelRessource.GetComponent<ModelRessource>();
+        ModelCard modelCardScr = modelCard.GetComponent<ModelCard>();
+        Dictionary<string, string> cardData = modelCardScr.find(cardId);
+        inputName.GetComponent<TMP_InputField>().text = cardData["name"];
+        inputDesc.GetComponent<TMP_InputField>().text = cardData["description"];
+        Dictionary<int, Dictionary<string, string>> allRes = modelResScr.getAll(projectId.ToString());
+        foreach (KeyValuePair<int, Dictionary<string, string>> res in allRes)
         {
-            if (project.Value["project_id"].Equals(projectId.ToString()))
-            {
                 GameObject toAdd = Instantiate(elemInList) as GameObject;
-                print(project.Value["name"]);
-                print(project.Value["description"]);
-                toAdd.transform.Find("RessourceName").GetComponent<TextMeshProUGUI>().text = project.Value["name"];
-                toAdd.transform.Find("RessourceDesc").GetComponent<TextMeshProUGUI>().text = project.Value["description"];
+                print(res.Value["name"]);
+                print(res.Value["description"]);
+                toAdd.transform.Find("RessourceName").GetComponent<TextMeshProUGUI>().text = res.Value["name"];
+                toAdd.transform.Find("RessourceDesc").GetComponent<TextMeshProUGUI>().text = res.Value["description"];
                 toAdd.transform.SetParent(listOfProj.transform, false);
-            }
-
         }
+
+        ConfirmVisualCard butScr = confirmButton.GetComponent<ConfirmVisualCard>();
+        butScr.setIdToModify(cardId);
+        butScr.setProjectId(projectId.ToString());
     }
 }

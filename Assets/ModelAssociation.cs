@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ModelCard : MonoBehaviour {
-    
+public class ModelAssociation : MonoBehaviour
+{
     Dictionary<int, Dictionary<string, string>> model;
     apiConnection api;
     static int i = 0;
@@ -21,18 +21,21 @@ public class ModelCard : MonoBehaviour {
 
     }
 
-    public void addCollections(string name, string desc, string projectId)
+    public void addCollections(string value, string projectId, string cardId, string ressourceId, string posX, string posY)
     {
         Dictionary<string, string> toAdd = new Dictionary<string, string>();
 
-        toAdd.Add("name", name);
-        toAdd.Add("description", desc);
+        toAdd.Add("value", value);
         toAdd.Add("fk_id_project", projectId);
+        toAdd.Add("fk_id_cards", cardId);
+        toAdd.Add("fk_id_ressource", ressourceId);
+        toAdd.Add("posX", posX);
+        toAdd.Add("posY", posY);
         string json = api.request(toAdd, "/api/card", "POST");
         Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(json);
         print(resp["id"].ToString());
-        ModelCard.i = int.Parse(resp["id"].ToString());
-       
+        ModelAssociation.i = int.Parse(resp["id"].ToString());
+
     }
 
     public static T DeserializeJson<T>(string json)
@@ -44,7 +47,6 @@ public class ModelCard : MonoBehaviour {
     {
         Dictionary<string, string> cardData = new Dictionary<string, string>();
         string json = api.request(null, "/api/card/" + id.ToString() + "/", "GET");
-        print(json);
         Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(json);
         cardData.Add("name", resp["name"].ToString());
         cardData.Add("description", resp["description"].ToString());
@@ -55,13 +57,13 @@ public class ModelCard : MonoBehaviour {
 
     public int getNbElement()
     {
-        return (ModelCard.i);
+        return (ModelAssociation.i);
     }
 
     public Dictionary<int, Dictionary<string, string>> getAll(string id)
     {
         Dictionary<int, Dictionary<string, string>> allCard = new Dictionary<int, Dictionary<string, string>>();
-        string json = api.request(null, "/api/card" + "?id="+id, "GET");
+        string json = api.request(null, "/api/card" + "?id=" + id, "GET");
 
         List<object> respList = DeserializeJson<List<object>>(json);
         int i = 0;

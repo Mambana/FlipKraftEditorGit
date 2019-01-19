@@ -39,11 +39,10 @@ public class CardsListController : BasicController {
         projectId = int.Parse(args["project_id"]);
         model = GameObject.Find("ModelCard");
         ModelCard modelScript = model.GetComponent<ModelCard>();
-        Dictionary<int, Dictionary<string, string>> all = modelScript.getAll();
+        Dictionary<int, Dictionary<string, string>> all = modelScript.getAll(projectId.ToString());
         foreach (KeyValuePair<int, Dictionary<string, string>> project in all)
         {
-            if (project.Value["project_id"].Equals(projectId.ToString()))
-            {
+            
                 GameObject toAdd = Instantiate(elemInList) as GameObject;
                 print(project.Value["name"]);
                 print(project.Value["description"]);
@@ -51,9 +50,9 @@ public class CardsListController : BasicController {
                 toAdd.transform.Find("CardDesc").GetComponent<TextMeshProUGUI>().text = project.Value["description"];
                 ModifyCardButton toAddScr = toAdd.GetComponent<ModifyCardButton>();
                 toAddScr.setIdToModify(project.Value["id"]);
-                toAddScr.setProjectId(project.Value["project_id"]);
+                toAddScr.setProjectId(project.Value["fk_id_project"]);
                 toAdd.transform.SetParent(listOfProj.transform, false);
-            }
+            
 
         }
         overviewButton.GetComponent<OverviewButton>().setCurrentProjectId(projectId);

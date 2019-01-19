@@ -38,9 +38,6 @@ public class CreateRessourceButton : MonoBehaviour {
     {
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
         ModelRessource ModelScr = Model.GetComponent<ModelRessource>();
-        ModelScr.addCollections("", "", projectId.ToString());
-        print("err");
-        but.addParam("id", (ModelScr.getNbElement() - 1).ToString());
         but.addParam("project_id", projectId.ToString());
         but.SendToDispatch();
     }
