@@ -91,9 +91,19 @@ public class ModelTest : MonoBehaviour {
         return (allProj);
     }
 
-    public void updateField(int id, string field, string value)
+    public void updateField(string id, string name, string min, string max,
+        string desc)
     {
-        model[id][field] = value;
+        Dictionary<string, string> toAdd = new Dictionary<string, string>();
+
+        toAdd.Add("name", name);
+        toAdd.Add("async_game", "0");
+        toAdd.Add("turn_game", "1");
+        toAdd.Add("min_player", min);
+        toAdd.Add("max_player", max);
+        toAdd.Add("description", desc);
+        string json = api.request(toAdd, "/api/project/" + id+ "/", "PUT");
+       
     }
 
     public void removeElem(int id)

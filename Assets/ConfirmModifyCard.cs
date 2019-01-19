@@ -41,12 +41,12 @@ public class ConfirmModifyCard : MonoBehaviour {
     {
         model = GameObject.Find("ModelCard");
         ModelCard modelScr = model.GetComponent<ModelCard>();
-
-        modelScr.updateField(idToModify, "name", inputName.GetComponent<TMP_InputField>().text);
-        modelScr.updateField(idToModify, "description", inputDesc.GetComponent<TMP_InputField>().text);
-
+        string name = inputName.GetComponent<TMP_InputField>().text;
+        string desc = inputDesc.GetComponent<TMP_InputField>().text;
+        modelScr.addCollections(name, desc, projectId.ToString());
+       
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
-        but.addParam("id", idToModify.ToString());
+        but.addParam("id", modelScr.getNbElement().ToString());
         but.addParam("project_id", projectId);
         but.SendToDispatch();
     }

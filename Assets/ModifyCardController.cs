@@ -34,22 +34,22 @@ public class ModifyCardController : BasicController {
 
     public override void apply()
     {
-        int id = int.Parse(args["id"]);
+       // int id = int.Parse(args["id"]);
         model = GameObject.Find("ModelCard");
         ModelCard modelScr = model.GetComponent<ModelCard>();
-
+      //  Dictionary<string, string> cardData = modelScr.find(id);
         //projNameTitle.GetComponent<TextMeshProUGUI>().text = modelScr.find(id, "name");
 
-        inputName.GetComponent<TMP_InputField>().text = modelScr.find(id, "name");
+        inputName.GetComponent<TMP_InputField>().text = "";
 
-        inputDesc.GetComponent<TMP_InputField>().text = modelScr.find(id, "description");
+        inputDesc.GetComponent<TMP_InputField>().text = "";
 
         ConfirmModifyCard butScr = confirmButton.GetComponent<ConfirmModifyCard>();
-        butScr.setIdToModify(id);
+       // butScr.setIdToModify(id);
         butScr.setProjectId(args["project_id"]);
-        RemoveCardButton rmButScr = removeButton.GetComponent<RemoveCardButton>();
-        rmButScr.setProjectId(args["project_id"]);
-        rmButScr.setIdToRemove(id);
+       // RemoveCardButton rmButScr = removeButton.GetComponent<RemoveCardButton>();
+        //rmButScr.setProjectId(args["project_id"]);
+        //rmButScr.setIdToRemove(id);
 
     }
 }

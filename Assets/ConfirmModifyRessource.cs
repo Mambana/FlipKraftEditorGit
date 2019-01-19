@@ -42,10 +42,10 @@ public class ConfirmModifyRessource : MonoBehaviour {
     {
         model = GameObject.Find("ModelRessource");
         ModelRessource modelScr = model.GetComponent<ModelRessource>();
+        string name = inputName.GetComponent<TMP_InputField>().text;
+        string desc = inputDesc.GetComponent<TMP_InputField>().text;
 
-        modelScr.updateField(idToModify, "name", inputName.GetComponent<TMP_InputField>().text);
-        modelScr.updateField(idToModify, "description", inputDesc.GetComponent<TMP_InputField>().text);
-
+        modelScr.updateField(idToModify.ToString(), projectId, name, desc);
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
         but.addParam("id", idToModify.ToString());
         but.addParam("project_id", projectId);

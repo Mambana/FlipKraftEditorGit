@@ -1,30 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
-public class ConfirmModifyButton : MonoBehaviour {
-
+public class ComfirmRessourceCreation : MonoBehaviour
+{
     // Use this for initialization
     int idToModify;
+    string projectId;
     GameObject model;
     [SerializeField]
     GameObject inputName;
     [SerializeField]
-    GameObject inputMin;
-    [SerializeField]
-    GameObject inputMax;
-    [SerializeField]
     GameObject inputDesc;
 
-    void Start () {
+
+    void Start()
+    {
         gameObject.GetComponent<Button>().onClick.AddListener(click);
+
     }
 
     // Update is called once per frame
-    void Update () {
-      
+    void Update()
+    {
+
     }
 
     public void setIdToModify(int id)
@@ -32,18 +33,22 @@ public class ConfirmModifyButton : MonoBehaviour {
         idToModify = id;
     }
 
+    public void setProjectId(string id)
+    {
+        projectId = id;
+    }
+
     void click()
     {
-        model = GameObject.Find("Model");
-        ModelTest modelScr = model.GetComponent<ModelTest>();
+        model = GameObject.Find("ModelRessource");
+        ModelRessource modelScr = model.GetComponent<ModelRessource>();
         string name = inputName.GetComponent<TMP_InputField>().text;
-        string min = inputMin.GetComponent<TMP_InputField>().text;
-        string max = inputMax.GetComponent<TMP_InputField>().text;
         string desc = inputDesc.GetComponent<TMP_InputField>().text;
-        print(idToModify+ " " + name + " " + min);
-        modelScr.updateField(idToModify.ToString(), name, min, max, desc);
+
+        modelScr.addCollections(name, desc, projectId.ToString());
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
-        but.addParam("id", idToModify.ToString());
+        but.addParam("id", modelScr.getNbElement().ToString());
+        but.addParam("project_id", projectId);
         but.SendToDispatch();
     }
 }

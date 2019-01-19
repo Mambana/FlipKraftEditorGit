@@ -37,9 +37,8 @@ public class CreateCardButton : MonoBehaviour {
     {
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
         ModelCard ModelScr = Model.GetComponent<ModelCard>();
-        ModelScr.addCollections("", "", projectId.ToString());
-     
-        but.addParam("id", (ModelScr.getNbElement() - 1).ToString());
+      //  ModelScr.addCollections("ENTER new card name", "ENTER new description", projectId.ToString());
+      //  but.addParam("id", (ModelScr.getNbElement()).ToString());
         but.addParam("project_id", projectId.ToString());
         but.SendToDispatch();
     }

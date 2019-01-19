@@ -39,11 +39,9 @@ public class RessourcesListController : BasicController {
         projectId = int.Parse(args["project_id"]);
         model = GameObject.Find("ModelRessource");
         ModelRessource modelScript = model.GetComponent<ModelRessource>();
-        Dictionary<int, Dictionary<string, string>> all = modelScript.getAll();
+        Dictionary<int, Dictionary<string, string>> all = modelScript.getAll(projectId.ToString());
         foreach (KeyValuePair<int, Dictionary<string, string>> project in all)
         {
-            if (project.Value["project_id"].Equals(projectId.ToString()))
-            {
                 GameObject toAdd = Instantiate(elemInList) as GameObject;
                 print(project.Value["name"]);
                 print(project.Value["description"]);
@@ -51,13 +49,10 @@ public class RessourcesListController : BasicController {
                 toAdd.transform.Find("RessourceDesc").GetComponent<TextMeshProUGUI>().text = project.Value["description"];
                 ModifyRessourceButton toAddScr = toAdd.GetComponent<ModifyRessourceButton>();
                 toAddScr.setIdToModify(project.Value["id"]);
-                toAddScr.setProjectId(project.Value["project_id"]);
+                toAddScr.setProjectId(project.Value["fk_id_project"]);
                 toAdd.transform.SetParent(listOfProj.transform, false);
-            }
-
         }
         overviewButton.GetComponent<OverviewButton>().setCurrentProjectId(projectId);
-        createRessourceButton.GetComponent<CreateRessourceButton>().setProjectId(projectId);
-      
+        createRessourceButton.GetComponent<CreateRessourceButton>().setProjectId(projectId);   
     }
 }
