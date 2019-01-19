@@ -50,12 +50,14 @@ public class ModifyVisualCardController : BasicController
         Dictionary<int, Dictionary<string, string>> allRes = modelResScr.getAll(projectId.ToString());
         foreach (KeyValuePair<int, Dictionary<string, string>> res in allRes)
         {
-                GameObject toAdd = Instantiate(elemInList) as GameObject;
-                print(res.Value["name"]);
-                print(res.Value["description"]);
-                toAdd.transform.Find("RessourceName").GetComponent<TextMeshProUGUI>().text = res.Value["name"];
-                toAdd.transform.Find("RessourceDesc").GetComponent<TextMeshProUGUI>().text = res.Value["description"];
-                toAdd.transform.SetParent(listOfProj.transform, false);
+            GameObject toAdd = Instantiate(elemInList) as GameObject;
+            ButtonCreateDraggleRess scr = toAdd.GetComponent<ButtonCreateDraggleRess>();
+            scr.setProjectId(projectId);
+            scr.setCardId(cardId);
+            scr.setRessId(int.Parse(res.Value["id"]));
+            toAdd.transform.Find("RessourceName").GetComponent<TextMeshProUGUI>().text = res.Value["name"];
+            toAdd.transform.Find("RessourceDesc").GetComponent<TextMeshProUGUI>().text = res.Value["description"];
+            toAdd.transform.SetParent(listOfProj.transform, false);
         }
 
         ConfirmVisualCard butScr = confirmButton.GetComponent<ConfirmVisualCard>();

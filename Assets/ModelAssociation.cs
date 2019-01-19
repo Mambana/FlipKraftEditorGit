@@ -31,7 +31,7 @@ public class ModelAssociation : MonoBehaviour
         toAdd.Add("fk_id_ressource", ressourceId);
         toAdd.Add("posX", posX);
         toAdd.Add("posY", posY);
-        string json = api.request(toAdd, "/api/card", "POST");
+        string json = api.request(toAdd, "/api/card/association", "POST");
         Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(json);
         print(resp["id"].ToString());
         ModelAssociation.i = int.Parse(resp["id"].ToString());
@@ -45,13 +45,13 @@ public class ModelAssociation : MonoBehaviour
 
     public Dictionary<string, string> find(int id)
     {
-        Dictionary<string, string> cardData = new Dictionary<string, string>();
-        string json = api.request(null, "/api/card/" + id.ToString() + "/", "GET");
+        Dictionary<string, string> assocData = new Dictionary<string, string>();
+        string json = api.request(null, "/api/card/association/" + id.ToString() + "/", "GET");
         Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(json);
-        cardData.Add("name", resp["name"].ToString());
-        cardData.Add("description", resp["description"].ToString());
-        cardData.Add("fk_id_project", resp["fk_id_project"].ToString());
-        return (cardData);
+        assocData.Add("name", resp["name"].ToString());
+        assocData.Add("description", resp["description"].ToString());
+        assocData.Add("fk_id_project", resp["fk_id_project"].ToString());
+        return (assocData);
     }
 
 
@@ -84,18 +84,21 @@ public class ModelAssociation : MonoBehaviour
         return (allCard);
     }
 
-    public void updateField(string id, string name, string desc, string projectId)
+    public void updateField(string assocId, string value, string projectId, string cardId, string ressourceId, string posX, string posY)
     {
         Dictionary<string, string> toAdd = new Dictionary<string, string>();
 
-        toAdd.Add("name", name);
-        toAdd.Add("description", desc);
+        toAdd.Add("value", value);
         toAdd.Add("fk_id_project", projectId);
-        string json = api.request(toAdd, "/api/card/" + id + "/", "PUT");
+        toAdd.Add("fk_id_cards", cardId);
+        toAdd.Add("fk_id_ressource", ressourceId);
+        toAdd.Add("posX", posX);
+        toAdd.Add("posY", posY);
+        string json = api.request(toAdd, "/api/card/association/"+assocId.ToString(), "PUT");
     }
 
     public void removeElem(int id)
     {
-        api.request(null, "/api/card/" + id.ToString() + "/", "DELETE");
+        api.request(null, "/api/card/association/" + id.ToString() , "DELETE");
     }
 }
