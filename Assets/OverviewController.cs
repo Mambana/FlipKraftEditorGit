@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Newtonsoft.Json;
 
 public class OverviewController : BasicController
 {
@@ -41,6 +42,31 @@ public class OverviewController : BasicController
 		
 	}
 
+    public static T DeserializeJson<T>(string json)
+    {
+        return JsonConvert.DeserializeObject<T>(json);
+    }
+
+    public void applyInServerResponse(string json)
+    {
+        Dictionary<string, string> param = new Dictionary<string, string>();
+        Dictionary<string, string> projectData = new Dictionary<string, string>();
+            //api.request(param, "/api/project/" + id.ToString() + "/", "GET");
+
+        Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(json);
+        projectData.Add("name", resp["name"].ToString());
+        projectData.Add("async_game", resp["async_game"].ToString());
+        projectData.Add("turn_game", resp["turn_game"].ToString());
+        projectData.Add("min_player", resp["min_player"].ToString());
+        projectData.Add("max_player", resp["max_player"].ToString());
+        projectData.Add("description", resp["description"].ToString());
+        projNameTitle.GetComponent<TextMeshProUGUI>().text = projectData["name"];
+        projName.GetComponent<TextMeshProUGUI>().text += " " + projectData["name"];
+        min.GetComponent<TextMeshProUGUI>().text += " " + projectData["min_player"];
+        max.GetComponent<TextMeshProUGUI>().text += " " + projectData["max_player"];
+        desc.GetComponent<TextMeshProUGUI>().text += " " + projectData["description"];
+    }
+
     public override void apply()
     {
        
@@ -51,13 +77,7 @@ public class OverviewController : BasicController
         ressourceButton.GetComponent<RessourceListButton>().setCurrentProjectId(id);
         cardButton.GetComponent<CardListButton>().setCurrentProjectId(id);
         ModelTest ModelScript = Model.GetComponent<ModelTest>();
-        Dictionary<string, string> projectData = ModelScript.find(id);
-        projNameTitle.GetComponent<TextMeshProUGUI>().text = projectData["name"];
-        projName.GetComponent<TextMeshProUGUI>().text += " "+ projectData["name"];
-        min.GetComponent<TextMeshProUGUI>().text += " " + projectData["min_player"];
-        max.GetComponent<TextMeshProUGUI>().text += " " + projectData["max_player"];
-        desc.GetComponent<TextMeshProUGUI>().text += " " + projectData["description"];
-     
+        ModelScript.find(id, applyInServerResponse);
     }
 
     

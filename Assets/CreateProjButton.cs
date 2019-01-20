@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Newtonsoft.Json;
 
 public class CreateProjButton : MonoBehaviour {
 
@@ -23,23 +24,33 @@ public class CreateProjButton : MonoBehaviour {
 		
 	}
 
-    void click()
+    public static T DeserializeJson<T>(string json)
     {
-        ///NEED REQUEST DB HERE///
-        ModelTest ModelScript = Model.GetComponent<ModelTest>();
-        ButtonListener but = gameObject.GetComponent<ButtonListener>();
-        but.addParam("description" ,desc.GetComponent<TMP_InputField>().text);
-        Dictionary<string, string> param = but.getParam();
-       
-        ModelScript.addCollections(param["name"], param["min"], param["max"], param["description"], "0", "0");
-        param.Clear();
-        param = new Dictionary<string, string>();
-        int id = ModelScript.getNbElement() - 1;
+        return JsonConvert.DeserializeObject<T>(json);
+    }
+
+    void applyInServerResponse(string json)
+    {
+        Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(json);
+        int id = int.Parse(resp["id"].ToString());
+        Dictionary<string, string> param = new Dictionary<string, string>();
         param.Add("id", id.ToString());
-
-
+        ButtonListener but = gameObject.GetComponent<ButtonListener>();
+        print("after api");
         but.setParams(param);
         but.SendToDispatch();
-        ///NEED REQUEST DB HERE///
+    }
+
+    void click()
+    {
+
+        ModelTest ModelScript = Model.GetComponent<ModelTest>();
+        ButtonListener but = gameObject.GetComponent<ButtonListener>();
+        but.addParam("description", desc.GetComponent<TMP_InputField>().text);
+        Dictionary<string, string> param = but.getParam();
+
+        ModelScript.addCollections(param["name"], param["min"], param["max"], param["description"], "0", "0", applyInServerResponse);
+        param.Clear();
+        
     }
 }

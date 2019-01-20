@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Newtonsoft.Json;
 
 public class ConfirmModifyCard : MonoBehaviour {
 
@@ -37,17 +38,28 @@ public class ConfirmModifyCard : MonoBehaviour {
         projectId = id;
     }
 
+    public static T DeserializeJson<T>(string json)
+    {
+        return JsonConvert.DeserializeObject<T>(json);
+    }
+
+    public void applyInServerResponse(string json)
+    {
+        Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(json);
+        ButtonListener but = gameObject.GetComponent<ButtonListener>();
+        but.addParam("id", resp["id"].ToString());
+        but.addParam("project_id", projectId);
+        but.SendToDispatch();
+    }
+
     void click()
     {
         model = GameObject.Find("ModelCard");
         ModelCard modelScr = model.GetComponent<ModelCard>();
         string name = inputName.GetComponent<TMP_InputField>().text;
         string desc = inputDesc.GetComponent<TMP_InputField>().text;
-        modelScr.addCollections(name, desc, projectId.ToString());
+        modelScr.addCollections(name, desc, projectId.ToString(), applyInServerResponse);
        
-        ButtonListener but = gameObject.GetComponent<ButtonListener>();
-        but.addParam("id", modelScr.getNbElement().ToString());
-        but.addParam("project_id", projectId);
-        but.SendToDispatch();
+        
     }
 }

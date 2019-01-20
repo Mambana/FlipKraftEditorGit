@@ -31,11 +31,7 @@ public class ModelAssociation : MonoBehaviour
         toAdd.Add("fk_id_ressource", ressourceId);
         toAdd.Add("posX", posX);
         toAdd.Add("posY", posY);
-        string json = api.request(toAdd, "/api/card/association", "POST");
-        Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(json);
-        print(resp["id"].ToString());
-        ModelAssociation.i = int.Parse(resp["id"].ToString());
-
+        api.request(toAdd, "/api/card/association", "POST", null);
     }
 
     public static T DeserializeJson<T>(string json)
@@ -94,11 +90,11 @@ public class ModelAssociation : MonoBehaviour
         toAdd.Add("fk_id_ressource", ressourceId);
         toAdd.Add("posX", posX);
         toAdd.Add("posY", posY);
-        string json = api.request(toAdd, "/api/card/association/"+assocId.ToString(), "PUT");
+        api.request(toAdd, "/api/card/association/"+assocId.ToString(), "PUT", null);
     }
 
     public void removeElem(int id)
     {
-        api.request(null, "/api/card/association/" + id.ToString() , "DELETE");
+        api.request(null, "/api/card/association/" + id.ToString() , "DELETE", null);
     }
 }

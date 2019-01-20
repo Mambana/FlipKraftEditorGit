@@ -68,9 +68,8 @@ public class DragAndDrop : MonoBehaviour
     
     }
 
-    public void onDrop()
-    {
-        
+  public void onDrop()
+    {       
         GameObject overObj = overedObject();
         if (overObj == card)
         {
@@ -92,10 +91,10 @@ public class DragAndDrop : MonoBehaviour
             }
             else
             {
-                modelScr.updateField(assocId.ToString(), "0", projectId.ToString(), cardId.ToString(), ressourceId.ToString(),
+               modelScr.updateField(assocId.ToString(), "0", projectId.ToString(), cardId.ToString(), ressourceId.ToString(),
                gameObject.transform.localPosition.x.ToString(),
                gameObject.transform.localPosition.y.ToString());
-                linked = true;
+               linked = true;
             }
         }
         else if (overObj == trash)

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Newtonsoft.Json;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -38,6 +39,20 @@ public class ComfirmRessourceCreation : MonoBehaviour
         projectId = id;
     }
 
+    public static T DeserializeJson<T>(string json)
+    {
+        return JsonConvert.DeserializeObject<T>(json);
+    }
+
+    public void applyInServerResponse(string json)
+    {
+        Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(json);
+        ButtonListener but = gameObject.GetComponent<ButtonListener>();
+        but.addParam("id", resp["id"].ToString());
+        but.addParam("project_id", projectId);
+        but.SendToDispatch();
+    }
+
     void click()
     {
         model = GameObject.Find("ModelRessource");
@@ -45,10 +60,7 @@ public class ComfirmRessourceCreation : MonoBehaviour
         string name = inputName.GetComponent<TMP_InputField>().text;
         string desc = inputDesc.GetComponent<TMP_InputField>().text;
 
-        modelScr.addCollections(name, desc, projectId.ToString());
-        ButtonListener but = gameObject.GetComponent<ButtonListener>();
-        but.addParam("id", modelScr.getNbElement().ToString());
-        but.addParam("project_id", projectId);
-        but.SendToDispatch();
+        modelScr.addCollections(name, desc, projectId.ToString(), applyInServerResponse);
+      
     }
 }

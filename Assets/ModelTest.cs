@@ -1,8 +1,15 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using UnityEngine;
-
-
+using Newtonsoft.Json;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Text;
+using UnityEngine;
+using UnityEngine.Networking;
 
 public class ModelTest : MonoBehaviour {
     Dictionary<int, Dictionary<string, string>> model;
@@ -25,7 +32,7 @@ public class ModelTest : MonoBehaviour {
     }
 
     public void addCollections(string name, string min, string max,
-        string desc, string nb_card, string nb_re)
+        string desc, string nb_card, string nb_re, Action<string> call)
     {
         Dictionary<string, string> toAdd = new Dictionary<string, string>();
 
@@ -35,26 +42,14 @@ public class ModelTest : MonoBehaviour {
         toAdd.Add("min_player", min);
         toAdd.Add("max_player", max);
         toAdd.Add("description", desc);
-        string json = api.request(toAdd, "/api/project", "POST");
-        Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(json);
-        ModelTest.i = int.Parse(resp["id"].ToString()) + 1;
+        print("IN MODEL");
+        api.request(toAdd, "/api/project", "POST", call);
+       
     }
 
-    public Dictionary<string,string> find(int id)
+    public void find(int id, Action<string> callback)
     {
-        Dictionary<string, string> param = new Dictionary<string, string>();
-        Dictionary<string, string> projectData = new Dictionary<string, string>();
-        string json = api.request(param, "/api/project/" + id.ToString() + "/", "GET");
-        
-        Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(json);
-        projectData.Add("name", resp["name"].ToString());
-        projectData.Add("async_game", resp["async_game"].ToString());
-        projectData.Add("turn_game", resp["turn_game"].ToString());
-        projectData.Add("min_player", resp["min_player"].ToString());
-        projectData.Add("max_player", resp["max_player"].ToString());
-        projectData.Add("description", resp["description"].ToString());
-
-        return (projectData);
+        api.request(null, "/api/project/" + id.ToString() + "/", "GET", callback);   
     }
 
 
@@ -63,32 +58,9 @@ public class ModelTest : MonoBehaviour {
         return (ModelTest.i);
     }
 
-    public Dictionary<int, Dictionary<string, string>> getAll()
+    public void getAll(Action<string> callback)
     {
-        Dictionary<int, Dictionary<string, string>> allProj = new Dictionary<int, Dictionary<string, string>>();
-        string json = api.request(null, "/api/project", "GET");
-       
-       List<object> respList =  DeserializeJson<List<object>>(json);
-        int i = 0;
-        
-        foreach (object obj in respList)
-        {
-            print(obj.ToString());
-            Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(obj.ToString());
-            Dictionary<string, string> projectData = new Dictionary<string, string>();
-
-            projectData.Add("name", resp["name"].ToString());
-            projectData.Add("async_game", resp["async_game"].ToString());
-            projectData.Add("turn_game", resp["turn_game"].ToString());
-            projectData.Add("min_player", resp["min_player"].ToString());
-            projectData.Add("max_player", resp["max_player"].ToString());
-            projectData.Add("description", resp["description"].ToString());
-            projectData.Add("id", resp["id"].ToString());
-            allProj.Add(i, projectData);
-            i++;
-        }
-        
-        return (allProj);
+        api.request(null, "/api/project", "GET", callback);
     }
 
     public void updateField(string id, string name, string min, string max,
@@ -102,13 +74,13 @@ public class ModelTest : MonoBehaviour {
         toAdd.Add("min_player", min);
         toAdd.Add("max_player", max);
         toAdd.Add("description", desc);
-        string json = api.request(toAdd, "/api/project/" + id+ "/", "PUT");
+        api.request(toAdd, "/api/project/" + id+ "/", "PUT", null);
        
     }
 
     public void removeElem(int id)
     {
 
-        api.request(null, "/api/project/" +id.ToString()+"/", "DELETE");
+        api.request(null, "/api/project/" +id.ToString()+"/", "DELETE", null);
     }
 }
