@@ -32,6 +32,7 @@ public class ButtonCreateDraggleRess : MonoBehaviour
         DragAndDrop scr = elem.GetComponent<DragAndDrop>();
         string ressName = gameObject.transform.Find("RessourceName").GetComponent<TextMeshProUGUI>().text;
 
+        scr.setLinked(false);
         scr.setName(ressName);
         scr.setCardId(cardId);
         scr.setProjectId(projectId);

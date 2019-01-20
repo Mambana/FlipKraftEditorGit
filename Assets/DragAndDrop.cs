@@ -7,6 +7,7 @@ public class DragAndDrop : MonoBehaviour
     private List<GameObject> objectList;
     private bool dragged;
     private bool linked;
+    private int value;
     private string name;
     private GameObject card;
     private GameObject trash;
@@ -27,7 +28,6 @@ public class DragAndDrop : MonoBehaviour
         objectList.Add(card);
         objectList.Add(trash);
         dragged = false;
-        linked = false;
         name = "";
         cardSize = card.GetComponent<RectTransform>().sizeDelta;
         ressSize = gameObject.GetComponent<RectTransform>().sizeDelta;
@@ -70,6 +70,7 @@ public class DragAndDrop : MonoBehaviour
 
     public void onDrop()
     {
+        
         GameObject overObj = overedObject();
         if (overObj == card)
         {
@@ -81,28 +82,35 @@ public class DragAndDrop : MonoBehaviour
                 gameObject.transform.position = new Vector2(card.transform.position.x, gameObject.transform.position.y);
             if (gameObject.transform.position.y - ressSize.y < card.transform.position.y - cardSize.y)
                 gameObject.transform.position = new Vector2(gameObject.transform.position.x, card.transform.position.y - cardSize.y + ressSize.y);
-            if (!linked)
+            if (linked == false)
             {
                 modelScr.addCollections("0", projectId.ToString(), cardId.ToString(), ressourceId.ToString(),
-                gameObject.transform.position.x.ToString(),
-                gameObject.transform.position.y.ToString());
+                gameObject.transform.localPosition.x.ToString(),
+                gameObject.transform.localPosition.y.ToString());
                 assocId = modelScr.getNbElement();
                 linked = true;
             }
             else
+            {
                 modelScr.updateField(assocId.ToString(), "0", projectId.ToString(), cardId.ToString(), ressourceId.ToString(),
-               gameObject.transform.position.x.ToString(),
-               gameObject.transform.position.y.ToString());
+               gameObject.transform.localPosition.x.ToString(),
+               gameObject.transform.localPosition.y.ToString());
+                linked = true;
+            }
         }
         else if (overObj == trash)
         {
             if (linked)
                 modelScr.removeElem(assocId);
+            linked = false;
             Destroy(gameObject);
         }
         else
         {
             gameObject.transform.position = new Vector3(Input.mousePosition.x - ressSize.x / 2, Input.mousePosition.y + ressSize.y / 2, 1);
+            if (linked)
+                modelScr.removeElem(assocId);
+            linked = false;
         }
         dragged = false;
     }
@@ -135,5 +143,25 @@ public class DragAndDrop : MonoBehaviour
     public void setAssocId(int id)
     {
         assocId = id;
+    }
+
+    public void setValue(int newValue)
+    {
+        value = newValue;
+    }
+
+    public void setPosition(float x, float y)
+    {
+        gameObject.transform.localPosition = new Vector3(x, y, 1);
+    }
+
+    public void setLinked(bool l)
+    {
+        linked = l;
+    }
+
+    public bool getLinked()
+    {
+        return (linked);
     }
 }

@@ -8,6 +8,7 @@ public class ModelCard : MonoBehaviour {
     Dictionary<int, Dictionary<string, string>> model;
     apiConnection api;
     static int i = 0;
+    List<object> lastAssoc;
     // Use this for initialization
     void Start()
     {
@@ -42,6 +43,7 @@ public class ModelCard : MonoBehaviour {
 
     public Dictionary<string, string> find(int id)
     {
+        
         Dictionary<string, string> cardData = new Dictionary<string, string>();
         string json = api.request(null, "/api/card/" + id.ToString() + "/", "GET");
         print(json);
@@ -49,6 +51,7 @@ public class ModelCard : MonoBehaviour {
         cardData.Add("name", resp["name"].ToString());
         cardData.Add("description", resp["description"].ToString());
         cardData.Add("fk_id_project", resp["fk_id_project"].ToString());
+        lastAssoc =  DeserializeJson<List<object>>(resp["associations"].ToString());
         return (cardData);
     }
 
@@ -95,5 +98,26 @@ public class ModelCard : MonoBehaviour {
     public void removeElem(int id)
     {
         api.request(null, "/api/card/" + id.ToString() + "/", "DELETE");
+    }
+
+    public Dictionary<int, Dictionary<string, string>> getLastAssoc()
+    {
+        Dictionary<int, Dictionary<string, string>> assocList = new Dictionary<int, Dictionary<string, string>>();
+        int i = 0;
+        foreach (object obj in lastAssoc)
+        {
+            Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(obj.ToString());
+            Dictionary<string, string> assoc = new Dictionary<string, string>();
+            assoc.Add("id", resp["id"].ToString());
+            assoc.Add("fk_id_ressource", resp["fk_id_ressource"].ToString());
+            assoc.Add("fk_id_cards", resp["fk_id_cards"].ToString());
+            assoc.Add("fk_id_project", resp["fk_id_project"].ToString());
+            assoc.Add("value", resp["value"].ToString());
+            assoc.Add("posX", resp["posX"].ToString());
+            assoc.Add("posY", resp["posY"].ToString());
+            assocList.Add(i, assoc);
+            i++;
+        }
+        return (assocList);
     }
 }

@@ -1205,6 +1205,9 @@ MonoBehaviour:
   inputName: {fileID: 4348500586252778540}
   inputDesc: {fileID: 729239323638349962}
   confirmButton: {fileID: 1326365166496706}
+  dragRessource: {fileID: 6574903857240032028, guid: 7cf56f440f8af844e857517a65dcfc32,
+    type: 3}
+  cardVisual: {fileID: 1245866507832454}
 --- !u!1 &1714932064525916
 GameObject:
   m_ObjectHideFlags: 0

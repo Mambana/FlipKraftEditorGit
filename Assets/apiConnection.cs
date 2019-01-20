@@ -27,10 +27,6 @@ public class apiConnection : MonoBehaviour
 
     public string request(Dictionary<string, string> toAdd, string route, string method)
     {
-      /*  int headerSize = 32;
-        int inputSize = 64;
-        byte[] buffer = new byte[(inputSize * 1000) + headerSize];
-        print(scrData.access("api_address") + route);*/
         var request = (HttpWebRequest)WebRequest.Create(scrData.access("api_address") + route);
         string svcCredentials = Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(scrData.access("email") + ":" + scrData.access("pwd")));
         request.Headers.Add("Authorization", "Basic " + svcCredentials);
@@ -59,33 +55,6 @@ public class apiConnection : MonoBehaviour
         httpResponse.Close();
        
         return (result);
-        /*  using (Stream stream = httpResponse.GetResponseStream())
-          {
-              if (stream != null)
-              {
-                  MemoryStream memStream = new MemoryStream();
-
-                  int count;
-                  while ((count = stream.Read(buffer, 0, buffer.Length)) != 0)
-                  {
-                      memStream.Write(buffer, 0, count);
-                  }
-
-                  memStream.Flush();
-                  stream.Close();
-
-                  memStream.Seek(0, SeekOrigin.Begin);
-                  memStream.Read(buffer, 0, buffer.Length);
-
-                  memStream.Close();
-              }
-          }
-
-
-          string st = "";
-          foreach (byte b in buffer)
-              st += b;
-          return Encoding.Default.GetString(buffer); ;*/
     }
    
 }
