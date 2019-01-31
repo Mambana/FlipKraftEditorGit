@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class RemoveRessourceButton : MonoBehaviour {
 
-    int idToRemove;
-    string projectId;
+    int idToRemove = 0;
+    string projectId = "";
     GameObject model;
 
     void Start()

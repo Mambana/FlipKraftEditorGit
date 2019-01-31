@@ -49,7 +49,6 @@ public class OverviewController : BasicController
 
     public void applyInServerResponse(string json)
     {
-        Dictionary<string, string> param = new Dictionary<string, string>();
         Dictionary<string, string> projectData = new Dictionary<string, string>();
             //api.request(param, "/api/project/" + id.ToString() + "/", "GET");
 
@@ -60,7 +59,7 @@ public class OverviewController : BasicController
         projectData.Add("min_player", resp["min_player"].ToString());
         projectData.Add("max_player", resp["max_player"].ToString());
         projectData.Add("description", resp["description"].ToString());
-        projNameTitle.GetComponent<TextMeshProUGUI>().text = projectData["name"];
+      //  projNameTitle.GetComponent<TextMeshProUGUI>().text = projectData["name"];
         projName.GetComponent<TextMeshProUGUI>().text += " " + projectData["name"];
         min.GetComponent<TextMeshProUGUI>().text += " " + projectData["min_player"];
         max.GetComponent<TextMeshProUGUI>().text += " " + projectData["max_player"];

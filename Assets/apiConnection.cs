@@ -29,13 +29,22 @@ public class apiConnection : MonoBehaviour
         string url = scrData.access("api_address") + route;
 
 
-        UnityWebRequest www = UnityWebRequest.Get(url);
-        www.SetRequestHeader("AUTHORIZATION", authorization);
+        using (UnityWebRequest www = UnityWebRequest.Get(url))
+        {
 
-        yield return www.SendWebRequest();
+            www.SetRequestHeader("AUTHORIZATION", authorization);
 
-        string json = www.downloadHandler.text;
-        call(json);
+            yield return www.SendWebRequest();
+            if (www.isNetworkError || www.isHttpError)
+            {
+                print(www.error);
+            }
+            else
+            {
+                string json = www.downloadHandler.text;
+                call(json);
+            }
+        }
     }
 
     IEnumerator postRequest(string route, Dictionary<string, string> fields, Action<string> call)
@@ -91,27 +100,16 @@ public class apiConnection : MonoBehaviour
         }
     }
 
-    IEnumerator deleteRequest(string route, Action<string> call)
+    IEnumerator deleteRequest(string route)
     {
         string authorization = authenticate(scrData.access("email"), scrData.access("pwd"));
         using (UnityWebRequest www = UnityWebRequest.Delete(scrData.access("api_address") + route))
         {
-            print(scrData.access("api_address") + route);
             www.SetRequestHeader("AUTHORIZATION", authorization);
 
 
             yield return www.SendWebRequest();
 
-            if (www.isNetworkError || www.isHttpError)
-            {
-                print(www.error);
-            }
-            else
-            {
-                print(www.downloadHandler.text);
-                if (call != null)
-                    call(www.downloadHandler.text);
-            }
         }
     }
 
@@ -132,7 +130,7 @@ public class apiConnection : MonoBehaviour
         if (method.Equals("PUT"))
             StartCoroutine(putRequest(route, toAdd, call));
         if (method.Equals("DELETE"))
-            StartCoroutine(deleteRequest(route, call));
+            StartCoroutine(deleteRequest(route));
      
     }
    

@@ -18,12 +18,14 @@ public class LoginButton : MonoBehaviour
     private GameObject loginMessage;
     [SerializeField]
     private GameObject apiAddressInput;
+    private apiConnection api;
     private GameObject session;
 
     void Start()
     {
         gameObject.GetComponent<Button>().onClick.AddListener(click);
         session = GameObject.Find("Session");
+        api = GameObject.Find("api_connection").GetComponent<apiConnection>();
     }
 
     // Update is called once per frame
@@ -32,20 +34,24 @@ public class LoginButton : MonoBehaviour
         
     }
 
+    void applyInResponseServer(string json)
+    {
+        TMP_Text msg = loginMessage.GetComponent<TMP_Text>();
+        ButtonListener but = gameObject.GetComponent<ButtonListener>();
+        if (json.Equals("none"))
+            msg.text = "Wrong password or email";
+
+
+        but.SendToDispatch();
+    }
+
     void click()
     {
-        ButtonListener but = gameObject.GetComponent<ButtonListener>();
         SessionData data = session.GetComponent<SessionData>();
         TMP_Text msg = loginMessage.GetComponent<TMP_Text>();
         string email = inputEmail.GetComponent<TMP_InputField>().text;
         string pswd = inputPswd.GetComponent<TMP_InputField>().text;
         string apiAdress = apiAddressInput.GetComponent<TMP_InputField>().text;
-      /*  if (email.IndexOf(".") <= 0 || email.IndexOf(".") == email.Length
-            || email.IndexOf("@") <= 0 || email.IndexOf("@") == email.Length)
-        {
-            msg.text = "Please, enter a valide email address";
-            return;
-        }*/
         if (pswd.Length < 6)
         {
             msg.text = "Please, enter a valide password";
@@ -55,11 +61,7 @@ public class LoginButton : MonoBehaviour
         data.updateData("id", "1");
         data.updateData("api_address", apiAdress);
         data.updateData("pwd", pswd);
-        
-
-        /*var request = (HttpWebRequest)WebRequest.Create(apiAdress);
-        string svcCredentials = Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(email + ":" + pswd));*/
-
-        but.SendToDispatch();
+        print(pswd);
+        api.request(null, "/api/project", "GET", applyInResponseServer);
     }
 }

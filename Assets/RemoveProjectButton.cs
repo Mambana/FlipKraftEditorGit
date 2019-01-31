@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class RemoveProjectButton : MonoBehaviour {
 
     // Use this for initialization
-    int idToRemove;
+    int idToRemove = 0;
     GameObject model;
     
 	void Start () {

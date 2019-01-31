@@ -5,13 +5,11 @@ using UnityEngine;
 
 public class ModelAssociation : MonoBehaviour
 {
-    Dictionary<int, Dictionary<string, string>> model;
     apiConnection api;
     static int i = 0;
     // Use this for initialization
     void Start()
     {
-        model = new Dictionary<int, Dictionary<string, string>>();
         api = GameObject.Find("api_connection").GetComponent<apiConnection>();
     }
 

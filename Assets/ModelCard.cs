@@ -9,14 +9,11 @@ public class ModelCard : MonoBehaviour {
     Dictionary<int, Dictionary<string, string>> model;
     apiConnection api;
     static int i = 0;
-    List<object> lastAssoc;
     // Use this for initialization
     void Start()
     {
         model = new Dictionary<int, Dictionary<string, string>>();
         api = GameObject.Find("api_connection").GetComponent<apiConnection>();
-
-        lastAssoc = new List<object>();
     }
 
     // Update is called once per frame
@@ -68,7 +65,8 @@ public class ModelCard : MonoBehaviour {
 
     public void removeElem(int id)
     {
-        api.request(null, "/api/card/" + id.ToString() + "/", "DELETE", null);
+       api.request(null, "/api/card/" + id.ToString() + "/", "DELETE", null);
+      
     }
 
  

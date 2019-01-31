@@ -6,12 +6,14 @@ using UnityEngine.UI;
 public class RemoveCardButton : MonoBehaviour {
 
 
-    int idToRemove;
-    string projectId;
+    int idToRemove = 0;
+    string projectId = "";
     GameObject model;
 
     void Start()
     {
+        
+     
         gameObject.GetComponent<Button>().onClick.AddListener(click);
     }
 

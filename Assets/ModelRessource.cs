@@ -1,27 +1,16 @@
 ﻿using Newtonsoft.Json;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Text;
-using Newtonsoft.Json;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Text;
-using UnityEngine;
-using UnityEngine.Networking;
+
 public class ModelRessource : MonoBehaviour {
     //TEST FOR UNITY GIT//
  
-    Dictionary<int, Dictionary<string, string>> model;
     apiConnection api;
     static int i = 0;
     // Use this for initialization
     void Start()
     {
-        model = new Dictionary<int, Dictionary<string, string>>();
         api = GameObject.Find("api_connection").GetComponent<apiConnection>();
     }
 
