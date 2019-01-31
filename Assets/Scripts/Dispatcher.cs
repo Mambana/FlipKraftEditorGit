@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Dispatcher : MonoBehaviour {
+    static public Dispatcher Instance = new Dispatcher();
     [SerializeField]
     private GameObject LoginUi;
     [SerializeField]
@@ -72,6 +73,7 @@ public class Dispatcher : MonoBehaviour {
 	
 	}
 
+   
    
 
     public void dispatch(string UiName, string UiScript, Dictionary<string,string> param)
