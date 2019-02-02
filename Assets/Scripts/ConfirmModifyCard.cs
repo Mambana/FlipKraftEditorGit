@@ -47,7 +47,7 @@ public class ConfirmModifyCard : MonoBehaviour {
     {
         Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(json);
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
-        but.addParam("id", resp["id"].ToString());
+        but.addParam("id", projectId);
         but.addParam("project_id", projectId);
         but.SendToDispatch();
     }

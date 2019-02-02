@@ -47,9 +47,9 @@ public class ModifyCardController : BasicController {
         ConfirmModifyCard butScr = confirmButton.GetComponent<ConfirmModifyCard>();
        // butScr.setIdToModify(id);
         butScr.setProjectId(args["project_id"]);
-       // RemoveCardButton rmButScr = removeButton.GetComponent<RemoveCardButton>();
-        //rmButScr.setProjectId(args["project_id"]);
-        //rmButScr.setIdToRemove(id);
+        CancelRessourceCreation cancel = removeButton.GetComponent<CancelRessourceCreation>();
+        cancel.setProjectId(args["project_id"]);
+       
 
     }
 }

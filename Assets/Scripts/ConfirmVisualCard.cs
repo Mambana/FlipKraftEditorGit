@@ -48,7 +48,7 @@ public class ConfirmVisualCard : MonoBehaviour
 
         modelScr.updateField(idToModify.ToString(), name, desc, projectId);
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
-        but.addParam("id", idToModify.ToString());
+        but.addParam("id", projectId);
         but.addParam("project_id", projectId);
         but.SendToDispatch();
     }

@@ -47,7 +47,7 @@ public class ConfirmModifyRessource : MonoBehaviour {
 
         modelScr.updateField(idToModify.ToString(), projectId, name, desc);
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
-        but.addParam("id", idToModify.ToString());
+        but.addParam("id", projectId);
         but.addParam("project_id", projectId);
         but.SendToDispatch();
     }
