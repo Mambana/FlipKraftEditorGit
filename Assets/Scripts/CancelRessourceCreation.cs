@@ -30,6 +30,7 @@ public class CancelRessourceCreation : MonoBehaviour
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
 
         but.addParam("project_id", projectId);
+        but.addParam("id", projectId);
         but.SendToDispatch();
     }
 }

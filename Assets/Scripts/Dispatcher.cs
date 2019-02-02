@@ -78,9 +78,10 @@ public class Dispatcher : MonoBehaviour {
 
     public void dispatch(string UiName, string UiScript, Dictionary<string,string> param)
     {
-        ///   POLICE ASSAULT IN PROGRESS    ///
-        ActiveUi = GameObject.FindGameObjectWithTag("active");
-        Destroy(ActiveUi);
+        if (ActiveUi)
+            Destroy(ActiveUi);
+        /*ActiveUi = GameObject.FindGameObjectWithTag("active");
+        Destroy(ActiveUi);*/
         ActiveUi = Instantiate(UiMap[UiName]) as GameObject;
         ActiveUi.tag = "active";
         BasicController UiController = ActiveUi.GetComponent(UiScript) as BasicController;

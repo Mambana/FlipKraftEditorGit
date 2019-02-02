@@ -56,7 +56,7 @@ public class ButtonBehaviour : MonoBehaviour
         return m_Param;
     }
 
-    public void SendToDispatch()
+  /*  public void SendToDispatch()
     {
         if (m_UiNameToCall == "")
         {
@@ -64,7 +64,7 @@ public class ButtonBehaviour : MonoBehaviour
             return;
         }
         Dispatcher.Instance.dispatch(m_UiNameToCall,"", m_Param);
-    }
+    }*/
 
     public bool HasKey(string key)
     {

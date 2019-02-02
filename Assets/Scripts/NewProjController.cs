@@ -39,8 +39,8 @@ public class NewProjController : BasicController {
                 inputMin.GetComponent<TMP_InputField>().text = args["min"];
             if (args.ContainsKey("max"))
                 inputMax.GetComponent<TMP_InputField>().text = args["max"];
-            /*if (args.ContainsKey("description"))
-                inputName.GetComponent<TextMeshProUGUI>().text = args["description"];*/
+            if (args.ContainsKey("description"))
+                inputName.GetComponent<TextMeshProUGUI>().text = args["description"];
         }
 
     }

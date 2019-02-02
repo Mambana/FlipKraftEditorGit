@@ -75,10 +75,10 @@ namespace UnityEngine.UI.Extensions
                 Debug.LogError("You need to have a child LayoutGroup content set for the list: " + name, gameObject);
                 return;
             }
-            if (DraggableArea == null)
+       /*     if (DraggableArea == null)
             {
                 DraggableArea = transform.root.GetComponentInChildren<Canvas>().GetComponent<RectTransform>();
-            }
+            }*/
             if (IsDropable && !GetComponent<Graphic>())
             {
                 Debug.LogError("You need to have a Graphic control (such as an Image) for the list [" + name + "] to be droppable", gameObject);

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class DeckListHandler : MonoBehaviour
 {
     public string deckSelected;
@@ -25,13 +25,18 @@ public class DeckListHandler : MonoBehaviour
         }
     }
 
-    public void AddDeck()
+    public void AddDeck(string projectId = "0", string id = "0", string cardName = "")
     {
         GameObject go = Instantiate(m_DeckUIPrefab, m_Content);
         DeckItemUI item = go.GetComponent<DeckItemUI>();
         item.DeckHandler = this;
         m_DecksList.Add(item);
         m_Content.sizeDelta = new Vector2(m_Content.sizeDelta.x + item.RectTransform.sizeDelta.x, m_Content.sizeDelta.y);
+        go.GetComponentInChildren<TMP_InputField>().textViewport = m_Content;
+        go.GetComponentInChildren<TMP_InputField>().text = cardName;
+        go.GetComponentInChildren<ModifyCardButton>().setIdToModify(id);
+        go.GetComponentInChildren<ModifyCardButton>().setProjectId(projectId);
+
     }
 
     public void RemoveDeck()

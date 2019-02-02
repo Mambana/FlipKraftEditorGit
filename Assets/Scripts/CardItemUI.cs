@@ -25,7 +25,7 @@ public class CardItemUI : MonoBehaviour, IPointerClickHandler
     public void Edit()
     {
         //todo get param and info
-        m_EditButtonBehaviour.SendToDispatch();
+       // m_EditButtonBehaviour.SendToDispatch();
     }
 
     public void Delete()

@@ -12,6 +12,7 @@ public class DragAndDrop : MonoBehaviour
     private GameObject card;
     private GameObject trash;
     private ModelAssociation modelScr;
+    private Canvas canvas;
     Vector2 cardSize;
     Vector2 ressSize;
     int projectId;
@@ -21,6 +22,7 @@ public class DragAndDrop : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         modelScr = GameObject.Find("ModelAssociation").GetComponent<ModelAssociation>();
         objectList = new List<GameObject>();
         card = GameObject.Find("CardVisual");
@@ -29,8 +31,8 @@ public class DragAndDrop : MonoBehaviour
         objectList.Add(trash);
         dragged = false;
         name = "";
-        cardSize = card.GetComponent<RectTransform>().sizeDelta;
-        ressSize = gameObject.GetComponent<RectTransform>().sizeDelta;
+        cardSize = card.GetComponent<RectTransform>().sizeDelta * canvas.scaleFactor;
+        ressSize = gameObject.GetComponent<RectTransform>().sizeDelta * canvas.scaleFactor;
     }
 
     // Update is called once per frame
@@ -53,8 +55,9 @@ public class DragAndDrop : MonoBehaviour
                 (gameObject.transform.position.y <= obj.transform.position.y &&
                 gameObject.transform.position.y >= obj.transform.position.y - objSize.y ||
                  gameObject.transform.position.y - ressSize.y <= obj.transform.position.y &&
-                gameObject.transform.position.y - ressSize.y >= obj.transform.position.y - objSize.y))
+                gameObject.transform.position.y - ressSize.y >= obj.transform.position.y - objSize.y ))
             {
+                print("object found");
                 return (obj);
             }
         }

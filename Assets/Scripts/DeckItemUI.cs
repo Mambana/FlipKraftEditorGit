@@ -72,9 +72,9 @@ public class DeckItemUI : MonoBehaviour, IPointerClickHandler
     public void Edit()
     {
         //todo get info in bdd then pass param
-        m_EditButtonBehaviour.AddParam("DeckName", m_DeckName.text);
-        m_EditButtonBehaviour.AddParam("MinCardLimit", m_MinCardLimit.text);
-        m_EditButtonBehaviour.AddParam("MaxCardLimit", m_MaxCardLimit.text);
-        m_EditButtonBehaviour.SendToDispatch();
+       // m_EditButtonBehaviour.AddParam("DeckName", m_DeckName.text);
+       // m_EditButtonBehaviour.AddParam("MinCardLimit", m_MinCardLimit.text);
+       // m_EditButtonBehaviour.AddParam("MaxCardLimit", m_MaxCardLimit.text);
+       //m_EditButtonBehaviour.SendToDispatch();
     }
 }

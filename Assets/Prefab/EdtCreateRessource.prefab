@@ -1458,8 +1458,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edc43fa7c1f29544794b4ddbb9f8aac0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UiNameToCall: RessourceListUi
-  UiScriptToCall: RessourcesListController
+  UiNameToCall: OverviewProjUi
+  UiScriptToCall: OverviewController
 --- !u!114 &6672785205613698107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3897,8 +3897,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edc43fa7c1f29544794b4ddbb9f8aac0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UiNameToCall: RessourceListUi
-  UiScriptToCall: RessourcesListController
+  UiNameToCall: OverviewProjUi
+  UiScriptToCall: OverviewController
 --- !u!114 &2335165928332398919
 MonoBehaviour:
   m_ObjectHideFlags: 0

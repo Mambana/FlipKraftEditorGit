@@ -11,6 +11,12 @@ public class CreateProjButton : MonoBehaviour {
     GameObject Model;
 
     [SerializeField]
+    GameObject name;
+    [SerializeField]
+    GameObject min;
+    [SerializeField]
+    GameObject max;
+    [SerializeField]
     GameObject desc;
 	// Use this for initialization
 	void Start () {
@@ -33,10 +39,10 @@ public class CreateProjButton : MonoBehaviour {
     {
         Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(json);
         int id = int.Parse(resp["id"].ToString());
+        print(id);
         Dictionary<string, string> param = new Dictionary<string, string>();
         param.Add("id", id.ToString());
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
-        print("after api");
         but.setParams(param);
         but.SendToDispatch();
     }
@@ -47,6 +53,9 @@ public class CreateProjButton : MonoBehaviour {
         ModelTest ModelScript = Model.GetComponent<ModelTest>();
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
         but.addParam("description", desc.GetComponent<TMP_InputField>().text);
+        but.addParam("name", name.GetComponent<TMP_InputField>().text);
+        but.addParam("min", min.GetComponent<TMP_InputField>().text);
+        but.addParam("max", max.GetComponent<TMP_InputField>().text);
         Dictionary<string, string> param = but.getParam();
 
         ModelScript.addCollections(param["name"], param["min"], param["max"], param["description"], "0", "0", applyInServerResponse);

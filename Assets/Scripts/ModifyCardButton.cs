@@ -22,6 +22,7 @@ public class ModifyCardButton : MonoBehaviour {
     public void setIdToModify(string id)
     {
         idToModify = id;
+        print("ok");
     }
 
     public void setProjectId(string id)
