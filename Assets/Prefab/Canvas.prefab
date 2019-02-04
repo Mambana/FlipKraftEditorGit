@@ -487,7 +487,8 @@ MonoBehaviour:
   ActiveUi: {fileID: 0}
   ProjectListUi: {fileID: 1169274404279414, guid: 5570c964f414ed74c9d6097cfd420776,
     type: 3}
-  ModifyProjectUi: {fileID: 0}
+  ModifyProjectUi: {fileID: 344921562824398743, guid: e9ac8b98553fc874a891f416bd4c22d1,
+    type: 3}
   RessourceListUi: {fileID: 0}
   ModifyRessourceUi: {fileID: 1550360880712210, guid: 97053afa830ab8d4a80d87e691273e84,
     type: 3}
