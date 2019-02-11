@@ -56,7 +56,7 @@ public class ModelTest : MonoBehaviour {
     }
 
     public void updateField(string id, string name, string min, string max,
-        string desc)
+        string desc, Action<string> callback = null)
     {
         Dictionary<string, string> toAdd = new Dictionary<string, string>();
 
@@ -66,7 +66,7 @@ public class ModelTest : MonoBehaviour {
         toAdd.Add("min_player", min);
         toAdd.Add("max_player", max);
         toAdd.Add("description", desc);
-        api.request(toAdd, "/api/project/" + id+ "/", "PUT", null);
+        api.request(toAdd, "/api/project/" + id+ "/", "PUT", callback);
        
     }
 

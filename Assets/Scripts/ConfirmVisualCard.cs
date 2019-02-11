@@ -39,6 +39,14 @@ public class ConfirmVisualCard : MonoBehaviour
         projectId = id;
     }
 
+    void CallDispatcher(string json)
+    {
+        ButtonListener but = gameObject.GetComponent<ButtonListener>();
+        but.addParam("id", projectId);
+        but.addParam("project_id", projectId);
+        but.SendToDispatch();
+    }
+
     void click()
     {
         model = GameObject.Find("ModelCard");
@@ -46,10 +54,7 @@ public class ConfirmVisualCard : MonoBehaviour
         string name = inputName.GetComponent<TMP_InputField>().text;
         string desc = inputDesc.GetComponent<TMP_InputField>().text;
 
-        modelScr.updateField(idToModify.ToString(), name, desc, projectId);
-        ButtonListener but = gameObject.GetComponent<ButtonListener>();
-        but.addParam("id", projectId);
-        but.addParam("project_id", projectId);
-        but.SendToDispatch();
+        modelScr.updateField(idToModify.ToString(), name, desc, projectId, CallDispatcher);
+     
     }
 }

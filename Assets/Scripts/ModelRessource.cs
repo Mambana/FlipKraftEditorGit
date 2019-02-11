@@ -4,8 +4,6 @@ using UnityEngine;
 using System;
 
 public class ModelRessource : MonoBehaviour {
-    //TEST FOR UNITY GIT//
- 
     apiConnection api;
     static int i = 0;
     // Use this for initialization
@@ -53,14 +51,14 @@ public class ModelRessource : MonoBehaviour {
         
     }
 
-    public void updateField(string id, string projectId, string name, string desc)
+    public void updateField(string id, string projectId, string name, string desc, Action<string> callback = null)
     {
         Dictionary<string, string> toAdd = new Dictionary<string, string>();
 
         toAdd.Add("name", name);
         toAdd.Add("description", desc);
         toAdd.Add("fk_id_project", projectId);
-        api.request(toAdd, "/api/ressource/" + id + "/", "PUT", null);
+        api.request(toAdd, "/api/ressource/" + id + "/", "PUT", callback);
     }
 
     public void removeElem(int id)

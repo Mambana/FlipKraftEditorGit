@@ -38,17 +38,21 @@ public class ConfirmModifyRessource : MonoBehaviour {
         projectId = id;
     }
 
+    public void CallDispatcher(string json)
+    {
+        ButtonListener but = gameObject.GetComponent<ButtonListener>();
+        but.addParam("id", projectId);
+        but.addParam("project_id", projectId);
+        but.SendToDispatch();
+    }
+
     void click()
     {
         model = GameObject.Find("ModelRessource");
         ModelRessource modelScr = model.GetComponent<ModelRessource>();
         string name = inputName.GetComponent<TMP_InputField>().text;
         string desc = inputDesc.GetComponent<TMP_InputField>().text;
-
-        modelScr.updateField(idToModify.ToString(), projectId, name, desc);
-        ButtonListener but = gameObject.GetComponent<ButtonListener>();
-        but.addParam("id", projectId);
-        but.addParam("project_id", projectId);
-        but.SendToDispatch();
+        modelScr.updateField(idToModify.ToString(), projectId, name, desc, CallDispatcher);
+        
     }
 }

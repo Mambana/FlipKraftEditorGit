@@ -32,6 +32,13 @@ public class ConfirmModifyButton : MonoBehaviour {
         idToModify = id;
     }
 
+    public void CallDispatcher(string json)
+    {
+        ButtonListener but = gameObject.GetComponent<ButtonListener>();
+        but.addParam("id", idToModify.ToString());
+        but.SendToDispatch();
+    }
+
     void click()
     {
         model = GameObject.Find("Model");
@@ -41,9 +48,7 @@ public class ConfirmModifyButton : MonoBehaviour {
         string max = inputMax.GetComponent<TMP_InputField>().text;
         string desc = inputDesc.GetComponent<TMP_InputField>().text;
         print(idToModify+ " " + name + " " + min);
-        modelScr.updateField(idToModify.ToString(), name, min, max, desc);
-        ButtonListener but = gameObject.GetComponent<ButtonListener>();
-        but.addParam("id", idToModify.ToString());
-        but.SendToDispatch();
+        modelScr.updateField(idToModify.ToString(), name, min, max, desc, CallDispatcher);
+       
     }
 }

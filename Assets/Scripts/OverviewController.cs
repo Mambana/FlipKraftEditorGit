@@ -132,8 +132,7 @@ public class OverviewController : BasicController
         foreach (KeyValuePair<int, Dictionary<string, string>> project in allRessource)
         {
             GameObject toAdd = Instantiate(elemInList) as GameObject;
-            print(project.Value["name"]);
-            print(project.Value["description"]);
+
             toAdd.transform.Find("RessourceName").GetComponent<TextMeshProUGUI>().text = project.Value["name"];
             toAdd.transform.Find("RessourceDesc").GetComponent<TextMeshProUGUI>().text = project.Value["description"];
             ModifyRessourceButton toAddScr = toAdd.GetComponent<ModifyRessourceButton>();
@@ -151,9 +150,6 @@ public class OverviewController : BasicController
         id = int.Parse(args["id"]);      
         Model = GameObject.Find("Model");
         newResBut.GetComponent<CreateRessourceButton>().setProjectId(id);
-        //modifyButton.GetComponent<ModifyButton>().setIdToModify(id);
-        // ressourceButton.GetComponent<RessourceListButton>().setCurrentProjectId(id);
-        // cardButton.GetComponent<CardListButton>().setCurrentProjectId(id);
         updateProj.GetComponent<ConfirmModifyButton>().setIdToModify(id);
         createCardBut.GetComponent<CreateCardButton>().setProjectId(id);
         ModelTest ModelScript = Model.GetComponent<ModelTest>();

@@ -53,14 +53,14 @@ public class ModelCard : MonoBehaviour {
        api.request(null, "/api/card" + "?id=" + id, "GET", callback); 
     }
 
-    public void updateField(string id, string name, string desc, string projectId)
+    public void updateField(string id, string name, string desc, string projectId, Action<string> callback = null)
     {
         Dictionary<string, string> toAdd = new Dictionary<string, string>();
 
         toAdd.Add("name", name);
         toAdd.Add("description", desc);
         toAdd.Add("fk_id_project", projectId);
-        api.request(toAdd, "/api/card/" + id + "/", "PUT", null);
+        api.request(toAdd, "/api/card/" + id + "/", "PUT", callback);
     }
 
     public void removeElem(int id)

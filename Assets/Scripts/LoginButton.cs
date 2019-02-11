@@ -40,9 +40,8 @@ public class LoginButton : MonoBehaviour
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
         if (json.Equals("none"))
             msg.text = "Wrong password or email";
-
-
-        but.SendToDispatch();
+        else
+          but.SendToDispatch();
     }
 
     void click()

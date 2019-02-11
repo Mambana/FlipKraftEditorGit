@@ -37,6 +37,8 @@ public class apiConnection : MonoBehaviour
             yield return www.SendWebRequest();
             if (www.isNetworkError || www.isHttpError)
             {
+                if (call != null)
+                    call("none");
                 print(www.error);
             }
             else
