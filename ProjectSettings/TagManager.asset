@@ -6,6 +6,9 @@ TagManager:
   tags:
   - parameters
   - active
+  - ScreenUI
+  - Container
+  - toDestroy
   layers:
   - Default
   - TransparentFX

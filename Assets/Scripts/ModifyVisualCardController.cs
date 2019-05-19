@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using Newtonsoft.Json;
 
@@ -8,6 +9,8 @@ public class ModifyVisualCardController : BasicController
 {
     int projectId;
     int cardId;
+
+    ImageHandler imageHandler;
 
     [SerializeField]
     GameObject elemInList;
@@ -32,11 +35,15 @@ public class ModifyVisualCardController : BasicController
 
     [SerializeField]
     GameObject cardVisual;
+
+    [SerializeField]
+    GameObject imgHandler;
     // Start is called before the first frame update
     List<object> lastAssoc;
     void Start()
     {
-        
+        //listOfProj = GameObject.FindWithTag("Container");
+        imageHandler = GameObject.Find("ImageHandler").GetComponent<ImageHandler>();
     }
 
     // Update is called once per frame
@@ -50,8 +57,20 @@ public class ModifyVisualCardController : BasicController
         return JsonConvert.DeserializeObject<T>(json);
     }
 
+    public void setRessourceOnCardSprite(string json, GameObject obj)
+    {
+        print(json);
+        Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(json);
+        ImageHandler imgHandlerScr = imageHandler.GetComponent<ImageHandler>();
+        print(resp["img_id"]);
+        obj.GetComponent<Image>().sprite = imgHandlerScr.GetSprite(int.Parse(resp["img_id"].ToString()));
+        
+    }
+
     public void applyOnCard(string json)
     {
+        GameObject modelRessource = GameObject.Find("ModelRessource");
+        ModelRessource modelResScr = modelRessource.GetComponent<ModelRessource>();
         Dictionary<string, string> cardData = new Dictionary<string, string>();
         Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(json);
         cardData.Add("name", resp["name"].ToString());
@@ -73,6 +92,7 @@ public class ModifyVisualCardController : BasicController
             assoc.Add("value", assocResp["value"].ToString());
             assoc.Add("posX", assocResp["posX"].ToString());
             assoc.Add("posY", assocResp["posY"].ToString());
+           
             assocList.Add(i, assoc);
             i++;
         }
@@ -89,6 +109,7 @@ public class ModifyVisualCardController : BasicController
             dragable.transform.SetParent(cardVisual.transform, false);
             print(assoc.Value["posX"]);
             print(assoc.Value["posY"]);
+            modelResScr.find(int.Parse(assoc.Value["fk_id_ressource"]), null ,setRessourceOnCardSprite, dragable);
             dragableScr.setPosition(float.Parse(assoc.Value["posX"]), float.Parse(assoc.Value["posY"]));
 
         }
@@ -111,6 +132,7 @@ public class ModifyVisualCardController : BasicController
             ressourceData.Add("description", resp["description"].ToString());
             ressourceData.Add("id", resp["id"].ToString());
             ressourceData.Add("fk_id_project", resp["fk_id_project"].ToString());
+            ressourceData.Add("img_id", resp["img_id"].ToString());
             allRessource.Add(i, ressourceData);
             i++;
         }
@@ -120,9 +142,12 @@ public class ModifyVisualCardController : BasicController
             ButtonCreateDraggleRess scr = toAdd.GetComponent<ButtonCreateDraggleRess>();
             scr.setProjectId(projectId);
             scr.setCardId(cardId);
+            scr.setImgId(int.Parse(res.Value["img_id"]));
             scr.setRessId(int.Parse(res.Value["id"]));
+          //  toAdd.GetComponent<Image>().sprite = imageHandler.GetSprite(int.Parse(res.Value["id"]));
             toAdd.transform.Find("RessourceName").GetComponent<TextMeshProUGUI>().text = res.Value["name"];
             toAdd.transform.Find("RessourceDesc").GetComponent<TextMeshProUGUI>().text = res.Value["description"];
+            toAdd.GetComponent<Image>().sprite = imageHandler.GetSprite(int.Parse(res.Value["img_id"]));
             toAdd.transform.SetParent(listOfProj.transform, false);
         }
     }

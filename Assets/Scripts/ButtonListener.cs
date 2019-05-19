@@ -26,7 +26,7 @@ public class ButtonListener : MonoBehaviour {
     {
         if (param == null)
             param = new Dictionary<string, string>();
-        if (!param.ContainsKey(ToAdd))
+        if (!param.ContainsKey(key))
             param.Add(key, ToAdd);
         else
             param[key] = ToAdd;
@@ -47,6 +47,7 @@ public class ButtonListener : MonoBehaviour {
 
         
         Dispatcher.GetComponent<Dispatcher>().dispatch(UiNameToCall, UiScriptToCall, param);
+        param = null;
     }
 
     public bool hasKey(string key)

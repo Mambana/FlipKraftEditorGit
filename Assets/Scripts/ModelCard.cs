@@ -63,9 +63,9 @@ public class ModelCard : MonoBehaviour {
         api.request(toAdd, "/api/card/" + id + "/", "PUT", callback);
     }
 
-    public void removeElem(int id)
+    public void removeElem(int id, Action<string> callback = null)
     {
-       api.request(null, "/api/card/" + id.ToString() + "/", "DELETE", null);
+       api.request(null, "/api/card/" + id.ToString() + "/", "DELETE", callback);
       
     }
 

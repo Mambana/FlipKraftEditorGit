@@ -23,7 +23,7 @@ public class apiConnection : MonoBehaviour
         
     }
 
-    IEnumerator getRequest(string route, Action<string> call)
+    IEnumerator getRequest(string route, Action<string> call, Action<string, GameObject> callOnObject = null, GameObject obj = null)
     {
         string authorization = authenticate(scrData.access("email"), scrData.access("pwd"));
         string url = scrData.access("api_address") + route;
@@ -44,7 +44,10 @@ public class apiConnection : MonoBehaviour
             else
             {
                 string json = www.downloadHandler.text;
-                call(json);
+                if (call != null)
+                 call(json);
+                if (callOnObject != null)
+                    callOnObject(json, obj);
             }
         }
     }
@@ -55,7 +58,7 @@ public class apiConnection : MonoBehaviour
         WWWForm form = new WWWForm();
         foreach (KeyValuePair<string, string> f in fields)
             form.AddField(f.Key, f.Value);
-
+        print(form.data);
         using (UnityWebRequest www = UnityWebRequest.Post(scrData.access("api_address") + route, form))
         {
             www.SetRequestHeader("AUTHORIZATION", authorization);
@@ -102,15 +105,23 @@ public class apiConnection : MonoBehaviour
         }
     }
 
-    IEnumerator deleteRequest(string route)
+    IEnumerator deleteRequest(string route, Action<string> call = null)
     {
         string authorization = authenticate(scrData.access("email"), scrData.access("pwd"));
         using (UnityWebRequest www = UnityWebRequest.Delete(scrData.access("api_address") + route))
         {
             www.SetRequestHeader("AUTHORIZATION", authorization);
-
-
+           
             yield return www.SendWebRequest();
+            if (www.isNetworkError || www.isHttpError)
+            {
+                print(www.error);
+            }
+            else
+            {
+                if (call != null)
+                    call("");
+            }
 
         }
     }
@@ -123,16 +134,17 @@ public class apiConnection : MonoBehaviour
         return auth;
     }
 
-    public void request(Dictionary<string, string> toAdd, string route, string method, Action<string> call)
+    public void request(Dictionary<string, string> toAdd, string route, string method,
+        Action<string> call = null, Action<string, GameObject> callOnObject = null, GameObject obj = null)
     {
         if (method.Equals("GET"))
-            StartCoroutine(getRequest(route, call));
+            StartCoroutine(getRequest(route, call, callOnObject, obj));
         if (method.Equals("POST"))
             StartCoroutine(postRequest(route, toAdd,call));
         if (method.Equals("PUT"))
             StartCoroutine(putRequest(route, toAdd, call));
         if (method.Equals("DELETE"))
-            StartCoroutine(deleteRequest(route));
+            StartCoroutine(deleteRequest(route,call));
      
     }
    

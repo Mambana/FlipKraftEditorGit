@@ -32,13 +32,24 @@ public class DeckListHandler : MonoBehaviour
         item.DeckHandler = this;
         m_DecksList.Add(item);
         m_Content.sizeDelta = new Vector2(m_Content.sizeDelta.x + item.RectTransform.sizeDelta.x, m_Content.sizeDelta.y);
-        go.GetComponentInChildren<TMP_InputField>().textViewport = m_Content;
-        go.GetComponentInChildren<TMP_InputField>().text = cardName;
+       // go.GetComponentInChildren<TMP_InputField>().textViewport = m_Content;
+        go.GetComponentInChildren<TextMeshProUGUI>().text = cardName;
         go.GetComponentInChildren<ModifyCardButton>().setIdToModify(id);
         go.GetComponentInChildren<ModifyCardButton>().setProjectId(projectId);
 
     }
 
+    public void RemoveAllDeck()
+    {
+        GameObject go = null;
+        foreach (DeckItemUI item in m_DecksList)
+        {
+            m_Content.sizeDelta = new Vector2(m_Content.sizeDelta.x - item.RectTransform.sizeDelta.x, m_Content.sizeDelta.y);
+            go = item.gameObject;
+            Destroy(go);
+        }
+        m_DecksList.Clear();
+    }
     public void RemoveDeck()
     {
         DeckItemUI item = m_DecksList.Find(x => x.DeckName == deckSelected);

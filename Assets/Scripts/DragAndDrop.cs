@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class DragAndDrop : MonoBehaviour
@@ -19,20 +20,26 @@ public class DragAndDrop : MonoBehaviour
     int cardId;
     int ressourceId;
     int assocId;
+
+    [SerializeField]
+    GameObject inputValuePopPup;
+    [SerializeField]
+    GameObject valueText;
     // Start is called before the first frame update
     void Start()
     {
         canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         modelScr = GameObject.Find("ModelAssociation").GetComponent<ModelAssociation>();
         objectList = new List<GameObject>();
-        card = GameObject.Find("CardVisual");
-        trash = GameObject.Find("Trash");
+        card = GameObject.Find("CardVisualeEditable");
+        trash = GameObject.Find("EditTrash");
         objectList.Add(card);
         objectList.Add(trash);
         dragged = false;
         name = "";
         cardSize = card.GetComponent<RectTransform>().sizeDelta * canvas.scaleFactor;
         ressSize = gameObject.GetComponent<RectTransform>().sizeDelta * canvas.scaleFactor;
+        
     }
 
     // Update is called once per frame
@@ -68,12 +75,13 @@ public class DragAndDrop : MonoBehaviour
     {
         dragged = true;
         gameObject.transform.position = new Vector3(Input.mousePosition.x - ressSize.x / 2 , Input.mousePosition.y + ressSize.y / 2, 1);
-    
+        
     }
 
   public void onDrop()
     {       
         GameObject overObj = overedObject();
+        
         if (overObj == card)
         {
             if (gameObject.transform.position.x + ressSize.x > card.transform.position.x + cardSize.x)
@@ -86,22 +94,36 @@ public class DragAndDrop : MonoBehaviour
                 gameObject.transform.position = new Vector2(gameObject.transform.position.x, card.transform.position.y - cardSize.y + ressSize.y);
             if (linked == false)
             {
-                modelScr.addCollections("0", projectId.ToString(), cardId.ToString(), ressourceId.ToString(),
+
+                GameObject inputValue = Instantiate(inputValuePopPup) as GameObject;
+                inputValue.transform.position = new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y, 1);
+                inputValue.transform.SetParent(canvas.transform, false);
+                ValidateInputValueButton scr = inputValue.transform.Find("Button").GetComponent<ValidateInputValueButton>();
+                scr.prepareAction(projectId.ToString(), cardId.ToString(), ressourceId.ToString(),
                 gameObject.transform.localPosition.x.ToString(),
-                gameObject.transform.localPosition.y.ToString());
+                gameObject.transform.localPosition.y.ToString(), valueText);
                 assocId = modelScr.getNbElement();
+               
+                
+                dragged = false;
                 linked = true;
             }
             else
             {
-               modelScr.updateField(assocId.ToString(), "0", projectId.ToString(), cardId.ToString(), ressourceId.ToString(),
-               gameObject.transform.localPosition.x.ToString(),
-               gameObject.transform.localPosition.y.ToString());
-               linked = true;
+                GameObject inputValue = Instantiate(inputValuePopPup) as GameObject;
+                ValidateInputValueButton scr = inputValue.transform.Find("Button").GetComponent<ValidateInputValueButton>(); 
+                scr.prepareAction(projectId.ToString(), cardId.ToString(), ressourceId.ToString(),
+                gameObject.transform.localPosition.x.ToString(),
+                gameObject.transform.localPosition.y.ToString(), valueText,assocId.ToString());
+                inputValue.transform.position = new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y, 1);
+                inputValue.transform.SetParent(canvas.transform, false);
+                dragged = false;
+                linked = true;
             }
         }
         else if (overObj == trash)
         {
+            print(assocId);
             if (linked)
                 modelScr.removeElem(assocId);
             linked = false;
@@ -150,6 +172,7 @@ public class DragAndDrop : MonoBehaviour
     public void setValue(int newValue)
     {
         value = newValue;
+        valueText.GetComponent<TextMeshProUGUI>().text = value.ToString();
     }
 
     public void setPosition(float x, float y)

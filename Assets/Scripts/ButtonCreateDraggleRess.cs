@@ -13,11 +13,14 @@ public class ButtonCreateDraggleRess : MonoBehaviour
     private int projectId;
     private int cardId;
     private int ressId;
+    private int imgId;
+    private int value;
+    private ImageHandler imgHandlerScr;
     // Start is called before the first frame update
     void Start()
     {
         gameObject.GetComponent<Button>().onClick.AddListener(click);
-        card = GameObject.Find("CardVisual");
+        card = GameObject.Find("CardVisualeEditable");
     }
 
     // Update is called once per frame
@@ -28,16 +31,19 @@ public class ButtonCreateDraggleRess : MonoBehaviour
 
     void click()
     {
+        imgHandlerScr = GameObject.Find("ImageHandler").GetComponent<ImageHandler>();
         GameObject elem = Instantiate(DraggableElem);
         DragAndDrop scr = elem.GetComponent<DragAndDrop>();
         string ressName = gameObject.transform.Find("RessourceName").GetComponent<TextMeshProUGUI>().text;
 
+        elem.GetComponent<Image>().sprite = imgHandlerScr.GetSprite(imgId);
         scr.setLinked(false);
         scr.setName(ressName);
         scr.setCardId(cardId);
         scr.setProjectId(projectId);
         scr.setRessourceId(ressId);
-        elem.transform.position = gameObject.transform.localPosition;
+
+        elem.transform.position = new Vector3(300, 300, 1); 
         elem.transform.SetParent(card.transform, false);
     }
 
@@ -54,5 +60,15 @@ public class ButtonCreateDraggleRess : MonoBehaviour
     public void setRessId(int id)
     {
         ressId = id;
+    }
+
+    public void setValue(int val)
+    {
+        value = val;
+    }
+
+    public void setImgId(int id)
+    {
+        imgId = id;
     }
 }

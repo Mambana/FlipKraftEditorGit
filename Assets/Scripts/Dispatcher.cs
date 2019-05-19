@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class Dispatcher : MonoBehaviour {
     static public Dispatcher Instance = new Dispatcher();
     [SerializeField]
@@ -17,7 +18,10 @@ public class Dispatcher : MonoBehaviour {
     private GameObject DescProjUi;
 
     [SerializeField]
-    private GameObject OverviewProjUi;
+    private GameObject CreatePhaseUi;
+
+    [SerializeField]
+    private GameObject ModifyPhaseUi;
 
     [SerializeField]
     private GameObject ActiveUi;
@@ -42,28 +46,34 @@ public class Dispatcher : MonoBehaviour {
 
     [SerializeField]
     private GameObject EditVisualCardUi;
-
+    [SerializeField]
+    private GameObject OverViewUi;
     [SerializeField]
     private GameObject NewRessourceUi;
+    [SerializeField]
+    private GameObject CreateRuleUi;
     private Dictionary<string, GameObject> UiMap;
 	// Use this for initialization
 	void Start () {
         UiMap = new Dictionary<string, GameObject>();
         UiMap["LoginUi"] = LoginUi;
         UiMap["HomeUi"] = HomeUi;
-        UiMap["NewProjUi"] = NewProjUi;
-        UiMap["DescProjUi"] = DescProjUi;
-        UiMap["OverviewProjUi"] = OverviewProjUi;
+        UiMap["NewProjUi"] =  NewProjUi;
+        // UiMap["DescProjUi"] =   Instantiate(DescProjUi) as GameObject;
+        UiMap["ModifyPhaseUi"] = ModifyPhaseUi;
+        UiMap["CreatePhaseUi"] =  CreatePhaseUi;
         UiMap["ProjectListUi"] = ProjectListUi;
-        UiMap["ModifyProjectUi"] = ModifyProjectUi;
-        UiMap["RessourceListUi"] = RessourceListUi;
+        UiMap["ModifyProjectUi"] =  ModifyProjectUi;
+       // UiMap["RessourceListUi"] =   Instantiate(RessourceListUi) as GameObject; 
         UiMap["ModifyRessourceUi"] = ModifyRessourceUi;
         UiMap["CardListUi"] = CardListUi;
-        UiMap["ModifyCardUi"] = ModifyCardUi;
+        UiMap["ModifyCardUi"] =  ModifyCardUi;
         UiMap["EditVisualCardUi"] = EditVisualCardUi;
-        UiMap["NewRessourceUi"] = NewRessourceUi;
-
-       dispatch("LoginUi", "LoginController", new Dictionary<string, string>());
+        UiMap["NewRessourceUi"] =  NewRessourceUi;
+        UiMap["OverviewProjUi"] =  OverViewUi;
+        UiMap["CreateRuleUi"] = CreateRuleUi;
+       
+        dispatch("LoginUi", "LoginController", new Dictionary<string, string>());
         //dispatch("NewProjUi", "NewProjController", new List<string>());
 
     }
@@ -78,12 +88,23 @@ public class Dispatcher : MonoBehaviour {
 
     public void dispatch(string UiName, string UiScript, Dictionary<string,string> param)
     {
+     /*   Dictionary<string, string[]> l = new Dictionary<string, string[]>();
+        string[] d = new string[7];
+        d[0] = "prolo";
+        d[1] = "smic";
+        l.Add("khey", d);
+        
+        print();*/
         if (ActiveUi)
-            Destroy(ActiveUi);
-        /*ActiveUi = GameObject.FindGameObjectWithTag("active");
-        Destroy(ActiveUi);*/
-        ActiveUi = Instantiate(UiMap[UiName]) as GameObject;
-        ActiveUi.tag = "active";
+        {
+                Destroy(ActiveUi);
+        }
+      
+            ActiveUi = Instantiate(UiMap[UiName]) as GameObject;
+            ActiveUi.tag = "active";
+            ActiveUi.transform.SetParent(gameObject.transform, false);
+        
+        
         BasicController UiController = ActiveUi.GetComponent(UiScript) as BasicController;
         UiController.setParams(param);
         UiController.apply();

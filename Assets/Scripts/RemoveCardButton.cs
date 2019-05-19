@@ -33,17 +33,23 @@ public class RemoveCardButton : MonoBehaviour {
         projectId = id;
     }
 
+    void callDispatcher(string json)
+    {
+        print("call");
+        ButtonListener but = gameObject.GetComponent<ButtonListener>();
+        but.addParam("project_id", projectId);
+        but.addParam("id", projectId);
+        but.SendToDispatch();
+    }
+
+
     void click()
     {
         model = GameObject.Find("ModelCard");
         ModelCard modelScr = model.GetComponent<ModelCard>();
 
-        modelScr.removeElem(idToRemove);
-        print(projectId);
-        
-        ButtonListener but = gameObject.GetComponent<ButtonListener>();
-        but.addParam("project_id", projectId);
-        but.addParam("id", projectId);
-        but.SendToDispatch();
+        modelScr.removeElem(idToRemove, callDispatcher);
+    
+       
     }
 }

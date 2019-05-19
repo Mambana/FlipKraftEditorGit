@@ -60,7 +60,6 @@ public class LoginButton : MonoBehaviour
         data.updateData("id", "1");
         data.updateData("api_address", apiAdress);
         data.updateData("pwd", pswd);
-        print(pswd);
         api.request(null, "/api/project", "GET", applyInResponseServer);
     }
 }

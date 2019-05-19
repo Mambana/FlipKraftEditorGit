@@ -23,20 +23,26 @@ public class ModelRessource : MonoBehaviour {
         return JsonConvert.DeserializeObject<T>(json);
     }
 
-    public void addCollections(string name, string desc, string projectId, Action<string> callback)
+    public void addCollections(string name, string desc, string projectId,  Action<string> callback, string imgId = "0", string playerVal = "0")
     {
         Dictionary<string, string> toAdd = new Dictionary<string, string>();
 
         toAdd.Add("name", name);
         toAdd.Add("description", desc);
         toAdd.Add("fk_id_project", projectId);
+        toAdd.Add("img_id", imgId);
+        toAdd.Add("player_value", playerVal);
         api.request(toAdd, "/api/ressource", "POST", callback);
         
     }
 
-    public void find(int id, Action<string> callback)
+    public void find(int id, Action<string> callback, Action<string, GameObject> callOnObject = null, GameObject obj = null)
     {
-      api.request(null, "/api/ressource/" + id.ToString() + "/", "GET", callback);  
+        if (callOnObject == null)
+         api.request(null, "/api/ressource/" + id.ToString() + "/", "GET", callback);
+        else
+            api.request(null, "/api/ressource/" + id.ToString() + "/", "GET", null ,callOnObject, obj);
+
     }
 
 
@@ -61,8 +67,8 @@ public class ModelRessource : MonoBehaviour {
         api.request(toAdd, "/api/ressource/" + id + "/", "PUT", callback);
     }
 
-    public void removeElem(int id)
+    public void removeElem(int id, Action<string> callback)
     {
-        api.request(null, "/api/ressource/" + id.ToString() + "/", "DELETE", null);
+        api.request(null, "/api/ressource/" + id.ToString() + "/", "DELETE", callback);
     }
 }

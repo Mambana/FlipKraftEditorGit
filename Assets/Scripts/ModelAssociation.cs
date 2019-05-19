@@ -88,11 +88,11 @@ public class ModelAssociation : MonoBehaviour
         toAdd.Add("fk_id_ressource", ressourceId);
         toAdd.Add("posX", posX);
         toAdd.Add("posY", posY);
-        api.request(toAdd, "/api/card/association/"+assocId.ToString(), "PUT", null);
+        api.request(toAdd, "/api/card/association/"+assocId.ToString() + "/", "PUT", null);
     }
 
     public void removeElem(int id)
     {
-        api.request(null, "/api/card/association/" + id.ToString() , "DELETE", null);
+        api.request(null, "/api/card/association/" + id.ToString() +"/", "DELETE", null);
     }
 }

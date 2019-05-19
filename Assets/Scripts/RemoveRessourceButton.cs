@@ -30,16 +30,22 @@ public class RemoveRessourceButton : MonoBehaviour {
         projectId = id;
     }
 
+    void callDispatcher(string json)
+    {
+        
+        ButtonListener but = gameObject.GetComponent<ButtonListener>();
+        but.addParam("project_id", projectId);
+        but.addParam("id", projectId);
+        but.SendToDispatch();
+    }
+
     void click()
     {
         model = GameObject.Find("ModelRessource");
         ModelRessource modelScr = model.GetComponent<ModelRessource>();
 
-        modelScr.removeElem(idToRemove);
+        modelScr.removeElem(idToRemove, callDispatcher);
 
-        ButtonListener but = gameObject.GetComponent<ButtonListener>();
-        but.addParam("project_id", projectId);
-        but.addParam("id", projectId);
-        but.SendToDispatch();
+     
     }
 }

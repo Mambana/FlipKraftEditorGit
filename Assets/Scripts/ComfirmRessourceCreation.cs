@@ -10,17 +10,21 @@ public class ComfirmRessourceCreation : MonoBehaviour
     // Use this for initialization
     int idToModify;
     string projectId;
+    int imgId;
     GameObject model;
     [SerializeField]
     GameObject inputName;
     [SerializeField]
     GameObject inputDesc;
+    [SerializeField]
+    private GameObject ressourceImage;
+    private ImageHandler imageHandler;
 
 
     void Start()
     {
         gameObject.GetComponent<Button>().onClick.AddListener(click);
-
+        imageHandler = GameObject.Find("ImageHandler").GetComponent<ImageHandler>();
     }
 
     // Update is called once per frame
@@ -39,6 +43,11 @@ public class ComfirmRessourceCreation : MonoBehaviour
         projectId = id;
     }
 
+    public void setImageId(int id)
+    {
+        imgId = id;
+    }
+
     public static T DeserializeJson<T>(string json)
     {
         return JsonConvert.DeserializeObject<T>(json);
@@ -46,10 +55,14 @@ public class ComfirmRessourceCreation : MonoBehaviour
 
     public void applyInServerResponse(string json)
     {
+        model = GameObject.Find("ModelRessource");
+        ModelRessource modelScr = model.GetComponent<ModelRessource>();
         Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(json);
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
         but.addParam("id", projectId);
         but.addParam("project_id", projectId);
+        print(modelScr.getNbElement());
+       
         but.SendToDispatch();
     }
 
@@ -60,7 +73,7 @@ public class ComfirmRessourceCreation : MonoBehaviour
         string name = inputName.GetComponent<TMP_InputField>().text;
         string desc = inputDesc.GetComponent<TMP_InputField>().text;
 
-        modelScr.addCollections(name, desc, projectId.ToString(), applyInServerResponse);
+        modelScr.addCollections(name, desc, projectId.ToString(), applyInServerResponse, imgId.ToString());
       
     }
 }

@@ -13,6 +13,8 @@ public class ProjectListController : BasicController {
     GameObject elemInList;
     [SerializeField]
     GameObject listOfProj;
+    [SerializeField]
+    List<GameObject> buttonList;
 	// Use this for initialization
 	void Start () {
      
@@ -33,9 +35,14 @@ public class ProjectListController : BasicController {
         Dictionary<int, Dictionary<string, string>> allProj = new Dictionary<int, Dictionary<string, string>>();
         List<object> respList = DeserializeJson<List<object>>(json);
         int i = 0;
+        foreach (GameObject button in buttonList)
+        {           
+                Destroy(button);
+        }
+        buttonList.Clear();
+        allProj.Clear();
         foreach (object obj in respList)
         {
-            print(obj.ToString());
             Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(obj.ToString());
             Dictionary<string, string> projectData = new Dictionary<string, string>();
 
@@ -52,13 +59,11 @@ public class ProjectListController : BasicController {
        
         foreach (KeyValuePair<int, Dictionary<string, string>> project in allProj)
         {
-            print(project);
             GameObject toAdd = Instantiate(elemInList) as GameObject;
-            print(project.Value["name"]);
-            print(project.Value["description"]);
             toAdd.transform.Find("ProjName").GetComponent<TextMeshProUGUI>().text = project.Value["name"];
             toAdd.transform.Find("ProjDesc").GetComponent<TextMeshProUGUI>().text = project.Value["description"];
             toAdd.GetComponent<ProjectButton>().setIdOnString(project.Value["id"]);
+            buttonList.Add(toAdd);
             if (listOfProj)
                 toAdd.transform.SetParent(listOfProj.transform, false);
            
