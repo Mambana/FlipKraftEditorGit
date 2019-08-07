@@ -17,6 +17,10 @@ public class ConfirmModifyButton : MonoBehaviour {
     GameObject inputMax;
     [SerializeField]
     GameObject inputDesc;
+    [SerializeField]
+    GameObject turnToggle;
+    [SerializeField]
+    GameObject asyncToggle;
 
     void Start () {
         gameObject.GetComponent<Button>().onClick.AddListener(click);
@@ -47,8 +51,15 @@ public class ConfirmModifyButton : MonoBehaviour {
         string min = inputMin.GetComponent<TMP_InputField>().text;
         string max = inputMax.GetComponent<TMP_InputField>().text;
         string desc = inputDesc.GetComponent<TMP_InputField>().text;
+        string turn_game = "false";
+        string async_game = "false";
+        print(turnToggle.GetComponent<Toggle>().isOn);
+        if (turnToggle.GetComponent<Toggle>().isOn)
+            turn_game = "true";
+        if (asyncToggle.GetComponent<Toggle>().isOn)
+            async_game = "true";
         print(idToModify+ " " + name + " " + min);
-        modelScr.updateField(idToModify.ToString(), name, min, max, desc, CallDispatcher);
+        modelScr.updateField(idToModify.ToString(), name, min, max, desc, CallDispatcher, async_game, turn_game);
        
     }
 }

@@ -34,6 +34,11 @@ public class ButtonSetArraySelection : MonoBehaviour
         }
     }
 
+    public void setSelectedList(List<string> selection)
+    {
+        toSend = selection;
+    }
+
     public void setSelection()
     {
         clearContent();
@@ -41,9 +46,11 @@ public class ButtonSetArraySelection : MonoBehaviour
         {
             GameObject t = Instantiate(m_toggle) as GameObject;          
             Toggle toggle = t.GetComponent<Toggle>();
-       
+
+            if (toSend.Where(x => x.Contains(elem)).FirstOrDefault() == null)
+                toggle.isOn = false;
             t.GetComponentInChildren<Text>().text = elem;
-            toggle.isOn = false;
+         
             toggle.onValueChanged.AddListener(delegate
             {
                 string togString = toggle.GetComponentInChildren<Text>().text;

@@ -24,13 +24,13 @@ public class ModelTest : MonoBehaviour {
     }
 
     public void addCollections(string name, string min, string max,
-        string desc, string nb_card, string nb_re, Action<string> call)
+        string desc, string nb_card, string nb_re,Action<string> call, string async = "false", string turn = "false")
     {
         Dictionary<string, string> toAdd = new Dictionary<string, string>();
 
         toAdd.Add("name", name);
-        toAdd.Add("async_game", "0");
-        toAdd.Add("turn_game", "1");
+        toAdd.Add("async_game", async);
+        toAdd.Add("turn_game", turn);
         toAdd.Add("min_player", min);
         toAdd.Add("max_player", max);
         toAdd.Add("description", desc);
@@ -56,13 +56,13 @@ public class ModelTest : MonoBehaviour {
     }
 
     public void updateField(string id, string name, string min, string max,
-        string desc, Action<string> callback = null)
+        string desc, Action<string> callback = null, string async = "false", string turn = "false")
     {
         Dictionary<string, string> toAdd = new Dictionary<string, string>();
 
         toAdd.Add("name", name);
-        toAdd.Add("async_game", "0");
-        toAdd.Add("turn_game", "1");
+        toAdd.Add("async_game", async);
+        toAdd.Add("turn_game", turn);
         toAdd.Add("min_player", min);
         toAdd.Add("max_player", max);
         toAdd.Add("description", desc);

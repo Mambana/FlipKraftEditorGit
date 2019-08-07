@@ -7,6 +7,19 @@ using System.Net;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.Experimental.Networking;
+
+public class cardRules
+{
+    public string name;
+    public string description;
+    public string[] signals;
+    public string[] var_type;
+    public string[] instructions;
+    public string[] variables;
+    public string[] var_description;
+    public string priority;
+}
 
 public class apiConnection : MonoBehaviour
 {
@@ -21,6 +34,12 @@ public class apiConnection : MonoBehaviour
     void Update()
     {
         
+    }
+
+
+    public static T DeserializeJson<T>(string json)
+    {
+        return JsonConvert.DeserializeObject<T>(json);
     }
 
     IEnumerator getRequest(string route, Action<string> call, Action<string, GameObject> callOnObject = null, GameObject obj = null)
@@ -78,10 +97,46 @@ public class apiConnection : MonoBehaviour
         }
     }
 
-    IEnumerator putRequest(string route, Dictionary<string, string> fields, Action<string> call)
+    string[] parseJsonArray(string json)
+    {
+        List<object> objs = DeserializeJson<List<object>>(json);
+        List<string> strs = new List<string>();
+        foreach(object ob in objs)
+        {
+            strs.Add(ob.ToString());
+        }
+
+        return (strs.ToArray());
+    }
+
+    string parseDictionary(Dictionary<string, string> dic)
+    {
+        cardRules rule = new cardRules();
+        rule.name = dic["name"];
+        rule.description = dic["description"];
+        print(rule.description);
+        rule.signals = parseJsonArray(dic["signals"]);
+        rule.variables = parseJsonArray(dic["variables"]);
+        rule.var_type = parseJsonArray(dic["var_type"]);
+        rule.instructions = parseJsonArray(dic["instructions"]);
+        rule.var_description = parseJsonArray(dic["var_description"]);
+        rule.priority = dic["priority"];
+        return (JsonConvert.SerializeObject(rule, Formatting.Indented));
+    }
+
+    IEnumerator putRequest(string route, Dictionary<string, string> fields, Action<string> call, bool askParse = false)
     {
         string authorization = authenticate(scrData.access("email"), scrData.access("pwd"));
         string json =  JsonConvert.SerializeObject(fields, Formatting.Indented);
+
+
+        if (askParse)
+        {
+            json = parseDictionary(fields);
+        }
+
+
+        
 
         print(json);
         using (UnityWebRequest www = UnityWebRequest.Put(scrData.access("api_address") + route, json))
@@ -135,14 +190,14 @@ public class apiConnection : MonoBehaviour
     }
 
     public void request(Dictionary<string, string> toAdd, string route, string method,
-        Action<string> call = null, Action<string, GameObject> callOnObject = null, GameObject obj = null)
+        Action<string> call = null, Action<string, GameObject> callOnObject = null, GameObject obj = null, bool askParse = false)
     {
         if (method.Equals("GET"))
             StartCoroutine(getRequest(route, call, callOnObject, obj));
         if (method.Equals("POST"))
             StartCoroutine(postRequest(route, toAdd,call));
         if (method.Equals("PUT"))
-            StartCoroutine(putRequest(route, toAdd, call));
+            StartCoroutine(putRequest(route, toAdd, call, askParse));
         if (method.Equals("DELETE"))
             StartCoroutine(deleteRequest(route,call));
      

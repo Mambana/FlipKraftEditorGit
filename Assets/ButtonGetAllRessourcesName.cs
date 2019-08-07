@@ -19,9 +19,7 @@ public class ButtonGetAllRessourcesName : MonoBehaviour
     {
         toSend = new List<string>();
         stringList = new List<string>();
-        ModelRessource modelRes = GameObject.Find("ModelRessource").GetComponent<ModelRessource>();
-        
-        modelRes.getAll(projectId.ToString(), applyinResponse);
+       
     }
 
     // Update is called once per frame
@@ -37,6 +35,7 @@ public class ButtonGetAllRessourcesName : MonoBehaviour
 
     public void applyinResponse(string json)
     {
+        print(json);
         Dictionary<int, Dictionary<string, string>> allRessource = new Dictionary<int, Dictionary<string, string>>();
         List<object> respList = DeserializeJson<List<object>>(json);
      
@@ -65,12 +64,13 @@ public class ButtonGetAllRessourcesName : MonoBehaviour
         clearContent();
         foreach (string elem in stringList)
         {
-            print (elem);
             GameObject t = Instantiate(m_toggle) as GameObject;
-            Toggle toggle = t.GetComponent<UnityEngine.UI.Toggle>();
+            Toggle toggle = t.GetComponent<Toggle>();
 
+            if (toSend.Where(x => x.Contains(elem)).FirstOrDefault() == null)
+                toggle.isOn = false;
             t.GetComponentInChildren<Text>().text = elem;
-            toggle.isOn = false;
+
             toggle.onValueChanged.AddListener(delegate
             {
                 string togString = toggle.GetComponentInChildren<Text>().text;
@@ -84,15 +84,25 @@ public class ButtonGetAllRessourcesName : MonoBehaviour
             });
             t.transform.SetParent(objList.transform, false);
         }
+
+
     }
 
     public void setProjectId(int id)
     {
         projectId = id;
+        ModelRessource modelRes = GameObject.Find("ModelRessource").GetComponent<ModelRessource>();
+
+        modelRes.getAll(projectId.ToString(), applyinResponse);
     }
 
     public List<string> getSelectedList()
     {
         return (toSend);
+    }
+
+    public void setSelectedList(List<string> l)
+    {
+        toSend = l;
     }
 }

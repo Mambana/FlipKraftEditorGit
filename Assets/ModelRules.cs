@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Newtonsoft.Json;
+using System.Linq;
 
 public class ModelRules : MonoBehaviour
 {
@@ -45,9 +46,9 @@ public class ModelRules : MonoBehaviour
 
     }
 
-    public void find(int id, Action<string> callback)
+    public void find(int id, int projectId,  Action<string> callback)
     {
-        api.request(null, "/api/rule/" + id.ToString() + "/", "GET", callback);
+        api.request(null, "/api/project/" +projectId.ToString()+ "/pack/"+ id.ToString() + "/", "GET", callback);
     }
 
 
@@ -58,24 +59,39 @@ public class ModelRules : MonoBehaviour
 
     public void getAll(string id, Action<string> callback)
     {
-        api.request(null, "/api/rule" + "?id=" + id, "GET", callback);
+        api.request(null, "/api/project/" + id + "/pack", "GET", callback);
 
     }
 
-    public void updateField(string id, string projectId, string name, string desc, string priority, Action<string> callback = null)
+    public string epurJson(string json)
+    {
+        print(json);
+        string epur = json.Replace("\\", "");
+        epur = epur.Substring(1, epur.Length - 2);
+        //print(epur);
+        return (epur);
+    }
+
+    public void updateField(string id, string projectId, string name, string desc, string[] signal,
+        string[] var_type, string[] instruction, string[] variables, string[] var_description,
+        string priority,
+        Action<string> callback)
     {
         Dictionary<string, string> toAdd = new Dictionary<string, string>();
-
+        print(projectId);
         toAdd.Add("name", name);
         toAdd.Add("description", desc);
-        toAdd.Add("fk_id_project", projectId);
+        toAdd.Add("signals",  JsonConvert.SerializeObject(signal.Select(x => x.Replace("\r\n", "")).ToArray(), Formatting.None) );
+        toAdd.Add("var_type", JsonConvert.SerializeObject(var_type.Select(x => x.Replace("\r\n", "")).ToArray(), Formatting.None));
+        toAdd.Add("instructions", JsonConvert.SerializeObject(instruction.Select(x => x.Replace("\r\n", "")).ToArray(), Formatting.None));
+        toAdd.Add("variables", JsonConvert.SerializeObject(variables.Select(x => x.Replace("\r\n", "")).ToArray(), Formatting.None));
+        toAdd.Add("var_description", JsonConvert.SerializeObject(var_description, Formatting.None));
         toAdd.Add("priority", priority);
-        toAdd.Add("playable", "true");
-        api.request(toAdd, "/api/phase/" + id + "/", "PUT", callback);
+        api.request(toAdd, "/api/project/" + projectId + "/pack/" + id + "/", "PUT", callback, null, null, true);
     }
 
-    public void removeElem(int id, Action<string> callback)
+    public void removeElem(int id, int projectId, Action<string> callback)
     {
-        api.request(null, "/api/phase/" + id.ToString() + "/", "DELETE", callback);
+        api.request(null, "/api/project/"+ projectId.ToString() +"/pack/" + id.ToString() + "/", "DELETE", callback);
     }
 }

@@ -45,6 +45,8 @@ public class OverviewController : BasicController
     [SerializeField]
     GameObject createRuleBut;
     [SerializeField]
+    GameObject rulesListBut;
+    [SerializeField]
     GameObject newResBut;
     [SerializeField]
     GameObject elemInList;
@@ -62,6 +64,10 @@ public class OverviewController : BasicController
     
     List<GameObject> ressources;
     List<GameObject> phases;
+    [SerializeField]
+    GameObject asyncToggle;
+    [SerializeField]
+    GameObject turnToggle;
     // Use this for initialization
     void Start () {
         ressources = new List<GameObject>();
@@ -113,6 +119,15 @@ public class OverviewController : BasicController
         min.GetComponent<TMP_InputField>().text = " " + projectData["min_player"];
         max.GetComponent<TMP_InputField>().text = " " + projectData["max_player"];
         desc.GetComponent<TMP_InputField>().text = " " + projectData["description"];
+
+        if (projectData["async_game"].Equals("True"))
+            asyncToggle.GetComponent<Toggle>().isOn = true;
+        else
+            asyncToggle.GetComponent<Toggle>().isOn = false;
+        if (projectData["turn_game"].Equals("True"))
+            turnToggle.GetComponent<Toggle>().isOn = true;
+        else
+            turnToggle.GetComponent<Toggle>().isOn = false;
     }
 
     public void applyForCards(string json)
@@ -171,7 +186,6 @@ public class OverviewController : BasicController
             toAddScr.setIdToModify(project.Value["id"]);
             toAddScr.setProjectId(project.Value["fk_id_project"]);
             toAdd.transform.SetParent(listOfRess.transform, false);
-            print(int.Parse(project.Value["img_id"]));
             toAdd.GetComponent<Image>().sprite = imgHandler.GetSprite(int.Parse(project.Value["img_id"]));
          //   ressources.Add(toAdd);
         }
@@ -227,7 +241,7 @@ public class OverviewController : BasicController
         ModelCards = GameObject.Find("ModelCard");
 
         foreach (KeyValuePair< string, string> arg in args)
-         print(arg.Value + " " + arg.Key);
+         
         id = int.Parse(args["id"]);      
         Model = GameObject.Find("Model");
         newResBut.GetComponent<CreateRessourceButton>().setProjectId(id);
@@ -235,6 +249,7 @@ public class OverviewController : BasicController
         updateProj.GetComponent<ConfirmModifyButton>().setIdToModify(id);
         createCardBut.GetComponent<CreateCardButton>().setProjectId(id);
         createRuleBut.GetComponent<CreateCardButton>().setProjectId(id);
+        rulesListBut.GetComponent<RessourceListButton>().setCurrentProjectId(id);
         ModelTest ModelScript = Model.GetComponent<ModelTest>();
         ModelScript.find(id, applyInServerResponse);
         ModelCard modelCardScript = ModelCards.GetComponent<ModelCard>();

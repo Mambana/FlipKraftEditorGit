@@ -18,7 +18,7 @@ public class ValidateInputValueButton : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField]
     private GameObject inputValue;
-
+    private ConfirmVisualCard confirmScr;
     private GameObject model;
     private GameObject valueText;
     private string projectId;
@@ -30,6 +30,7 @@ public class ValidateInputValueButton : MonoBehaviour
 
     void Start()
     {
+        confirmScr = GameObject.Find("Validate").GetComponent<ConfirmVisualCard>();
         gameObject.GetComponent<Button>().onClick.AddListener(click);
         model = GameObject.Find("ModelAssociation");
     }
@@ -43,7 +44,8 @@ public class ValidateInputValueButton : MonoBehaviour
     void click()
     {
         string value = inputValue.GetComponent<TMP_InputField>().text;
-        ModelAssociation modelScr = model.GetComponent<ModelAssociation>();
+        confirmScr.addAssocToModify(projectId, cardId, ressourceId, posX, posY, value, assocId);
+        /*ModelAssociation modelScr = model.GetComponent<ModelAssociation>();
         if (assocId == null)
             modelScr.addCollections(value, projectId, cardId, ressourceId, 
                 posX,
@@ -51,7 +53,7 @@ public class ValidateInputValueButton : MonoBehaviour
         else
             modelScr.updateField(assocId, value, projectId, cardId, ressourceId,
                posX,
-               posY);
+               posY);*/
         valueText.GetComponent<TextMeshProUGUI>().text = value;
         Destroy(inputValue);
     }

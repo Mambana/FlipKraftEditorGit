@@ -10,6 +10,7 @@ public class ModifyVisualCardController : BasicController
     int projectId;
     int cardId;
 
+    
     ImageHandler imageHandler;
 
     [SerializeField]
@@ -38,10 +39,18 @@ public class ModifyVisualCardController : BasicController
 
     [SerializeField]
     GameObject imgHandler;
+
+    [SerializeField]
+    GameObject createRuleButton;
+
+    [SerializeField]
+    GameObject RulesListButton;
     // Start is called before the first frame update
+   
     List<object> lastAssoc;
     void Start()
     {
+       
         //listOfProj = GameObject.FindWithTag("Container");
         imageHandler = GameObject.Find("ImageHandler").GetComponent<ImageHandler>();
     }
@@ -59,11 +68,12 @@ public class ModifyVisualCardController : BasicController
 
     public void setRessourceOnCardSprite(string json, GameObject obj)
     {
-        print(json);
+   
         Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(json);
         ImageHandler imgHandlerScr = imageHandler.GetComponent<ImageHandler>();
-        print(resp["img_id"]);
-        obj.GetComponent<Image>().sprite = imgHandlerScr.GetSprite(int.Parse(resp["img_id"].ToString()));
+    
+        if (obj != null)
+            obj.GetComponent<Image>().sprite = imgHandlerScr.GetSprite(int.Parse(resp["img_id"].ToString()));
         
     }
 
@@ -107,8 +117,6 @@ public class ModifyVisualCardController : BasicController
             dragableScr.setValue(int.Parse(assoc.Value["value"]));
             dragableScr.setLinked(true);
             dragable.transform.SetParent(cardVisual.transform, false);
-            print(assoc.Value["posX"]);
-            print(assoc.Value["posY"]);
             modelResScr.find(int.Parse(assoc.Value["fk_id_ressource"]), null ,setRessourceOnCardSprite, dragable);
             dragableScr.setPosition(float.Parse(assoc.Value["posX"]), float.Parse(assoc.Value["posY"]));
 
@@ -176,5 +184,14 @@ public class ModifyVisualCardController : BasicController
         RemoveCardButton rmScr = removeButton.GetComponent<RemoveCardButton>();
         rmScr.setIdToRemove(cardId);
         rmScr.setProjectId(projectId.ToString());
-      }
+
+ 
+        createRuleButton.GetComponent<CreateCardButton>().setIdToModify(cardId);
+        createRuleButton.GetComponent<CreateCardButton>().setProjectId(projectId);
+        RulesListButton.GetComponent<CreateCardButton>().setIdToModify(cardId);
+        RulesListButton.GetComponent<CreateCardButton>().setProjectId(projectId);
+
+    }
+
+  
 }

@@ -49,6 +49,7 @@ public class ModifyCardController : BasicController {
         butScr.setProjectId(args["project_id"]);
         CancelRessourceCreation cancel = removeButton.GetComponent<CancelRessourceCreation>();
         cancel.setProjectId(args["project_id"]);
+        cancel.setRessourceId(args["project_id"]);
        
 
     }

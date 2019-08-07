@@ -102,7 +102,7 @@ public class DragAndDrop : MonoBehaviour
                 scr.prepareAction(projectId.ToString(), cardId.ToString(), ressourceId.ToString(),
                 gameObject.transform.localPosition.x.ToString(),
                 gameObject.transform.localPosition.y.ToString(), valueText);
-                assocId = modelScr.getNbElement();
+               // assocId = modelScr.getNbElement();
                
                 
                 dragged = false;

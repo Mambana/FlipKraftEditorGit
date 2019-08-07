@@ -7,6 +7,7 @@ public class CancelRessourceCreation : MonoBehaviour
 {
     
     string projectId;
+    string id;
     GameObject model;
 
     void Start()
@@ -25,12 +26,17 @@ public class CancelRessourceCreation : MonoBehaviour
         projectId = id;
     }
 
+    public void setRessourceId(string _id)
+    {
+        id = _id;
+    }
+
     void click()
     {
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
 
         but.addParam("project_id", projectId);
-        but.addParam("id", projectId);
+        but.addParam("id", id);
         but.SendToDispatch();
     }
 }

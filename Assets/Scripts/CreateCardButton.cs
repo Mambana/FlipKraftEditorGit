@@ -40,6 +40,7 @@ public class CreateCardButton : MonoBehaviour {
       //  ModelScr.addCollections("ENTER new card name", "ENTER new description", projectId.ToString());
       //  but.addParam("id", (ModelScr.getNbElement()).ToString());
         but.addParam("project_id", projectId.ToString());
+        but.addParam("card_id", idToModify.ToString());
         but.SendToDispatch();
     }
 }

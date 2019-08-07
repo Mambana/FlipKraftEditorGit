@@ -30,5 +30,6 @@ public class CreateRuleController : BasicController
         butScr.setProjectId(id);
         confirmButton.GetComponent<ConfirmRuleCreationButton>().setProjectId(id.ToString());
         cancelButton.GetComponent<CancelRessourceCreation>().setProjectId(id.ToString());
+        cancelButton.GetComponent<CancelRessourceCreation>().setRessourceId(id.ToString());
     }
 }
