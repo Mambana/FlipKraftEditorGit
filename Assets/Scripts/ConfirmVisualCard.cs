@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Newtonsoft.Json;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -16,6 +17,7 @@ public class ConfirmVisualCard : MonoBehaviour
     GameObject inputName;
     [SerializeField]
     GameObject inputDesc;
+    [SerializeField]
     private List<Dictionary<string, string>> assocListToModify;
 
     public void addAssocToModify(string pId, string cId, string rId, string pX, string pY, string val, string aId = null)
@@ -54,7 +56,10 @@ public class ConfirmVisualCard : MonoBehaviour
         projectId = id;
     }
 
-
+    public static T DeserializeJson<T>(string json)
+    {
+        return JsonConvert.DeserializeObject<T>(json);
+    }
 
     void CallDispatcher(string json)
     {
@@ -65,24 +70,27 @@ public class ConfirmVisualCard : MonoBehaviour
         but.SendToDispatch();
     }
 
-    void sendList()
+    void sendList(string json)
     {
         print("sending list...");
         modelAssoc = GameObject.Find("ModelAssociation");
         ModelAssociation modelScr = modelAssoc.GetComponent<ModelAssociation>();
+        Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(json);
+        string cid = resp["id"].ToString();
         foreach (Dictionary<string,string> l in assocListToModify)
         {
             print("sending e..");
             print(l["posX"]);
          if (l["assoc_id"] == null)
-          modelScr.addCollections(l["value"], l["project_id"], l["card_id"], l["ressource_id"], 
+          modelScr.addCollections(l["value"], l["project_id"], cid, l["ressource_id"], 
               l["posX"],
               l["posY"]);
         else
-          modelScr.updateField(l["assoc_id"], l["value"], l["project_id"], l["card_id"], l["ressource_id"],
+          modelScr.updateField(l["assoc_id"], l["value"], l["project_id"], cid, l["ressource_id"],
               l["posX"],
               l["posY"]);
         }
+        CallDispatcher(json);
     }
 
     void click()
@@ -91,8 +99,11 @@ public class ConfirmVisualCard : MonoBehaviour
         ModelCard modelScr = model.GetComponent<ModelCard>();
         string name = inputName.GetComponent<TMP_InputField>().text;
         string desc = inputDesc.GetComponent<TMP_InputField>().text;
-        sendList();
-        modelScr.updateField(idToModify.ToString(), name, desc, projectId, CallDispatcher);
+        if (idToModify == -1)
+            modelScr.addCollections(name, desc, projectId, sendList);
+        modelScr.updateField(idToModify.ToString(), name, desc, projectId, sendList);
+        
+      
      
     }
 }
