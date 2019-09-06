@@ -14,12 +14,13 @@ public class ConfirmModifyRessource : MonoBehaviour {
     GameObject inputName;
     [SerializeField]
     GameObject inputDesc;
-
+    ImageHandler imageHandler;
+    int imgId;
   
     void Start()
     {
         gameObject.GetComponent<Button>().onClick.AddListener(click);
-
+        imageHandler = GameObject.Find("ImageHandler").GetComponent<ImageHandler>();
     }
 
     // Update is called once per frame
@@ -31,6 +32,11 @@ public class ConfirmModifyRessource : MonoBehaviour {
     public void setIdToModify(int id)
     {
         idToModify = id;
+    }
+
+    public void setImageId(int id)
+    {
+        imgId = id;
     }
 
     public void setProjectId(string id)
@@ -52,7 +58,7 @@ public class ConfirmModifyRessource : MonoBehaviour {
         ModelRessource modelScr = model.GetComponent<ModelRessource>();
         string name = inputName.GetComponent<TMP_InputField>().text;
         string desc = inputDesc.GetComponent<TMP_InputField>().text;
-        modelScr.updateField(idToModify.ToString(), projectId, name, desc, CallDispatcher);
+        modelScr.updateField(idToModify.ToString(), projectId, name, desc, imgId.ToString(), CallDispatcher);
         
     }
 }

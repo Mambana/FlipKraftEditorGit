@@ -126,11 +126,17 @@ namespace UnityEngine.UI.Extensions
                 CancelDrag();
                 return;
             }
+
+
+
             //Set dragging object on cursor
-            var canvas = _draggingObject.GetComponentInParent<Canvas>();
+            var canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
             Vector3 worldPoint;
+            print(_draggingObject);
             RectTransformUtility.ScreenPointToWorldPointInRectangle(canvas.GetComponent<RectTransform>(), eventData.position,
                 canvas.worldCamera, out worldPoint);
+            worldPoint.z = 0;
+           
             _draggingObject.position = worldPoint;
 
             //Check everything under the cursor to find a ReorderableList
@@ -222,6 +228,7 @@ namespace UnityEngine.UI.Extensions
                     }
                     RefreshSizes();
                     _draggingObject.SetParent(_currentReorderableListRaycasted.Content, false);
+                    
                     _draggingObject.rotation = _currentReorderableListRaycasted.transform.rotation;
                     _draggingObject.SetSiblingIndex(_fakeElement.GetSiblingIndex());
 
@@ -302,7 +309,7 @@ namespace UnityEngine.UI.Extensions
         private void RefreshSizes()
         {
             Vector2 size = _draggingObjectOriginalSize;
-
+            Vector3 scale = new Vector3(1, 1, 1);
             //if (_currentReorderableListRaycasted != null && _currentReorderableListRaycasted.IsDropable && _currentReorderableListRaycasted.Content.childCount > 0)
             //{
             //    var firstChild = _currentReorderableListRaycasted.Content.GetChild(0);
@@ -312,9 +319,12 @@ namespace UnityEngine.UI.Extensions
             //    }
             //}
 
+            gameObject.GetComponent<RectTransform>().sizeDelta = size;
+            gameObject.GetComponent<RectTransform>().localScale = scale;
             _draggingObject.sizeDelta = size;
             _fakeElementLE.preferredHeight = _draggingObjectLE.preferredHeight = size.y;
             _fakeElementLE.preferredWidth = _draggingObjectLE.preferredWidth = size.x;
+            
         }
 
         public void Init(ReorderableList reorderableList)

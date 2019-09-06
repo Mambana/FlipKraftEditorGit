@@ -10,6 +10,13 @@ public class PhaseItemUI : MonoBehaviour, IPointerClickHandler
     public PhasesHandler PhaseHandler { get; set; }
     public RectTransform RectTransform { get; private set; }
 
+    void Start()
+    {
+
+        //listOfProj = GameObject.FindWithTag("Container");
+        PhaseHandler = GameObject.Find("Phases").GetComponent<PhasesHandler>();
+    }
+
     private void Awake()
     {
         RectTransform = GetComponent<RectTransform>();
@@ -17,6 +24,7 @@ public class PhaseItemUI : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+       
         PhaseHandler.phaseSelected = int.Parse(indexText.text);
     }
 }

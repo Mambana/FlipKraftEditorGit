@@ -21,11 +21,14 @@ public class ModifyRessourceController : BasicController
     GameObject inputDesc;
     [SerializeField]
     GameObject projRessource;
+    [SerializeField]
+    GameObject ressourceImg;
+    GameObject imageHandler;
 
 
     void Start()
     {
-
+        imageHandler = GameObject.Find("ImageHandler");
     }
 
     // Update is called once per frame
@@ -46,6 +49,9 @@ public class ModifyRessourceController : BasicController
         ressourceData.Add("name", resp["name"].ToString());
         ressourceData.Add("description", resp["description"].ToString());
         ressourceData.Add("fk_id_project", resp["fk_id_project"].ToString());
+        ressourceData.Add("img_id", resp["img_id"].ToString());
+
+        ressourceImg.GetComponent<Image>().sprite = imageHandler.GetComponent<ImageHandler>().GetSprite(int.Parse(ressourceData["img_id"]));
         inputName.GetComponent<TMP_InputField>().text = ressourceData["name"];
         inputDesc.GetComponent<TMP_InputField>().text = ressourceData["description"];
     }

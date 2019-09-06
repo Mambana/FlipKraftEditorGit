@@ -95,6 +95,7 @@ public class ModifyVisualCardController : BasicController
         {
             Dictionary<string, object> assocResp = DeserializeJson<Dictionary<string, object>>(obj.ToString());
             Dictionary<string, string> assoc = new Dictionary<string, string>();
+           
             assoc.Add("id", assocResp["id"].ToString());
             assoc.Add("fk_id_ressource", assocResp["fk_id_ressource"].ToString());
             assoc.Add("fk_id_cards", assocResp["fk_id_cards"].ToString());

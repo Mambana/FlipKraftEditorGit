@@ -57,13 +57,15 @@ public class ModelRessource : MonoBehaviour {
         
     }
 
-    public void updateField(string id, string projectId, string name, string desc, Action<string> callback = null)
+    public void updateField(string id, string projectId, string name, string desc, string imgId, Action<string> callback = null)
     {
         Dictionary<string, string> toAdd = new Dictionary<string, string>();
 
         toAdd.Add("name", name);
         toAdd.Add("description", desc);
         toAdd.Add("fk_id_project", projectId);
+        toAdd.Add("img_id", imgId);
+       
         api.request(toAdd, "/api/ressource/" + id + "/", "PUT", callback);
     }
 

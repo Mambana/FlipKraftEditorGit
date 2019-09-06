@@ -7,14 +7,13 @@ public class ImageSelectionButton : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField]
     private GameObject ressourceImage;
-    private GameObject confirmButton;
-
+    [SerializeField]
     int id;
 
     void Start()
     {
         gameObject.GetComponent<Button>().onClick.AddListener(click);
-        confirmButton = GameObject.Find("ComfirmCreationButton");
+        
     }
 
     // Update is called once per frame
@@ -25,9 +24,20 @@ public class ImageSelectionButton : MonoBehaviour
 
     void click()
     {
+        var confirmButton = GameObject.Find("ComfirmCreationButton");         
         ressourceImage.GetComponent<Image>().sprite = gameObject.GetComponent<Image>().sprite;
-        ComfirmRessourceCreation butScr = confirmButton.GetComponent<ComfirmRessourceCreation>();
-        butScr.setImageId(id);
+        if (confirmButton)
+        {
+            ComfirmRessourceCreation butScr = confirmButton.GetComponent<ComfirmRessourceCreation>();
+            butScr.setImageId(id);
+        }
+        else
+        {
+            confirmButton = GameObject.Find("ComfirmModifyButton");
+            ConfirmModifyRessource butScr = confirmButton.GetComponent<ConfirmModifyRessource>();
+            butScr.setImageId(id);
+
+        }
     }
 
     public void SetRessourceImage(GameObject ressImage, int imgId)
