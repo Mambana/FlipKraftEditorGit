@@ -9,6 +9,7 @@ public class CreatePhaseButton : MonoBehaviour
 {
     int idToModify;
     string projectId;
+    string projectName;
     GameObject model;
     [SerializeField]
     GameObject inputName;
@@ -40,6 +41,11 @@ public class CreatePhaseButton : MonoBehaviour
         projectId = id;
     }
 
+    public void setProjectName(string name)
+    {
+        projectName = name;
+    }
+
     public static T DeserializeJson<T>(string json)
     {
         return JsonConvert.DeserializeObject<T>(json);
@@ -51,6 +57,7 @@ public class CreatePhaseButton : MonoBehaviour
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
         but.addParam("id", projectId);
         but.addParam("project_id", projectId);
+        but.addParam("project_name", projectName);
         but.SendToDispatch();
     }
 
@@ -65,7 +72,7 @@ public class CreatePhaseButton : MonoBehaviour
         bool isNumeric = int.TryParse(priority, out n);
         if (isNumeric == false)
             return ;
-        modelScr.addCollections(name, desc, priority, projectId.ToString(), applyInServerResponse);
+        modelScr.addCollections(name, desc, priority, projectId.ToString(), projectName, applyInServerResponse);
 
 
     }

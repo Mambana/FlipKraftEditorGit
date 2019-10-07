@@ -27,12 +27,14 @@ public class CreatCardRulesController : BasicController
     {
         int id = int.Parse(args["project_id"]);
         int cardId = int.Parse(args["card_id"]);
+        string projectName = args["project_name"];
         ButtonGetAllRessourcesName butScr = resButton.GetComponent<ButtonGetAllRessourcesName>();
-        butScr.setProjectId(id);
+        butScr.setProjectName(projectName);
         confirmButton.GetComponent<ConfirmCardRuleCreationButton>().setProjectId(id.ToString());
         confirmButton.GetComponent<ConfirmCardRuleCreationButton>().setCardId(cardId.ToString());
+        confirmButton.GetComponent<ConfirmCardRuleCreationButton>().setProjectName(projectName);
         cancelButton.GetComponent<CancelCardRulesCreation>().setProjectId(id.ToString());
         cancelButton.GetComponent<CancelCardRulesCreation>().setCardId(cardId.ToString());
-        resButton.GetComponent<ButtonGetAllRessourcesName>().setProjectId(id);
+        cancelButton.GetComponent<CancelCardRulesCreation>().setProjectName(projectName);
     }
 }

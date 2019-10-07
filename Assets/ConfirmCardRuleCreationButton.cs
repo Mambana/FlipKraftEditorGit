@@ -9,6 +9,7 @@ public class ConfirmCardRuleCreationButton : MonoBehaviour
 {
     string cardId;
     string projectId;
+    string projectName;
     GameObject model;
     [SerializeField]
     GameObject inputName;
@@ -44,6 +45,10 @@ public class ConfirmCardRuleCreationButton : MonoBehaviour
         projectId = id;
     }
 
+    public void setProjectName(string name)
+    {
+        projectName = name;
+    }
     public static T DeserializeJson<T>(string json)
     {
         return JsonConvert.DeserializeObject<T>(json);
@@ -55,6 +60,7 @@ public class ConfirmCardRuleCreationButton : MonoBehaviour
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
         but.addParam("id", cardId);
         but.addParam("project_id", projectId);
+        but.addParam("project_name", projectName);
         but.SendToDispatch();
     }
 
@@ -66,7 +72,7 @@ public class ConfirmCardRuleCreationButton : MonoBehaviour
         string desc = inputDesc.GetComponent<TMP_InputField>().text;
         int n;
         string[] descs = new string[1];
-        modelScr.addCollections(cardId.ToString(), name, desc,
+        modelScr.addCollections(cardId.ToString(), projectName, name, desc,
             signals.GetComponent<ButtonSetArraySelection>().getSelectedList().ToArray(),
             types.GetComponent<ButtonSetArraySelection>().getSelectedList().ToArray(),
             instructions.GetComponent<ButtonSetArraySelection>().getSelectedList().ToArray(),

@@ -19,17 +19,18 @@ public class ModelAssociation : MonoBehaviour
 
     }
 
-    public void addCollections(string value, string projectId, string cardId, string ressourceId, string posX, string posY)
+    public void addCollections(string value, string projectId, string projectName, string cardId, string ressourceId, string posX, string posY)
     {
         Dictionary<string, string> toAdd = new Dictionary<string, string>();
 
+        ///api/project/{name}/card/{id}/ressource/{idr}/
         toAdd.Add("value", value);
         toAdd.Add("fk_id_project", projectId);
         toAdd.Add("fk_id_cards", cardId);
         toAdd.Add("fk_id_ressource", ressourceId);
         toAdd.Add("posX", posX);
         toAdd.Add("posY", posY);
-        api.request(toAdd, "/api/card/association", "POST", null);
+        api.request(toAdd, "/api/project/" + projectName + "/card/" + cardId + "/ressource/" + ressourceId+"/", "POST", null);
     }
 
     public static T DeserializeJson<T>(string json)
@@ -37,10 +38,10 @@ public class ModelAssociation : MonoBehaviour
         return JsonConvert.DeserializeObject<T>(json);
     }
 
-    public Dictionary<string, string> find(int id)
+    public Dictionary<string, string> find(string projectName, string cardId, string ressourceId)
     {
         Dictionary<string, string> assocData = new Dictionary<string, string>();
-        string json = api.request(null, "/api/card/association/" + id.ToString() + "/", "GET");
+        string json = api.request(null, "/api/project/" + projectName + "/card/" + cardId + "/ressource/" + ressourceId , "GET");
         Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(json);
         assocData.Add("name", resp["name"].ToString());
         assocData.Add("description", resp["description"].ToString());
@@ -78,17 +79,16 @@ public class ModelAssociation : MonoBehaviour
         return (allCard);
     }
 
-    public void updateField(string assocId, string value, string projectId, string cardId, string ressourceId, string posX, string posY)
+    public void updateField(string assocId, string value, string projectId, string projectName, string cardId, string ressourceId, string posX, string posY)
     {
         Dictionary<string, string> toAdd = new Dictionary<string, string>();
-
         toAdd.Add("value", value);
         toAdd.Add("fk_id_project", projectId);
         toAdd.Add("fk_id_cards", cardId);
         toAdd.Add("fk_id_ressource", ressourceId);
         toAdd.Add("posX", posX);
         toAdd.Add("posY", posY);
-        api.request(toAdd, "/api/card/association/"+assocId.ToString() + "/", "PUT", null);
+        api.request(toAdd, "/api/project/" + projectName + "/card/" + cardId + "/ressource/" + ressourceId + "/", "PUT", null);
     }
 
     public void removeElem(int id)

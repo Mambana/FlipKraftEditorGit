@@ -7,6 +7,10 @@ using Newtonsoft.Json;
 
 public class OverviewController : BasicController
 {
+
+    int id;
+    string projectName;
+
     [SerializeField]
     GameObject Model;
     [SerializeField]
@@ -15,7 +19,6 @@ public class OverviewController : BasicController
     GameObject ModelRessources;
     [SerializeField]
     GameObject modelPhases;
-    int id;
     [SerializeField]
     GameObject projName;
     [SerializeField]
@@ -151,7 +154,7 @@ public class OverviewController : BasicController
         }
         foreach (KeyValuePair<int, Dictionary<string, string>> project in allCard)
         {  
-            cardListScr.AddDeck(id.ToString(), project.Value["id"], project.Value["name"]);
+            cardListScr.AddDeck(id.ToString(), projectName, project.Value["id"], project.Value["name"]);
         }
     }
 
@@ -185,6 +188,7 @@ public class OverviewController : BasicController
             ModifyRessourceButton toAddScr = toAdd.GetComponent<ModifyRessourceButton>();
             toAddScr.setIdToModify(project.Value["id"]);
             toAddScr.setProjectId(project.Value["fk_id_project"]);
+            toAddScr.setProjectName(projectName);
             toAdd.transform.SetParent(listOfRess.transform, false);
             toAdd.GetComponent<Image>().sprite = imgHandler.GetSprite(int.Parse(project.Value["img_id"]));
          //   ressources.Add(toAdd);
@@ -222,8 +226,10 @@ public class OverviewController : BasicController
             RemovePhaseButton rmScr = toAdd.transform.Find("RemoveButton").GetComponent<RemovePhaseButton>();
             toAddScr.setIdToModify(project.Value["id"]);
             toAddScr.setProjectId(project.Value["fk_id_project"]);
+            toAddScr.setProjectName(projectName);
             rmScr.setIdToRemove(int.Parse(project.Value["id"]));
             rmScr.setProjectId(project.Value["fk_id_project"]);
+            rmScr.setProjectName(projectName);
             toAdd.transform.SetParent(phaseItemContainer.transform, false);
           //  phases.Add(toAdd);
         }
@@ -242,22 +248,28 @@ public class OverviewController : BasicController
 
         foreach (KeyValuePair< string, string> arg in args)
          
-        id = int.Parse(args["id"]);      
+        id = int.Parse(args["id"]);
+        projectName = args["project_name"];
         Model = GameObject.Find("Model");
         newResBut.GetComponent<CreateRessourceButton>().setProjectId(id);
+        newResBut.GetComponent<CreateRessourceButton>().setProjectName(projectName) ;
         createPhaseBut.GetComponent<CreateRessourceButton>().setProjectId(id);
+        createPhaseBut.GetComponent<CreateRessourceButton>().setProjectName(projectName);
         updateProj.GetComponent<ConfirmModifyButton>().setIdToModify(id);
+        updateProj.GetComponent<ConfirmModifyButton>().setProjectName(projectName);
         createCardBut.GetComponent<CreateCardButton>().setProjectId(id);
-        createRuleBut.GetComponent<CreateCardButton>().setProjectId(id);
+        createCardBut.GetComponent<CreateCardButton>().setProjectName(projectName);
+        createRuleBut.GetComponent<CreateCardButton>().setProjectName(projectName);
         rulesListBut.GetComponent<RessourceListButton>().setCurrentProjectId(id);
+        rulesListBut.GetComponent<RessourceListButton>().setProjectName(projectName);
         ModelTest ModelScript = Model.GetComponent<ModelTest>();
-        ModelScript.find(id, applyInServerResponse);
+        ModelScript.find(projectName, applyInServerResponse);
         ModelCard modelCardScript = ModelCards.GetComponent<ModelCard>();
-        modelCardScript.getAll(id.ToString(), applyForCards);
+        modelCardScript.getAll(projectName, applyForCards);
         ModelRessource ModelRessourceScr = ModelRessources.GetComponent<ModelRessource>();
-        ModelRessourceScr.getAll(id.ToString(), applyForRessource);
+        ModelRessourceScr.getAll(projectName, applyForRessource);
         ModelPhases modelPhasesScr = modelPhases.GetComponent<ModelPhases>();
-        modelPhasesScr.getAll(id.ToString(), applyForPhases);
+        modelPhasesScr.getAll(projectName, applyForPhases);
     }
 
     

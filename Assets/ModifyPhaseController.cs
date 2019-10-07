@@ -21,6 +21,7 @@ public class ModifyPhaseController : BasicController
     int projectId;
     GameObject model;
     int idToModify;
+    string projectName;
     // Start is called before the first frame update
     void Start()
     {
@@ -54,16 +55,18 @@ public class ModifyPhaseController : BasicController
     public override void apply()
     {
         int id = int.Parse(args["id"]);
-
+        projectName = args["project_name"];
         model = GameObject.Find("ModelPhases");
         ModelPhases modelScr = model.GetComponent<ModelPhases>();
-        modelScr.find(id, applyInServerResponse);
+        modelScr.find(id, projectName, applyInServerResponse);
         ConfirmModifyPhaseButton butScr = confirmButton.GetComponent<ConfirmModifyPhaseButton>();
         butScr.setProjectId(args["project_id"]);
         butScr.setIdToModify(id);
+        butScr.setProjectName(projectName);
        RemovePhaseButton removeBut = removeButton.GetComponent<RemovePhaseButton>();
         removeBut.setProjectId(args["project_id"]);
         removeBut.setIdToRemove(id);
+        removeBut.setProjectName(projectName);
         
     }
 }

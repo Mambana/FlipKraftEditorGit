@@ -9,6 +9,7 @@ public class ConfirmModifyRessource : MonoBehaviour {
     // Use this for initialization
     int idToModify;
     string projectId;
+    string projectName;
     GameObject model;
     [SerializeField]
     GameObject inputName;
@@ -39,6 +40,10 @@ public class ConfirmModifyRessource : MonoBehaviour {
         imgId = id;
     }
 
+    public void setProjectName(string name)
+    {
+        projectName = name;
+    }
     public void setProjectId(string id)
     {
         projectId = id;
@@ -49,6 +54,7 @@ public class ConfirmModifyRessource : MonoBehaviour {
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
         but.addParam("id", projectId);
         but.addParam("project_id", projectId);
+        but.addParam("project_name", projectName);
         but.SendToDispatch();
     }
 
@@ -58,7 +64,7 @@ public class ConfirmModifyRessource : MonoBehaviour {
         ModelRessource modelScr = model.GetComponent<ModelRessource>();
         string name = inputName.GetComponent<TMP_InputField>().text;
         string desc = inputDesc.GetComponent<TMP_InputField>().text;
-        modelScr.updateField(idToModify.ToString(), projectId, name, desc, imgId.ToString(), CallDispatcher);
+        modelScr.updateField(idToModify.ToString(), projectName, name, desc, imgId.ToString(), CallDispatcher);
         
     }
 }

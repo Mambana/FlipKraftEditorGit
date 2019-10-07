@@ -10,6 +10,7 @@ public class ConfirmRuleModificationButton : MonoBehaviour
     GameObject model;
     int projectId;
     int ruleId;
+    string projectName;
     [SerializeField]
     GameObject inputName;
     [SerializeField]
@@ -49,12 +50,17 @@ public class ConfirmRuleModificationButton : MonoBehaviour
         ruleId = id;
     }
 
+    public void setProjectName(string name)
+    {
+        projectName = name;
+    }
     public void applyInServerResponse(string json)
     {
         Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(json);
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
         but.addParam("id", projectId.ToString());
         but.addParam("project_id", projectId.ToString());
+        but.addParam("project_name", projectName);
         but.SendToDispatch();
     }
 
@@ -67,7 +73,7 @@ public class ConfirmRuleModificationButton : MonoBehaviour
         int n;
         string[] descs = new string[1];
         descs[0] = "null";
-        modelScr.updateField(ruleId.ToString(), projectId.ToString(), name, desc,
+        modelScr.updateField(ruleId.ToString(), projectName, name, desc,
             signals.GetComponent<ButtonSetArraySelection>().getSelectedList().ToArray(),
             types.GetComponent<ButtonSetArraySelection>().getSelectedList().ToArray(),
             instructions.GetComponent<ButtonSetArraySelection>().getSelectedList().ToArray(),

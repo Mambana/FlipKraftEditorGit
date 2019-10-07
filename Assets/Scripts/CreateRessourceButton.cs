@@ -10,6 +10,8 @@ public class CreateRessourceButton : MonoBehaviour {
    
     int idToModify;
     int projectId;
+    string projectName;
+
     GameObject Model;
     void Start()
     {
@@ -29,6 +31,10 @@ public class CreateRessourceButton : MonoBehaviour {
         idToModify = id;
     }
 
+    public void setProjectName(string name)
+    {
+        projectName = name;
+    }
     public void setProjectId(int id)
     {
         projectId = id;
@@ -39,6 +45,7 @@ public class CreateRessourceButton : MonoBehaviour {
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
         ModelRessource ModelScr = Model.GetComponent<ModelRessource>();
         but.addParam("project_id", projectId.ToString());
+        but.addParam("project_name", projectName);
         but.SendToDispatch();
     }
 }

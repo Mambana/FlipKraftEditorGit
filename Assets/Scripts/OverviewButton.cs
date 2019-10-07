@@ -7,7 +7,7 @@ public class OverviewButton : MonoBehaviour {
 
     // Use this for initialization
     int projectId;
-
+    string projectName;
 	void Start () {
         gameObject.GetComponent<Button>().onClick.AddListener(click);
     }
@@ -17,7 +17,10 @@ public class OverviewButton : MonoBehaviour {
         projectId = id;
     }
     // Update is called once per frame
-    
+    public void setProjectName(string name)
+    {
+        projectName = name;
+    }
 
     void click()
     {

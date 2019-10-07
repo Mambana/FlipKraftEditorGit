@@ -8,6 +8,7 @@ public class ConfirmModifyPhaseButton : MonoBehaviour
 {
     int idToModify;
     string projectId;
+    string projectName;
     GameObject model;
     [SerializeField]
     GameObject inputName;
@@ -38,11 +39,16 @@ public class ConfirmModifyPhaseButton : MonoBehaviour
         projectId = id;
     }
 
+    public void setProjectName(string name)
+    {
+        projectName = name;
+    }
     public void CallDispatcher(string json)
     {
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
         but.addParam("id", projectId);
         but.addParam("project_id", projectId);
+        but.addParam("project_name", projectName);
         but.SendToDispatch();
     }
 
@@ -60,7 +66,7 @@ public class ConfirmModifyPhaseButton : MonoBehaviour
         bool isNumeric = int.TryParse(priority, out n);
         if (isNumeric == false)
             return;
-        modelScr.updateField(idToModify.ToString(), projectId, name, desc, priority, CallDispatcher);
+        modelScr.updateField(idToModify.ToString(), projectId, projectName,  name, desc, priority, CallDispatcher);
 
     }
 }

@@ -26,10 +26,13 @@ public class CreateRuleController : BasicController
     public override void apply()
     {
         int id = int.Parse(args["project_id"]);
+        string projectName = args["project_name"];
         ButtonGetAllRessourcesName butScr = resButton.GetComponent<ButtonGetAllRessourcesName>();
-        butScr.setProjectId(id);
+        butScr.setProjectName(projectName);
         confirmButton.GetComponent<ConfirmRuleCreationButton>().setProjectId(id.ToString());
+        confirmButton.GetComponent<ConfirmRuleCreationButton>().setProjectName(projectName);
         cancelButton.GetComponent<CancelRessourceCreation>().setProjectId(id.ToString());
         cancelButton.GetComponent<CancelRessourceCreation>().setRessourceId(id.ToString());
+        cancelButton.GetComponent<CancelRessourceCreation>().setProjectName(projectName);
     }
 }

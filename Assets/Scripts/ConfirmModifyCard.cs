@@ -9,6 +9,7 @@ public class ConfirmModifyCard : MonoBehaviour {
 
     int idToModify;
     string projectId;
+    string projectName;
     GameObject model;
     [SerializeField]
     GameObject inputName;
@@ -19,7 +20,6 @@ public class ConfirmModifyCard : MonoBehaviour {
     void Start()
     {
         gameObject.GetComponent<Button>().onClick.AddListener(click);
-
     }
 
     // Update is called once per frame
@@ -38,6 +38,11 @@ public class ConfirmModifyCard : MonoBehaviour {
         projectId = id;
     }
 
+    public void setProjectName(string name)
+    {
+        projectName = name;
+    }
+
     public static T DeserializeJson<T>(string json)
     {
         return JsonConvert.DeserializeObject<T>(json);
@@ -49,6 +54,7 @@ public class ConfirmModifyCard : MonoBehaviour {
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
         but.addParam("id", projectId);
         but.addParam("project_id", projectId);
+        but.addParam("project_name", projectName);
         but.SendToDispatch();
     }
 
@@ -58,7 +64,7 @@ public class ConfirmModifyCard : MonoBehaviour {
         ModelCard modelScr = model.GetComponent<ModelCard>();
         string name = inputName.GetComponent<TMP_InputField>().text;
         string desc = inputDesc.GetComponent<TMP_InputField>().text;
-        modelScr.addCollections(name, desc, projectId.ToString(), applyInServerResponse);
+        modelScr.addCollections(name, desc, projectId.ToString(), projectName, applyInServerResponse);
        
         
     }

@@ -7,6 +7,7 @@ public class ModifyRulesButton : MonoBehaviour
 {
     int projectId;
     int ruleId;
+    string projectName;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,11 +30,16 @@ public class ModifyRulesButton : MonoBehaviour
         ruleId = id;
     }
 
+    public void setProjectName(string name)
+    {
+        projectName = name;
+    }
     public void click()
     {
             ButtonListener but = gameObject.GetComponent<ButtonListener>();
             but.addParam("id", ruleId.ToString());
             but.addParam("project_id", projectId.ToString());
+            but.addParam("project_name", projectName);
             but.SendToDispatch();
         
     }

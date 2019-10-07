@@ -28,6 +28,7 @@ public class ModifyRulesController : BasicController
 
     int projectId;
     int id;
+    string projectName;
     void Start()
     {
 
@@ -68,21 +69,24 @@ public class ModifyRulesController : BasicController
         typesBut.GetComponent<ButtonSetArraySelection>().setSelectedList(createListFromJson(resp["var_type"].ToString()));
         instructionsBut.GetComponent<ButtonSetArraySelection>().setSelectedList(createListFromJson(resp["instructions"].ToString()));
         ressourcesBut.GetComponent<ButtonGetAllRessourcesName>().setSelectedList(createListFromJson(resp["variables"].ToString()));
-        ressourcesBut.GetComponent<ButtonGetAllRessourcesName>().setProjectId(projectId);
+        ressourcesBut.GetComponent<ButtonGetAllRessourcesName>().setProjectName(projectName);
     }
 
     public override void apply()
     {
         id = int.Parse(args["id"]);
         projectId = int.Parse(args["project_id"]);
+        projectName = args["project_name"];
         model = GameObject.Find("ModelRules");
         ModelRules modelScr = model.GetComponent<ModelRules>();
-        modelScr.find(id, projectId, applyInServerResponse);
+        modelScr.find(id, projectName, applyInServerResponse);
         ConfirmRuleModificationButton butScr = confirmButton.GetComponent<ConfirmRuleModificationButton>();
         butScr.setIdToModify(id);
-        butScr.setProjectId(int.Parse(args["project_id"]));
+        butScr.setProjectId(projectId);
+        butScr.setProjectName(projectName);
         RemoveRuleButton rmButScr = removeButton.GetComponent<RemoveRuleButton>();
-        rmButScr.setProjectId(int.Parse(args["project_id"]));
+        rmButScr.setProjectId(projectId);
         rmButScr.setIdToRemove(id);
+        rmButScr.setProjectName(projectName);
     }
 }

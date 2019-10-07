@@ -7,6 +7,7 @@ public class RemovePhaseButton : MonoBehaviour
 {
     int idToRemove = 0;
     string projectId = "";
+    string projectName;
     GameObject model;
 
     void Start()
@@ -30,6 +31,10 @@ public class RemovePhaseButton : MonoBehaviour
         projectId = id;
     }
 
+    public void setProjectName(string name)
+    {
+        projectName = name;
+    }
     void callDispatcher(string json)
     {
         print("call");
@@ -38,6 +43,7 @@ public class RemovePhaseButton : MonoBehaviour
         {
             but.addParam("project_id", projectId);
             but.addParam("id", projectId);
+            but.addParam("project_name", projectName);
             but.SendToDispatch();
         }
         else
@@ -48,6 +54,6 @@ public class RemovePhaseButton : MonoBehaviour
     {
         model = GameObject.Find("ModelPhases");
         ModelPhases modelScr = model.GetComponent<ModelPhases>();
-        modelScr.removeElem(idToRemove, callDispatcher); 
+        modelScr.removeElem(idToRemove, projectName, callDispatcher); 
     }
 }

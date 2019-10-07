@@ -47,7 +47,7 @@ public class apiConnection : MonoBehaviour
         string authorization = authenticate(scrData.access("email"), scrData.access("pwd"));
         string url = scrData.access("api_address") + route;
 
-
+        print(url);
         using (UnityWebRequest www = UnityWebRequest.Get(url))
         {
 
@@ -77,16 +77,19 @@ public class apiConnection : MonoBehaviour
         WWWForm form = new WWWForm();
         foreach (KeyValuePair<string, string> f in fields)
             form.AddField(f.Key, f.Value);
-        print(form.data);
+       
         using (UnityWebRequest www = UnityWebRequest.Post(scrData.access("api_address") + route, form))
         {
+            print(scrData.access("api_address") + route);
             www.SetRequestHeader("AUTHORIZATION", authorization);
 
             yield return www.SendWebRequest();
 
             if (www.isNetworkError || www.isHttpError)
             {
+                print(www.downloadHandler.text);
                 print(www.error);
+            
             }
             else
             {
@@ -135,10 +138,6 @@ public class apiConnection : MonoBehaviour
             json = parseDictionary(fields);
         }
 
-
-        
-
-        print(json);
         using (UnityWebRequest www = UnityWebRequest.Put(scrData.access("api_address") + route, json))
         {
             www.SetRequestHeader("AUTHORIZATION", authorization);
@@ -150,6 +149,8 @@ public class apiConnection : MonoBehaviour
             if (www.isNetworkError || www.isHttpError)
             {
                 print(www.error);
+                print(scrData.access("api_address") + route);
+                print(json);
             }
             else
             {
@@ -192,6 +193,7 @@ public class apiConnection : MonoBehaviour
     public void request(Dictionary<string, string> toAdd, string route, string method,
         Action<string> call = null, Action<string, GameObject> callOnObject = null, GameObject obj = null, bool askParse = false)
     {
+        
         if (method.Equals("GET"))
             StartCoroutine(getRequest(route, call, callOnObject, obj));
         if (method.Equals("POST"))

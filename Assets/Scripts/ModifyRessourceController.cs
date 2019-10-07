@@ -44,6 +44,7 @@ public class ModifyRessourceController : BasicController
 
     public void applyInServerResponse(string json)
     {
+        print(json);
         Dictionary<string, string> ressourceData = new Dictionary<string, string>();
         Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(json);
         ressourceData.Add("name", resp["name"].ToString());
@@ -59,15 +60,17 @@ public class ModifyRessourceController : BasicController
     public override void apply()
     {
         int id = int.Parse(args["id"]);
-
+        string projectName = args["project_name"];
         model = GameObject.Find("ModelRessource");
         ModelRessource modelScr = model.GetComponent<ModelRessource>();
-        modelScr.find(id, applyInServerResponse);  
+        modelScr.find(id, projectName, applyInServerResponse);  
         ConfirmModifyRessource butScr = confirmButton.GetComponent<ConfirmModifyRessource>();
         butScr.setIdToModify(id);
         butScr.setProjectId(args["project_id"]);
+        butScr.setProjectName(projectName);
         RemoveRessourceButton rmButScr = removeButton.GetComponent<RemoveRessourceButton>();
         rmButScr.setProjectId(args["project_id"]);
+        rmButScr.setProjectName(projectName);
         rmButScr.setIdToRemove(id);
     }
 }

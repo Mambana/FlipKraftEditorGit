@@ -9,6 +9,7 @@ public class ButtonGetAllRessourcesName : MonoBehaviour
 {
     // Start is called before the first frame update
     private int projectId;
+    private string projectName;
     [SerializeField]
     GameObject objList;
     private List<string> stringList;
@@ -88,12 +89,20 @@ public class ButtonGetAllRessourcesName : MonoBehaviour
 
     }
 
-    public void setProjectId(int id)
+    public void setProjectId(int id)//!\DEPRECATED DO NOT USE IT EXEPT IF API GET BACK TO PREVIOUS VERSION
     {
         projectId = id;
         ModelRessource modelRes = GameObject.Find("ModelRessource").GetComponent<ModelRessource>();
 
         modelRes.getAll(projectId.ToString(), applyinResponse);
+    }
+
+    public void setProjectName(string  name)
+    {
+        projectName = name;
+        ModelRessource modelRes = GameObject.Find("ModelRessource").GetComponent<ModelRessource>();
+
+        modelRes.getAll(projectName, applyinResponse);
     }
 
     public List<string> getSelectedList()

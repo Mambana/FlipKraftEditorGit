@@ -8,6 +8,7 @@ public class ConfirmModifyButton : MonoBehaviour {
 
     // Use this for initialization
     int idToModify;
+    string projectName;
     GameObject model;
     [SerializeField]
     GameObject inputName;
@@ -36,10 +37,16 @@ public class ConfirmModifyButton : MonoBehaviour {
         idToModify = id;
     }
 
+    public void setProjectName(string name)
+    {
+        projectName = name;
+    }
+
     public void CallDispatcher(string json)
     {
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
         but.addParam("id", idToModify.ToString());
+        but.addParam("project_name", projectName);
         but.SendToDispatch();
     }
 
@@ -59,7 +66,7 @@ public class ConfirmModifyButton : MonoBehaviour {
         if (asyncToggle.GetComponent<Toggle>().isOn)
             async_game = "true";
         print(idToModify+ " " + name + " " + min);
-        modelScr.updateField(idToModify.ToString(), name, min, max, desc, CallDispatcher, async_game, turn_game);
+        modelScr.updateField(projectName, name, min, max, desc, CallDispatcher, async_game, turn_game);
        
     }
 }

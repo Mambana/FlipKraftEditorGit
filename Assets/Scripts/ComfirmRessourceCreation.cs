@@ -10,6 +10,7 @@ public class ComfirmRessourceCreation : MonoBehaviour
     // Use this for initialization
     int idToModify;
     string projectId;
+    string projectName;
     int imgId;
     GameObject model;
     [SerializeField]
@@ -48,6 +49,11 @@ public class ComfirmRessourceCreation : MonoBehaviour
         imgId = id;
     }
 
+    public void setProjectName(string name)
+    {
+        projectName = name;
+    }
+
     public static T DeserializeJson<T>(string json)
     {
         return JsonConvert.DeserializeObject<T>(json);
@@ -61,6 +67,7 @@ public class ComfirmRessourceCreation : MonoBehaviour
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
         but.addParam("id", projectId);
         but.addParam("project_id", projectId);
+        but.addParam("project_name", projectName);
         print(modelScr.getNbElement());
        
         but.SendToDispatch();
@@ -73,7 +80,7 @@ public class ComfirmRessourceCreation : MonoBehaviour
         string name = inputName.GetComponent<TMP_InputField>().text;
         string desc = inputDesc.GetComponent<TMP_InputField>().text;
 
-        modelScr.addCollections(name, desc, projectId.ToString(), applyInServerResponse, imgId.ToString());
+        modelScr.addCollections(name, desc, projectId, projectName, applyInServerResponse, imgId.ToString());
       
     }
 }

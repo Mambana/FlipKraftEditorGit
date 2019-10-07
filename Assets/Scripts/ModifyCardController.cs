@@ -9,7 +9,7 @@ public class ModifyCardController : BasicController {
 
     int projectId;
     int cardId;
-
+    string projectName;
 
     ImageHandler imageHandler;
 
@@ -110,21 +110,22 @@ public class ModifyCardController : BasicController {
         GameObject modelCard;
 
         projectId = int.Parse(args["project_id"]);
-    
+        projectName = args["project_name"];
         modelRessource = GameObject.Find("ModelRessource");
         modelCard = GameObject.Find("ModelCard");
         ModelRessource modelResScr = modelRessource.GetComponent<ModelRessource>();
 
-        modelResScr.getAll(projectId.ToString(), applyInRessource);
+        modelResScr.getAll(projectName, applyInRessource);
 
 
         ConfirmVisualCard butScr = confirmButton.GetComponent<ConfirmVisualCard>();
         butScr.setIdToModify(-1);
         butScr.setProjectId(projectId.ToString());
+        butScr.setProjectName(projectName);
         CancelRessourceCreation rmScr = removeButton.GetComponent<CancelRessourceCreation>();
  
         rmScr.setProjectId(projectId.ToString());
-
+        rmScr.setProjectName(projectName);
 
         /*createRuleButton.GetComponent<CreateCardButton>().setIdToModify(cardId);
         createRuleButton.GetComponent<CreateCardButton>().setProjectId(projectId);

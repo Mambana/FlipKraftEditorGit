@@ -63,9 +63,10 @@ public class ModifyProjectController : BasicController {
     public override void apply()
     {
         int id = int.Parse(args["id"]);
+        string projectName = args["project_name"];
         model = GameObject.Find("Model");
         ModelTest modelScr = model.GetComponent<ModelTest>();
-        modelScr.find(id, applyInServerResponse);
+        modelScr.find(projectName, applyInServerResponse);
         ConfirmModifyButton butScr = confirmButton.GetComponent<ConfirmModifyButton>();
         butScr.setIdToModify(id);
         RemoveProjectButton rmButScr = removeButton.GetComponent<RemoveProjectButton>();

@@ -42,6 +42,7 @@ public class CreateProjButton : MonoBehaviour {
         print(id);
         Dictionary<string, string> param = new Dictionary<string, string>();
         param.Add("id", id.ToString());
+        param.Add("project_name", resp["name"].ToString());
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
         but.setParams(param);
         but.SendToDispatch();
@@ -56,6 +57,7 @@ public class CreateProjButton : MonoBehaviour {
         but.addParam("name", name.GetComponent<TMP_InputField>().text);
         but.addParam("min", min.GetComponent<TMP_InputField>().text);
         but.addParam("max", max.GetComponent<TMP_InputField>().text);
+     
         Dictionary<string, string> param = but.getParam();
 
         ModelScript.addCollections(param["name"], param["min"], param["max"], param["description"], "0", "0", applyInServerResponse);

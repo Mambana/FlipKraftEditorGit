@@ -8,6 +8,7 @@ public class RemoveRuleButton : MonoBehaviour
     // Start is called before the first frame update
     int id;
     int projectId;
+    string projectName;
     GameObject model;
     void Start()
     {
@@ -30,6 +31,11 @@ public class RemoveRuleButton : MonoBehaviour
         projectId = id;
     }
 
+    public void setProjectName(string name)
+    {
+        projectName = name;
+    }
+
     void callDispatcher(string json)
     {
         print("call");
@@ -43,7 +49,7 @@ public class RemoveRuleButton : MonoBehaviour
     {
         model = GameObject.Find("ModelRules");
         ModelRules modelScr = model.GetComponent<ModelRules>();
-        modelScr.removeElem(id, projectId, callDispatcher);
+        modelScr.removeElem(id, projectName, callDispatcher);
     }
 
 }

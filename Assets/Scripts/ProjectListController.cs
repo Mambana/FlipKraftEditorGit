@@ -63,6 +63,7 @@ public class ProjectListController : BasicController {
             toAdd.transform.Find("ProjName").GetComponent<TextMeshProUGUI>().text = project.Value["name"];
             toAdd.transform.Find("ProjDesc").GetComponent<TextMeshProUGUI>().text = project.Value["description"];
             toAdd.GetComponent<ProjectButton>().setIdOnString(project.Value["id"]);
+            toAdd.GetComponent<ProjectButton>().setProjectName(project.Value["name"]);
             buttonList.Add(toAdd);
             if (listOfProj)
                 toAdd.transform.SetParent(listOfProj.transform, false);

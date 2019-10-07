@@ -39,9 +39,9 @@ public class ModelTest : MonoBehaviour {
        
     }
 
-    public void find(int id, Action<string> callback)
+    public void find(string name, Action<string> callback)
     {
-        api.request(null, "/api/project/" + id.ToString() + "/", "GET", callback);   
+        api.request(null, "/api/project/" + name + "/", "GET", callback);   
     }
 
 

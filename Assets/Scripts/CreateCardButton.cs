@@ -9,6 +9,7 @@ public class CreateCardButton : MonoBehaviour {
 
     int idToModify;
     int projectId;
+    string  projectName;
     GameObject Model;
     void Start()
     {
@@ -28,6 +29,11 @@ public class CreateCardButton : MonoBehaviour {
         idToModify = id;
     }
 
+    public void setProjectName(string name)
+    {
+        projectName = name;
+    }
+
     public void setProjectId(int id)
     {
         projectId = id;
@@ -41,6 +47,7 @@ public class CreateCardButton : MonoBehaviour {
       //  but.addParam("id", (ModelScr.getNbElement()).ToString());
         but.addParam("project_id", projectId.ToString());
         but.addParam("card_id", idToModify.ToString());
+        but.addParam("project_name", projectName);
         but.SendToDispatch();
     }
 }

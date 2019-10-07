@@ -25,7 +25,7 @@ public class DeckListHandler : MonoBehaviour
         }
     }
 
-    public void AddDeck(string projectId = "0", string id = "0", string cardName = "")
+    public void AddDeck(string projectId, string projectName, string id, string cardName)
     {
         GameObject go = Instantiate(m_DeckUIPrefab, m_Content);
         DeckItemUI item = go.GetComponent<DeckItemUI>();
@@ -36,6 +36,8 @@ public class DeckListHandler : MonoBehaviour
         go.GetComponentInChildren<TextMeshProUGUI>().text = cardName;
         go.GetComponentInChildren<ModifyCardButton>().setIdToModify(id);
         go.GetComponentInChildren<ModifyCardButton>().setProjectId(projectId);
+        go.GetComponentInChildren<ModifyCardButton>().setProjectName(projectName);
+
 
     }
 

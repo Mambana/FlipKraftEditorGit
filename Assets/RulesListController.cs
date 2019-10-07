@@ -7,6 +7,7 @@ using TMPro;
 public class RulesListController : BasicController
 {
     int projectId;
+    string projectName;
     GameObject model;
     [SerializeField]
     GameObject elemInList;
@@ -63,8 +64,9 @@ public class RulesListController : BasicController
             GameObject toAdd = Instantiate(elemInList) as GameObject;
             toAdd.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = project.Value["name"];
             toAdd.transform.Find("Description").GetComponent<TextMeshProUGUI>().text = project.Value["description"];
-            toAdd.GetComponent<ModifyRulesButton>().setRuleId(int.Parse(project.Value["id"]));//
+            toAdd.GetComponent<ModifyRulesButton>().setRuleId(int.Parse(project.Value["id"]));
             toAdd.GetComponent<ModifyRulesButton>().setProjectId(projectId);
+            toAdd.GetComponent<ModifyRulesButton>().setProjectName(projectName);
             buttonList.Add(toAdd);
             if (listOfRules)
                 toAdd.transform.SetParent(listOfRules.transform, false);
@@ -75,10 +77,12 @@ public class RulesListController : BasicController
     override public void apply()
     {
         projectId = int.Parse(args["project_id"]);
+        projectName = args["project_name"];
         model = GameObject.Find("ModelRules");
         ModelRules modelScript = model.GetComponent<ModelRules>();
-        modelScript.getAll(projectId.ToString(), applyInServerResponse);
+        modelScript.getAll(projectName, applyInServerResponse);
         cancelButton.GetComponent<CancelRessourceCreation>().setProjectId(projectId.ToString());
         cancelButton.GetComponent<CancelRessourceCreation>().setRessourceId(projectId.ToString());
+        cancelButton.GetComponent<CancelRessourceCreation>().setProjectName(projectName);
     }
 }

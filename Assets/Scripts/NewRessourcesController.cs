@@ -29,8 +29,11 @@ public class NewRessourcesController : BasicController
 
         ComfirmRessourceCreation butScr = confirmButton.GetComponent<ComfirmRessourceCreation>();
         butScr.setProjectId(args["project_id"]);
+        butScr.setProjectName(args["project_name"]);
         CancelRessourceCreation cancelBut = cancelButton.GetComponent<CancelRessourceCreation>();
         cancelBut.setProjectId(args["project_id"]);
         cancelBut.setRessourceId(args["project_id"]);
+        cancelBut.setProjectName(args["project_name"]);
+        
     }
 }

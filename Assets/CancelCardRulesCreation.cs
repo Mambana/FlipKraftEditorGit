@@ -7,6 +7,7 @@ public class CancelCardRulesCreation : MonoBehaviour
 {
     string projectId;
     string id;
+    string projectName;
     GameObject model;
 
     void Start()
@@ -30,12 +31,17 @@ public class CancelCardRulesCreation : MonoBehaviour
         id = _id;
     }
 
+    public void setProjectName(string name)
+    {
+        projectName = name;
+    }
     void click()
     {
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
 
         but.addParam("project_id", projectId);
         but.addParam("id", id);
+        but.addParam("project_name", projectName);
         but.SendToDispatch();
     }
 }

@@ -8,6 +8,7 @@ using TMPro;
 public class ConfirmRuleCreationButton : MonoBehaviour
 {
     string projectId;
+    string projectName;
     GameObject model;
     [SerializeField]
     GameObject inputName;
@@ -38,6 +39,11 @@ public class ConfirmRuleCreationButton : MonoBehaviour
         projectId = id;
     }
 
+    public void setProjectName(string name)
+    {
+        projectName = name;
+    }
+
     public static T DeserializeJson<T>(string json)
     {
         return JsonConvert.DeserializeObject<T>(json);
@@ -50,6 +56,7 @@ public class ConfirmRuleCreationButton : MonoBehaviour
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
         but.addParam("id", projectId);
         but.addParam("project_id", projectId);
+        but.addParam("project_name", projectName);
         but.SendToDispatch();
     }
 
@@ -61,7 +68,7 @@ public class ConfirmRuleCreationButton : MonoBehaviour
         string desc = inputDesc.GetComponent<TMP_InputField>().text;
         int n;
         string[] descs = new string[1];
-        modelScr.addCollections(projectId.ToString(), name, desc,
+        modelScr.addCollections(projectName, name, desc,
             signals.GetComponent<ButtonSetArraySelection>().getSelectedList().ToArray(),
             types.GetComponent<ButtonSetArraySelection>().getSelectedList().ToArray(),
             instructions.GetComponent<ButtonSetArraySelection>().getSelectedList().ToArray(),

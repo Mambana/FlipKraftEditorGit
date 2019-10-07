@@ -24,7 +24,7 @@ public class ModelPhases : MonoBehaviour
         return JsonConvert.DeserializeObject<T>(json);
     }
 
-    public void addCollections(string name, string desc, string priority, string projectId, Action<string> callback)
+    public void addCollections(string name, string desc, string priority, string projectId, string projectName, Action<string> callback)
     {
         Dictionary<string, string> toAdd = new Dictionary<string, string>();
 
@@ -33,13 +33,13 @@ public class ModelPhases : MonoBehaviour
         toAdd.Add("description", desc);
         toAdd.Add("playable", "true");
         toAdd.Add("priority", priority);
-        api.request(toAdd, "/api/phase", "POST", callback);
+        api.request(toAdd, "/api/project/" + projectName + "/phase", "POST", callback);
 
     }
 
-    public void find(int id, Action<string> callback)
+    public void find(int id, string projectName, Action<string> callback)
     {
-        api.request(null, "/api/phase/" + id.ToString() + "/", "GET", callback);
+        api.request(null, "/api/project/" + projectName + "/phase/" +  id.ToString() + "/", "GET", callback);
     }
 
 
@@ -48,13 +48,13 @@ public class ModelPhases : MonoBehaviour
         return (ModelPhases.i);
     }
 
-    public void getAll(string id, Action<string> callback)
+    public void getAll(string projectName, Action<string> callback)
     {
-        api.request(null, "/api/phase" + "?id=" + id, "GET", callback);
+        api.request(null, "/api/project/" + projectName + "/phase", "GET", callback);
 
     }
 
-    public void updateField(string id, string projectId, string name, string desc, string priority, Action<string> callback = null)
+    public void updateField(string id, string projectId, string projectName ,string name, string desc, string priority, Action<string> callback = null)
     {
         Dictionary<string, string> toAdd = new Dictionary<string, string>();
 
@@ -63,11 +63,11 @@ public class ModelPhases : MonoBehaviour
         toAdd.Add("fk_id_project", projectId);
         toAdd.Add("priority", priority);
         toAdd.Add("playable", "true");
-        api.request(toAdd, "/api/phase/" + id + "/", "PUT", callback);
+        api.request(toAdd, "/api/project/" + projectName + "/phase/" + id + "/", "PUT", callback);
     }
 
-    public void removeElem(int id, Action<string> callback)
+    public void removeElem(int id, string projectName, Action<string> callback)
     {
-        api.request(null, "/api/phase/" + id.ToString() + "/", "DELETE", callback);
+        api.request(null, "/api/project/" + projectName + "/phase/" + id.ToString() + "/", "DELETE", callback);
     }
 }

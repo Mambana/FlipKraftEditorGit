@@ -26,13 +26,12 @@ public class ModelCardRules : MonoBehaviour
         return JsonConvert.DeserializeObject<T>(json);
     }
 
-    public void addCollections(string projectId, string name, string desc, string[] signal,
+    public void addCollections(string cardId, string projectName, string name, string desc, string[] signal,
         string[] var_type, string[] instruction, string[] variables, string[] var_description,
         string priority,
         Action<string> callback)
     {
         Dictionary<string, string> toAdd = new Dictionary<string, string>();
-        print(projectId);
         print(JsonConvert.SerializeObject(signal, Formatting.Indented));
         toAdd.Add("name", name);
         toAdd.Add("description", desc);
@@ -42,7 +41,7 @@ public class ModelCardRules : MonoBehaviour
         toAdd.Add("variables", JsonConvert.SerializeObject(variables, Formatting.Indented));
         toAdd.Add("var_description", JsonConvert.SerializeObject(var_description, Formatting.Indented));
         toAdd.Add("priority", priority);
-        api.request(toAdd, "/api/card/" + projectId + "/pack", "POST", callback);
+        api.request(toAdd, "/api/project/" + projectName + "/card/" +cardId+ "/pack", "POST", callback);
 
     }
 
