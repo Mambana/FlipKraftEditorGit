@@ -43,7 +43,12 @@ public class ValidateInputValueButton : MonoBehaviour
 
     void click()
     {
+        int n;
         string value = inputValue.GetComponent<TMP_InputField>().text;
+        if (int.TryParse(value, out n) == false)
+        {
+            return;
+        }
         confirmScr.addAssocToModify(projectId, cardId, ressourceId, posX, posY, value, assocId);
         /*ModelAssociation modelScr = model.GetComponent<ModelAssociation>();
         if (assocId == null)
