@@ -20,5 +20,6 @@ public class BasicButton : MonoBehaviour {
     {
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
         but.SendToDispatch();
+        Destroy(this.transform.parent.gameObject);
     }
 }

@@ -18,6 +18,11 @@ public class ValidateInputValueButton : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField]
     private GameObject inputValue;
+    [SerializeField]
+    private GameObject errorMsg; 
+    private GameObject canvas;
+    [SerializeField]
+    private GameObject disableScreen;
     private ConfirmVisualCard confirmScr;
     private GameObject model;
     private GameObject valueText;
@@ -33,6 +38,7 @@ public class ValidateInputValueButton : MonoBehaviour
         confirmScr = GameObject.Find("Validate").GetComponent<ConfirmVisualCard>();
         gameObject.GetComponent<Button>().onClick.AddListener(click);
         model = GameObject.Find("ModelAssociation");
+        
     }
 
     // Update is called once per frame
@@ -47,6 +53,7 @@ public class ValidateInputValueButton : MonoBehaviour
         string value = inputValue.GetComponent<TMP_InputField>().text;
         if (int.TryParse(value, out n) == false)
         {
+            errorMsg.GetComponent<TextMeshProUGUI>().text = "Please enter a valide number...";
             return;
         }
         confirmScr.addAssocToModify(projectId, cardId, ressourceId, posX, posY, value, assocId);
@@ -60,11 +67,13 @@ public class ValidateInputValueButton : MonoBehaviour
                posX,
                posY);*/
         valueText.GetComponent<TextMeshProUGUI>().text = value;
-        Destroy(inputValue);
+        Destroy(transform.parent.parent.gameObject);
+        Destroy(disableScreen);
     }
 
     public void prepareAction(string pId, string cId, string rId, string pX, string pY, GameObject vText ,string aId = null)
     {
+        canvas = GameObject.Find("Canvas");
         projectId = pId;
         cardId = cId;
         ressourceId = rId;
@@ -72,5 +81,10 @@ public class ValidateInputValueButton : MonoBehaviour
         posY = pY;
         assocId = aId;
         valueText = vText;
+        disableScreen = Instantiate(disableScreen) as GameObject;
+        disableScreen.transform.SetParent(canvas.transform, false);
+        disableScreen.transform.SetSiblingIndex(98);
+        transform.parent.parent.SetSiblingIndex(99);
+
     }
 }

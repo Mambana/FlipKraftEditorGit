@@ -11,6 +11,7 @@ using UnityEngine.Experimental.Networking;
 
 public class cardRules
 {
+   
     public string name;
     public string description;
     public string[] signals;
@@ -24,6 +25,10 @@ public class cardRules
 public class apiConnection : MonoBehaviour
 {
     // Start is called before the first frame update
+    [SerializeField]
+    private GameObject errorPopup;
+    [SerializeField]
+    private GameObject canvas;
     SessionData scrData;
     void Start()
     {
@@ -56,8 +61,10 @@ public class apiConnection : MonoBehaviour
             yield return www.SendWebRequest();
             if (www.isNetworkError || www.isHttpError)
             {
-                if (call != null)
+               if (call != null)
                     call("none");
+                else
+                    instantiateErrorPopup();
                 print(www.error);
             }
             else
@@ -89,7 +96,9 @@ public class apiConnection : MonoBehaviour
             {
                 print(www.downloadHandler.text);
                 print(www.error);
-            
+                instantiateErrorPopup();
+
+
             }
             else
             {
@@ -151,6 +160,7 @@ public class apiConnection : MonoBehaviour
                 print(www.error);
                 print(scrData.access("api_address") + route);
                 print(json);
+                instantiateErrorPopup();
             }
             else
             {
@@ -171,6 +181,7 @@ public class apiConnection : MonoBehaviour
             yield return www.SendWebRequest();
             if (www.isNetworkError || www.isHttpError)
             {
+                instantiateErrorPopup();
                 print(www.error);
             }
             else
@@ -205,6 +216,12 @@ public class apiConnection : MonoBehaviour
      
     }
    
+    public void instantiateErrorPopup()
+    {
+        GameObject element = Instantiate(errorPopup) as GameObject;
+        element.transform.SetParent(canvas.transform, false);
+    }
+
     public string request(Dictionary<string, string> toAdd, string route, string method)
     {
       var request = (HttpWebRequest)WebRequest.Create(scrData.access("api_address") + route);

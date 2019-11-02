@@ -169,7 +169,6 @@ GameObject:
   m_Component:
   - component: {fileID: 224661507456629568}
   - component: {fileID: 222364467215119636}
-  - component: {fileID: 114657565660495592}
   - component: {fileID: 114516961373257330}
   m_Layer: 0
   m_Name: EdtListProject
@@ -211,35 +210,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1169274404279414}
   m_CullTransparentMesh: 0
---- !u!114 &114657565660495592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1169274404279414}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 77622a79bb0a84a4c93d523b8ca7d9d4, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
 --- !u!114 &114516961373257330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,6 +225,7 @@ MonoBehaviour:
   listUi: {fileID: 1665402340360548}
   elemInList: {fileID: 1503583733971442, guid: 4cd36683d49538741ab600fadb58dc02, type: 3}
   listOfProj: {fileID: 1878337576194760}
+  buttonList: []
 --- !u!1 &1320703413031446
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,7 +342,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 224445614477345242}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.06530121
+  m_Size: 0.040000003
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1198,7 +1169,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -55.00006, y: -53}
+  m_AnchoredPosition: {x: -55, y: -53}
   m_SizeDelta: {x: 112.06006, y: 55.9}
   m_Pivot: {x: 0.58895016, y: 0.5}
 --- !u!222 &222755276675344724

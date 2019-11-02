@@ -14,6 +14,7 @@ public class DragAndDrop : MonoBehaviour
     private GameObject trash;
     private ModelAssociation modelScr;
     private Canvas canvas;
+    private GameObject inputValue;
     Vector2 cardSize;
     Vector2 ressSize;
     int projectId;
@@ -94,28 +95,31 @@ public class DragAndDrop : MonoBehaviour
                 gameObject.transform.position = new Vector2(gameObject.transform.position.x, card.transform.position.y - cardSize.y + ressSize.y);
             if (linked == false)
             {
-
-                GameObject inputValue = Instantiate(inputValuePopPup) as GameObject;
-                inputValue.transform.position = new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y, 1);
+                if (inputValue != null)
+                    Destroy(inputValue);
+                inputValue = Instantiate(inputValuePopPup) as GameObject;
+                inputValue.transform.position = new Vector3(-1.5259f, 7.6294f, 1);
                 inputValue.transform.SetParent(canvas.transform, false);
-                ValidateInputValueButton scr = inputValue.transform.Find("Button").GetComponent<ValidateInputValueButton>();
+                ValidateInputValueButton scr = inputValue.transform.Find("InputValue").Find("Button").GetComponent<ValidateInputValueButton>();
                 scr.prepareAction(projectId.ToString(), cardId.ToString(), ressourceId.ToString(),
-                gameObject.transform.localPosition.x.ToString(),
-                gameObject.transform.localPosition.y.ToString(), valueText);
-               // assocId = modelScr.getNbElement();
-               
+               gameObject.transform.localPosition.x.ToString(),
+               gameObject.transform.localPosition.y.ToString(), valueText);
+                    // assocId = modelScr.getNbElement();
+
                 
                 dragged = false;
                 linked = true;
             }
             else
             {
-                GameObject inputValue = Instantiate(inputValuePopPup) as GameObject;
-                ValidateInputValueButton scr = inputValue.transform.Find("Button").GetComponent<ValidateInputValueButton>(); 
+                if (inputValue != null)
+                    Destroy(inputValue);
+                inputValue = Instantiate(inputValuePopPup) as GameObject;
+                ValidateInputValueButton scr = inputValue.transform.Find("InputValue").Find("Button").GetComponent<ValidateInputValueButton>(); 
                 scr.prepareAction(projectId.ToString(), cardId.ToString(), ressourceId.ToString(),
                 gameObject.transform.localPosition.x.ToString(),
                 gameObject.transform.localPosition.y.ToString(), valueText,assocId.ToString());
-                inputValue.transform.position = new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y, 1);
+                inputValue.transform.position = new Vector3(-1.5259f, 7.6294f, 1);
                 inputValue.transform.SetParent(canvas.transform, false);
                 dragged = false;
                 linked = true;
