@@ -21,8 +21,7 @@ public class OverviewController : BasicController
     GameObject modelPhases;
     [SerializeField]
     GameObject projName;
-    [SerializeField]
-    GameObject min;
+
     [SerializeField]
     GameObject max;
     [SerializeField]
@@ -67,10 +66,7 @@ public class OverviewController : BasicController
     
     List<GameObject> ressources;
     List<GameObject> phases;
-    [SerializeField]
-    GameObject asyncToggle;
-    [SerializeField]
-    GameObject turnToggle;
+
     // Use this for initialization
     void Start () {
         ressources = new List<GameObject>();
@@ -108,8 +104,8 @@ public class OverviewController : BasicController
     public void applyInServerResponse(string json)
     {
         Dictionary<string, string> projectData = new Dictionary<string, string>();
-            //api.request(param, "/api/project/" + id.ToString() + "/", "GET");
-
+        //api.request(param, "/api/project/" + id.ToString() + "/", "GET");
+        print(json);
         Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(json);
         projectData.Add("name", resp["name"].ToString());
         projectData.Add("async_game", resp["async_game"].ToString());
@@ -117,20 +113,12 @@ public class OverviewController : BasicController
         projectData.Add("min_player", resp["min_player"].ToString());
         projectData.Add("max_player", resp["max_player"].ToString());
         projectData.Add("description", resp["description"].ToString());
-      //  projNameTitle.GetComponent<TextMeshProUGUI>().text = projectData["name"];
+       // projectData.Add("hand_size", resp["hand_size"].ToString());
+        //  projNameTitle.GetComponent<TextMeshProUGUI>().text = projectData["name"];
         projName.GetComponent<TMP_InputField>().text = " " + projectData["name"];
-        min.GetComponent<TMP_InputField>().text = " " + projectData["min_player"];
-        max.GetComponent<TMP_InputField>().text = " " + projectData["max_player"];
+       // min.GetComponent<TMP_InputField>().text = " " + projectData["min_player"];
+       // max.GetComponent<TMP_InputField>().text = " " + projectData["hand_size"];
         desc.GetComponent<TMP_InputField>().text = " " + projectData["description"];
-
-        if (projectData["async_game"].Equals("True"))
-            asyncToggle.GetComponent<Toggle>().isOn = true;
-        else
-            asyncToggle.GetComponent<Toggle>().isOn = false;
-        if (projectData["turn_game"].Equals("True"))
-            turnToggle.GetComponent<Toggle>().isOn = true;
-        else
-            turnToggle.GetComponent<Toggle>().isOn = false;
     }
 
     public void applyForCards(string json)

@@ -44,18 +44,18 @@ public class PhasesHandler : MonoBehaviour
 
     public void ReorganiseList()
     {
-        this.DelayAction(0.05f, () =>
+      /*  this.DelayAction(0.05f, () =>
         {
             int i = 0;
             m_PhasesList.Clear();
             foreach (Transform t in m_Content)
             {
                 PhaseItemUI item = t.gameObject.GetComponent<PhaseItemUI>();
-                item.PhaseHandler = this;
+              
                 item.indexText.text = i.ToString();
                 m_PhasesList.Add(item);
                 ++i;
             }
-        });
+        });*/
     }
 }

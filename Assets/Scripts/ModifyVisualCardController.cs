@@ -14,6 +14,9 @@ public class ModifyVisualCardController : BasicController
     ImageHandler imageHandler;
 
     [SerializeField]
+    GameObject trash;
+
+    [SerializeField]
     GameObject elemInList;
 
     [SerializeField]
@@ -113,6 +116,8 @@ public class ModifyVisualCardController : BasicController
             dragableScr.setCardId(cardId);
             dragableScr.setRessourceId(int.Parse(assoc.Value["idr"]));
             dragableScr.setProjectId(projectId);
+            dragableScr.setProjectName(projectName);
+            dragableScr.setTrash(trash);
             dragableScr.setValue(int.Parse(assoc.Value["value"]));
             dragableScr.setLinked(true);
             dragable.transform.SetParent(cardVisual.transform, false);
@@ -149,6 +154,7 @@ public class ModifyVisualCardController : BasicController
             ButtonCreateDraggleRess scr = toAdd.GetComponent<ButtonCreateDraggleRess>();
             scr.setProjectId(projectId);
             scr.setCardId(cardId);
+            scr.setTrash(trash);
             scr.setImgId(int.Parse(res.Value["img_id"]));
             scr.setRessId(int.Parse(res.Value["id"]));
           //  toAdd.GetComponent<Image>().sprite = imageHandler.GetSprite(int.Parse(res.Value["id"]));

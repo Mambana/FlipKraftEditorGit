@@ -11,17 +11,19 @@ public class DragAndDrop : MonoBehaviour
     private int value;
     private string name;
     private GameObject card;
-    private GameObject trash;
+    [SerializeField]
+    private GameObject trash = null;
     private ModelAssociation modelScr;
     private Canvas canvas;
     private GameObject inputValue;
+    private GameObject validateBtn;
     Vector2 cardSize;
     Vector2 ressSize;
     int projectId;
     int cardId;
     int ressourceId;
     int assocId;
-
+    string projectName;
     [SerializeField]
     GameObject inputValuePopPup;
     [SerializeField]
@@ -40,14 +42,30 @@ public class DragAndDrop : MonoBehaviour
         name = "";
         cardSize = card.GetComponent<RectTransform>().sizeDelta * canvas.scaleFactor;
         ressSize = gameObject.GetComponent<RectTransform>().sizeDelta * canvas.scaleFactor;
-        
+        validateBtn = GameObject.Find("Validate");
+
     }
 
+    public void setProjectName(string name)
+    {
+        projectName = name;
+    }
+    public void setTrash(GameObject tr)
+    {
+        trash = tr;
+        //if(objectList != null)
+          //  objectList.Add(trash);
+    }
     // Update is called once per frame
     void Update()
     {
+        trash = GameObject.Find("EditTrash");
         if (dragged)
-          gameObject.transform.position = new Vector3(Input.mousePosition.x - ressSize.x / 2, Input.mousePosition.y + ressSize.y / 2, 1);
+        {
+            gameObject.transform.position = new Vector3(Input.mousePosition.x - ressSize.x / 2, Input.mousePosition.y + ressSize.y / 2, 1);
+         
+        }
+
     }
 
     public GameObject overedObject()
@@ -74,7 +92,9 @@ public class DragAndDrop : MonoBehaviour
 
   public void onDrag()
     {
+        
         dragged = true;
+        trash.GetComponent<CanvasGroup>().alpha = 1f;
         gameObject.transform.position = new Vector3(Input.mousePosition.x - ressSize.x / 2 , Input.mousePosition.y + ressSize.y / 2, 1);
         
     }
@@ -82,7 +102,7 @@ public class DragAndDrop : MonoBehaviour
   public void onDrop()
     {       
         GameObject overObj = overedObject();
-        
+       
         if (overObj == card)
         {
             if (gameObject.transform.position.x + ressSize.x > card.transform.position.x + cardSize.x)
@@ -108,7 +128,6 @@ public class DragAndDrop : MonoBehaviour
 
                 
                 dragged = false;
-                linked = true;
             }
             else
             {
@@ -122,24 +141,24 @@ public class DragAndDrop : MonoBehaviour
                 inputValue.transform.position = new Vector3(-1.5259f, 7.6294f, 1);
                 inputValue.transform.SetParent(canvas.transform, false);
                 dragged = false;
-                linked = true;
             }
         }
         else if (overObj == trash)
         {
             print(assocId);
             if (linked)
-                modelScr.removeElem(assocId);
-            linked = false;
+                modelScr.removeElem(projectName, cardId, assocId);
             Destroy(gameObject);
+            validateBtn.GetComponent<ConfirmVisualCard>().removeAssocFromList(ressourceId.ToString());
         }
         else
         {
             gameObject.transform.position = new Vector3(Input.mousePosition.x - ressSize.x / 2, Input.mousePosition.y + ressSize.y / 2, 1);
             if (linked)
-                modelScr.removeElem(assocId);
+                modelScr.removeElem(projectName, cardId, assocId);
             linked = false;
         }
+        trash.GetComponent<CanvasGroup>().alpha = 0f;
         dragged = false;
     }
 

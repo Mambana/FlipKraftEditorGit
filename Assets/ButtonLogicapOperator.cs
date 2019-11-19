@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-public class ButtonSetArraySelection : MonoBehaviour
+public class ButtonLogicapOperator : MonoBehaviour
 {
     [SerializeField]
     GameObject objList;
@@ -20,36 +20,34 @@ public class ButtonSetArraySelection : MonoBehaviour
     private int maxOpKey = 0;
     Toggle LastToggle;
     string originalRules;
-    private List<GameObject> togList;
+
     // Start is called before the first frame update
     void Start()
     {
-        togList = new List<GameObject>();
         toSend = new List<string>();
         selectedOp = new Dictionary<string, string>();
         LastToggle = null;
         opKeyList = new List<string>();
-   
+
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+
     }
-    
- 
+
+
     public void clearContent()
     {
-        foreach(Transform c in objList.transform.GetChildren())
-        {       
-             Destroy(c.gameObject);
+        foreach (Transform c in objList.transform.GetChildren())
+        {
+            Destroy(c.gameObject);
         }
         selectedOp.Clear();
         LastToggle = null;
         opKeyList.Clear();
         originalRules = rulesTxt.GetComponent<TextMeshProUGUI>().text;
-        togList.Clear();
     }
 
     public void setSelectedList(List<string> selection)
@@ -63,12 +61,12 @@ public class ButtonSetArraySelection : MonoBehaviour
         string key;
         int lastIdx = 0;
 
-        while ((lastIdx = rulesString.IndexOf("$o", lastIdx)) != -1)
+        while ((lastIdx = rulesString.IndexOf("$ol", lastIdx)) != -1)
         {
             if (lastIdx >= 0)
             {
-                key = rulesString.Substring(lastIdx, 5);
-                lastIdx += 5;
+                key = rulesString.Substring(lastIdx, 6);
+                lastIdx += 6;
                 if (!opKeyList.Contains(key))
                     opKeyList.Add(key);
             }
@@ -78,35 +76,20 @@ public class ButtonSetArraySelection : MonoBehaviour
 
     public void addRulesOpItem(string toAdd)
     {
-        Dictionary<string, string> dic = new Dictionary<string, string>();
         foreach (string item in opKeyList)
         {
             if (!selectedOp.ContainsKey(item))
             {
+                print("created :" + item);
                 selectedOp.Add(item, toAdd);
                 return;
             }
         }
-        foreach (GameObject tog in togList)
-        {
-            if (tog.GetComponentInChildren<Text>().text.Equals(selectedOp.First().Value) &&
-                tog.GetComponent<Toggle>().isOn == true)
-            {
-                tog.GetComponent<Toggle>().isOn = false;
-                break;
-            }
 
-        }
         string lostKey = selectedOp.First().Key;
+
         selectedOp.Remove(lostKey);
-        foreach (KeyValuePair<string, string> pair in selectedOp)
-        {
-            dic.Add(pair.Key, pair.Value);
-        }
-        dic.Add(lostKey, toAdd);
-        selectedOp.Clear();
-        selectedOp = dic;
-        updateRulesTextForOp();
+        selectedOp.Add(lostKey, toAdd);
 
     }
 
@@ -114,9 +97,9 @@ public class ButtonSetArraySelection : MonoBehaviour
     public void updateRulesTextForOp()
     {
         string rulesString = "";
-        foreach(KeyValuePair<string, string> op in selectedOp)
+        foreach (KeyValuePair<string, string> op in selectedOp)
         {
-           rulesString =  originalRules.Replace(op.Key, op.Value);
+            rulesString = originalRules.Replace(op.Key, op.Value);
         }
         rulesTxt.GetComponent<TextMeshProUGUI>().text = rulesString;
     }
@@ -131,7 +114,8 @@ public class ButtonSetArraySelection : MonoBehaviour
                 GameObject t = Instantiate(m_toggle) as GameObject;
                 Toggle toggle = t.GetComponent<Toggle>();
 
-                toggle.isOn = false;
+                if (toSend.Where(x => x.Contains(elem)).FirstOrDefault() == null)
+                    toggle.isOn = false;
                 t.GetComponentInChildren<Text>().text = elem;
 
                 toggle.onValueChanged.AddListener(delegate
@@ -139,8 +123,13 @@ public class ButtonSetArraySelection : MonoBehaviour
                     string togString = toggle.GetComponentInChildren<Text>().text;
                     if (toggle.isOn)
                     {
+                        if (toSend.Where(x => x.Contains(togString)).FirstOrDefault() == null)
+                            toSend.Add(togString);
                         addRulesOpItem(togString);
-                      updateRulesTextForOp();
+                        updateRulesTextForOp();
+                        if (LastToggle && LastToggle != toggle)
+                            LastToggle.isOn = false;
+                        LastToggle = toggle;
                     }
                     else
                     {
@@ -148,13 +137,11 @@ public class ButtonSetArraySelection : MonoBehaviour
                     }
                 });
                 t.transform.SetParent(objList.transform, false);
-                togList.Add(t);
             }
         }
 
 
     }
-
     public List<string> getSelectedList()
     {
         return (toSend);

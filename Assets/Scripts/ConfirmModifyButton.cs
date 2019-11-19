@@ -19,12 +19,16 @@ public class ConfirmModifyButton : MonoBehaviour {
     [SerializeField]
     GameObject inputDesc;
     [SerializeField]
-    GameObject turnToggle;
+    GameObject wrong;
     [SerializeField]
-    GameObject asyncToggle;
-
+    GameObject paper;
+    [SerializeField]
+    GameObject canvas;
+    [SerializeField]
+    GameObject inputValuePopPup;
     void Start () {
         gameObject.GetComponent<Button>().onClick.AddListener(click);
+        canvas = GameObject.Find("Canvas");
     }
 
     // Update is called once per frame
@@ -52,21 +56,30 @@ public class ConfirmModifyButton : MonoBehaviour {
 
     void click()
     {
+        int nb;
+        GameObject error;
+        GameObject disable;
         model = GameObject.Find("Model");
         ModelTest modelScr = model.GetComponent<ModelTest>();
         string name = inputName.GetComponent<TMP_InputField>().text;
-        string min = inputMin.GetComponent<TMP_InputField>().text;
+       // string min = inputMin.GetComponent<TMP_InputField>().text;
         string max = inputMax.GetComponent<TMP_InputField>().text;
         string desc = inputDesc.GetComponent<TMP_InputField>().text;
         string turn_game = "false";
         string async_game = "false";
-        print(turnToggle.GetComponent<Toggle>().isOn);
-        if (turnToggle.GetComponent<Toggle>().isOn)
-            turn_game = "true";
-        if (asyncToggle.GetComponent<Toggle>().isOn)
-            async_game = "true";
-        print(idToModify+ " " + name + " " + min);
-        modelScr.updateField(projectName, name, min, max, desc, CallDispatcher, async_game, turn_game);
+        if (int.TryParse(max, out nb) == false)
+        {
+            error = Instantiate(wrong) as GameObject;
+            disable = Instantiate(paper) as GameObject;
+            error.GetComponentInChildren<ConfirmErrorBtn>().setParent(error);
+            error.GetComponentInChildren<ConfirmErrorBtn>().setDisableScreen(disable);
+            error.transform.SetParent(canvas.transform, false);
+            disable.transform.SetParent(canvas.transform, false);
+            disable.transform.SetSiblingIndex(98);
+            error.transform.SetSiblingIndex(99);
+        }
+        else
+         modelScr.updateField(projectName, name,  max, desc, CallDispatcher, async_game, turn_game);
        
     }
 }

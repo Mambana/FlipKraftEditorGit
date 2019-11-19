@@ -23,7 +23,7 @@ public class ModelTest : MonoBehaviour {
         return JsonConvert.DeserializeObject<T>(json);
     }
 
-    public void addCollections(string name, string min, string max,
+    public void addCollections(string name,  string handSize,
         string desc, string nb_card, string nb_re,Action<string> call, string async = "false", string turn = "false")
     {
         Dictionary<string, string> toAdd = new Dictionary<string, string>();
@@ -31,8 +31,9 @@ public class ModelTest : MonoBehaviour {
         toAdd.Add("name", name);
         toAdd.Add("async_game", async);
         toAdd.Add("turn_game", turn);
-        toAdd.Add("min_player", min);
-        toAdd.Add("max_player", max);
+        toAdd.Add("hand_size", handSize);
+        toAdd.Add("min", "2");
+        toAdd.Add("max", "2");
         toAdd.Add("description", desc);
         print("IN MODEL");
         api.request(toAdd, "/api/project", "POST", call);
@@ -55,7 +56,7 @@ public class ModelTest : MonoBehaviour {
         api.request(null, "/api/project", "GET", callback);
     }
 
-    public void updateField(string id, string name, string min, string max,
+    public void updateField(string id, string name, string handSize,
         string desc, Action<string> callback = null, string async = "false", string turn = "false")
     {
         Dictionary<string, string> toAdd = new Dictionary<string, string>();
@@ -63,8 +64,9 @@ public class ModelTest : MonoBehaviour {
         toAdd.Add("name", name);
         toAdd.Add("async_game", async);
         toAdd.Add("turn_game", turn);
-        toAdd.Add("min_player", min);
-        toAdd.Add("max_player", max);
+        toAdd.Add("hand_size", handSize);
+        toAdd.Add("min", "2");
+        toAdd.Add("max", "2");
         toAdd.Add("description", desc);
         api.request(toAdd, "/api/project/" + id+ "/", "PUT", callback);
        

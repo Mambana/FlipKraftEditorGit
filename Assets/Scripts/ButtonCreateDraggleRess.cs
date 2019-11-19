@@ -9,6 +9,8 @@ public class ButtonCreateDraggleRess : MonoBehaviour
 
     [SerializeField]
     private GameObject DraggableElem;
+    [SerializeField]
+    private GameObject trash;
     private GameObject card;
     private int projectId;
     private int cardId;
@@ -29,6 +31,10 @@ public class ButtonCreateDraggleRess : MonoBehaviour
         
     }
 
+    public void setTrash(GameObject tr)
+    {
+        trash = tr;
+    }
     void click()
     {
         imgHandlerScr = GameObject.Find("ImageHandler").GetComponent<ImageHandler>();
@@ -38,6 +44,7 @@ public class ButtonCreateDraggleRess : MonoBehaviour
 
         elem.GetComponent<Image>().sprite = imgHandlerScr.GetSprite(imgId);
         scr.setLinked(false);
+        scr.setTrash(trash);
         scr.setName(ressName);
         scr.setCardId(cardId);
         scr.setProjectId(projectId);

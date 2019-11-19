@@ -146,7 +146,7 @@ public class apiConnection : MonoBehaviour
         {
             json = parseDictionary(fields);
         }
-
+        print(route);
         using (UnityWebRequest www = UnityWebRequest.Put(scrData.access("api_address") + route, json))
         {
             www.SetRequestHeader("AUTHORIZATION", authorization);
@@ -177,7 +177,7 @@ public class apiConnection : MonoBehaviour
         using (UnityWebRequest www = UnityWebRequest.Delete(scrData.access("api_address") + route))
         {
             www.SetRequestHeader("AUTHORIZATION", authorization);
-           
+            print("delete/" + route);
             yield return www.SendWebRequest();
             if (www.isNetworkError || www.isHttpError)
             {
@@ -186,6 +186,7 @@ public class apiConnection : MonoBehaviour
             }
             else
             {
+              //  print(www.downloadHandler.text);
                 if (call != null)
                     call("");
             }

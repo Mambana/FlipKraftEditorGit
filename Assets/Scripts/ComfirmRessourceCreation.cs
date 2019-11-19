@@ -19,6 +19,8 @@ public class ComfirmRessourceCreation : MonoBehaviour
     GameObject inputDesc;
     [SerializeField]
     private GameObject ressourceImage;
+    [SerializeField]
+    private GameObject inputPlayerValue;
     private ImageHandler imageHandler;
 
 
@@ -79,8 +81,8 @@ public class ComfirmRessourceCreation : MonoBehaviour
         ModelRessource modelScr = model.GetComponent<ModelRessource>();
         string name = inputName.GetComponent<TMP_InputField>().text;
         string desc = inputDesc.GetComponent<TMP_InputField>().text;
-
-        modelScr.addCollections(name, desc, projectId, projectName, applyInServerResponse, imgId.ToString());
+        string pvalue = inputPlayerValue.GetComponent<TMP_InputField>().text;
+        modelScr.addCollections(name, desc, projectId, projectName, applyInServerResponse, imgId.ToString(), pvalue);
       
     }
 }

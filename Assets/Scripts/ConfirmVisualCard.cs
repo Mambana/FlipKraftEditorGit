@@ -35,6 +35,18 @@ public class ConfirmVisualCard : MonoBehaviour
         assocListToModify.Add(assoc);
     }
 
+    public void removeAssocFromList(string rid)
+    {
+        Dictionary<string, string> toRm = null;
+        foreach (Dictionary<string,string> item in assocListToModify)
+        {
+            if (item["ressource_id"].Equals(rid) == true)
+                toRm = item;
+            
+        }
+        assocListToModify.Remove(toRm);
+    }
+
     void Start()
     {
         assocListToModify = new List<Dictionary<string, string>>();

@@ -10,8 +10,6 @@ public class NewProjController : BasicController {
     [SerializeField]
     private GameObject inputName;
     [SerializeField]
-    private GameObject inputMin;
-    [SerializeField]
     private GameObject inputMax;
     [SerializeField]
     private GameObject inputDesc;
@@ -35,8 +33,6 @@ public class NewProjController : BasicController {
         {
             if (args.ContainsKey("name"))
                 inputName.GetComponent<TMP_InputField>().text = args["name"];
-            if (args.ContainsKey("min"))
-                inputMin.GetComponent<TMP_InputField>().text = args["min"];
             if (args.ContainsKey("max"))
                 inputMax.GetComponent<TMP_InputField>().text = args["max"];
             if (args.ContainsKey("description"))

@@ -91,8 +91,8 @@ public class ModelAssociation : MonoBehaviour
         api.request(toAdd, "/api/project/" + projectName + "/card/" + cardId + "/ressource/" + ressourceId + "/", "PUT", null);
     }
 
-    public void removeElem(int id)
-    {
-        api.request(null, "/api/card/association/" + id.ToString() +"/", "DELETE", null);
+    public void removeElem(string pName, int id, int idr)
+    {//api/project/{name}/card/{id}/ressource/{idr}
+        api.request(null, "/api/project/" + pName + "/card/"+ id.ToString() + "/ressource/" + idr.ToString()+ "/", "DELETE", null);
     }
 }

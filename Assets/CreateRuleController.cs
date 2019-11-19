@@ -11,6 +11,8 @@ public class CreateRuleController : BasicController
     GameObject confirmButton;
     [SerializeField]
     GameObject cancelButton;
+    [SerializeField]
+    GameObject presButton;
 
     void Start()
     {
@@ -28,7 +30,9 @@ public class CreateRuleController : BasicController
         int id = int.Parse(args["project_id"]);
         string projectName = args["project_name"];
         ButtonGetAllRessourcesName butScr = resButton.GetComponent<ButtonGetAllRessourcesName>();
+        ButtonGetAllRessourcesName prbutScr = presButton.GetComponent<ButtonGetAllRessourcesName>();
         butScr.setProjectName(projectName);
+        prbutScr.setProjectName(projectName);
         confirmButton.GetComponent<ConfirmRuleCreationButton>().setProjectId(id.ToString());
         confirmButton.GetComponent<ConfirmRuleCreationButton>().setProjectName(projectName);
         cancelButton.GetComponent<CancelRessourceCreation>().setProjectId(id.ToString());
