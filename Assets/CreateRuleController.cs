@@ -13,6 +13,8 @@ public class CreateRuleController : BasicController
     GameObject cancelButton;
     [SerializeField]
     GameObject presButton;
+    [SerializeField]
+    GameObject phasesButton;
 
     void Start()
     {
@@ -27,10 +29,13 @@ public class CreateRuleController : BasicController
 
     public override void apply()
     {
+        print("applyed");
         int id = int.Parse(args["project_id"]);
         string projectName = args["project_name"];
         ButtonGetAllRessourcesName butScr = resButton.GetComponent<ButtonGetAllRessourcesName>();
         ButtonGetAllRessourcesName prbutScr = presButton.GetComponent<ButtonGetAllRessourcesName>();
+        ButtonSetPhases phButScr = phasesButton.GetComponent<ButtonSetPhases>();
+        phButScr.setProjectName(projectName);
         butScr.setProjectName(projectName);
         prbutScr.setProjectName(projectName);
         confirmButton.GetComponent<ConfirmRuleCreationButton>().setProjectId(id.ToString());

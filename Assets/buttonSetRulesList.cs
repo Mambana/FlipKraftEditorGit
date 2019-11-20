@@ -26,12 +26,12 @@ public class buttonSetRulesList : MonoBehaviour
     void Start()
     {
         rulesSetList = new Dictionary<string, string>();
-        rulesSetList.Add("playFirstCardFromPhase", "Play the first card from phase number :p1");
-        rulesSetList.Add("playAnyCardFromPhase", "Play any card from phase number :p1");
-        rulesSetList.Add("evaluateCardDuel", "if player 1 have the strongest ressource  beetween $r1-2 and $r2-3 do to $j1-0 : $p3-6 $o1-4 $v1-5 " +
+        rulesSetList.Add("playFirstCardFromPhase", "Play the first card from the phase :p1-0");
+        rulesSetList.Add("playAnyCardFromPhase", "Play any card from phase number :p1-0");
+        rulesSetList.Add("evaluateCardDuel", "for phases :p1-n if player 1 have the strongest ressource  beetween $r1-2 and $r2-3 do to $j1-0 : $p3-6 $o1-4 $v1-5 " +
             "if player 2 have the strongest ressource beetween $r1-2 and $r2-3 do to $j2-1 : $p3-6 $o1-4 $v1-5" +
             "");
-        rulesSetList.Add("determineWinner", "if player 1 's ressources is $ol-0 $r1-1 than the player 2, then player 1 win other wise," +
+        rulesSetList.Add("determineWinner", "for phases :p1-n if player 1 's ressources is $ol-0 $r1-1 than the player 2, then player 1 win other wise," +
             "the player 2 win ");
         toSend = new List<string>();
         toggleList = new List<GameObject>();
