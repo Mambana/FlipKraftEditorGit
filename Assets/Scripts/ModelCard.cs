@@ -22,13 +22,14 @@ public class ModelCard : MonoBehaviour {
 
     }
 
-    public void addCollections(string name, string desc, string projectId, string projectName, Action<string> callback)
+    public void addCollections(string name, string desc, string projectId, string projectName, Action<string> callback, string phasesId = "0")
     {
         Dictionary<string, string> toAdd = new Dictionary<string, string>();
 
         toAdd.Add("name", name);
         toAdd.Add("description", desc);
         toAdd.Add("fk_id_project", projectId);
+        toAdd.Add("fk_id_phase", phasesId);
         api.request(toAdd, "/api/project/" + projectName +"/card", "POST", callback);
     }
 

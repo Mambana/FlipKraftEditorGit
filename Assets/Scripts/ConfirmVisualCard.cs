@@ -20,6 +20,7 @@ public class ConfirmVisualCard : MonoBehaviour
     [SerializeField]
     GameObject inputDesc;
     [SerializeField]
+    GameObject parent;
     private List<Dictionary<string, string>> assocListToModify;
 
     public void addAssocToModify(string pId, string cId, string rId, string pX, string pY, string val, string aId = null)
@@ -125,7 +126,7 @@ public class ConfirmVisualCard : MonoBehaviour
         if (desc.Equals(""))
             desc = Guid.NewGuid().ToString();
         if (idToModify == -1)
-            modelScr.addCollections(name, desc, projectId, projectName, sendList);
+            modelScr.addCollections(name, desc, projectId, projectName, sendList, parent.GetComponent<ModifyCardController>().getSelectedPhases());
         else
           modelScr.updateField(idToModify.ToString(), name, desc, projectId, projectName, sendList);
         

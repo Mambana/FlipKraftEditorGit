@@ -47,10 +47,15 @@ public class ModifyCardController : BasicController {
     GameObject RulesListButton;
     // Start is called before the first frame update
 
+    [SerializeField]
+    GameObject PhasesDropDown;
+
+
+    Dictionary<string, string> phases;
     List<object> lastAssoc;
     void Start()
     {
-
+        phases = new Dictionary<string, string>();
         //listOfProj = GameObject.FindWithTag("Container");
         imageHandler = GameObject.Find("ImageHandler").GetComponent<ImageHandler>();
     }
@@ -66,7 +71,39 @@ public class ModifyCardController : BasicController {
         return JsonConvert.DeserializeObject<T>(json);
     }
 
+    public string getSelectedPhases()
+    {
+        int idx = PhasesDropDown.GetComponent<Dropdown>().value;
+        List<Dropdown.OptionData> menuOptions = PhasesDropDown.GetComponent<Dropdown>().options;
+        return (phases[menuOptions[idx].text]);
+    }
+    public void applyForPhases(string json)
+    {
+        Dictionary<int, Dictionary<string, string>> allRessource = new Dictionary<int, Dictionary<string, string>>();
+        List<object> respList = DeserializeJson<List<object>>(json);
+        Dropdown dropdownEventIDs = PhasesDropDown.GetComponent<Dropdown>();
+        int i = 0;
 
+        foreach (object obj in respList)
+        {
+            Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(obj.ToString());
+            Dictionary<string, string> ressourceData = new Dictionary<string, string>();
+
+            ressourceData.Add("name", resp["name"].ToString());
+            ressourceData.Add("id", resp["id"].ToString());
+            allRessource.Add(i, ressourceData);
+            i++;
+        }
+
+        foreach(KeyValuePair<int, Dictionary<string, string>> res in allRessource)
+        {
+            phases.Add(res.Value["name"], res.Value["id"]);
+        }
+        foreach(KeyValuePair<string, string> p in phases)
+        {
+            dropdownEventIDs.AddOptions(new List<string> { p.Key });
+        }
+    }
     public void applyInRessource(string json)
     {
         Dictionary<int, Dictionary<string, string>> allRessource = new Dictionary<int, Dictionary<string, string>>();
@@ -108,15 +145,17 @@ public class ModifyCardController : BasicController {
     {
         GameObject modelRessource;
         GameObject modelCard;
+        GameObject modelPhases;
 
         projectId = int.Parse(args["project_id"]);
         projectName = args["project_name"];
         modelRessource = GameObject.Find("ModelRessource");
         modelCard = GameObject.Find("ModelCard");
+        modelPhases = GameObject.Find("ModelPhases");
         ModelRessource modelResScr = modelRessource.GetComponent<ModelRessource>();
 
         modelResScr.getAll(projectName, applyInRessource);
-
+        modelPhases.GetComponent<ModelPhases>().getAll(projectName, applyForPhases);
 
         ConfirmVisualCard butScr = confirmButton.GetComponent<ConfirmVisualCard>();
         butScr.setIdToModify(-1);
