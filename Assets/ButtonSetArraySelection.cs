@@ -106,19 +106,21 @@ public class ButtonSetArraySelection : MonoBehaviour
         dic.Add(lostKey, toAdd);
         selectedOp.Clear();
         selectedOp = dic;
-        updateRulesTextForOp();
+       // updateRulesTextForOp();
 
     }
 
 
-    public void updateRulesTextForOp()
+    public string updateRulesTextForOp()
     {
-        string rulesString = "";
-        foreach(KeyValuePair<string, string> op in selectedOp)
+        string rulesString = originalRules;
+        foreach (KeyValuePair<string, string> op in selectedOp)
         {
-           rulesString =  originalRules.Replace(op.Key, op.Value);
+
+            rulesString = rulesString.Replace(op.Key, op.Value);
         }
         rulesTxt.GetComponent<TextMeshProUGUI>().text = rulesString;
+        return (rulesString);
     }
     public void setSelection()
     {

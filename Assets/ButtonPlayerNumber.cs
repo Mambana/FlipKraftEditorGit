@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using System.Linq;
 using UnityEngine.UI;
 using TMPro;
-public class ButtonLogicapOperator : MonoBehaviour
+public class ButtonPlayerNumber : MonoBehaviour
 {
     [SerializeField]
     GameObject objList;
@@ -63,12 +63,12 @@ public class ButtonLogicapOperator : MonoBehaviour
         string key;
         int lastIdx = 0;
 
-        while ((lastIdx = rulesString.IndexOf("$ol", lastIdx)) != -1)
+        while ((lastIdx = rulesString.IndexOf("$j", lastIdx)) != -1)
         {
             if (lastIdx >= 0)
             {
-                key = rulesString.Substring(lastIdx, 6);
-                lastIdx += 6;
+                key = rulesString.Substring(lastIdx, 5);
+                lastIdx += 5;
                 if (!opKeyList.Contains(key))
                     opKeyList.Add(key);
             }
@@ -106,16 +106,20 @@ public class ButtonLogicapOperator : MonoBehaviour
         dic.Add(lostKey, toAdd);
         selectedOp.Clear();
         selectedOp = dic;
-        updateRulesTextForOp();
+      //  updateRulesTextForOp();
 
     }
 
+
     public void updateRulesTextForOp()
     {
-        string rulesString = "";
+        string rulesString = originalRules;
+        int i = 0;
         foreach (KeyValuePair<string, string> op in selectedOp)
         {
-            rulesString = originalRules.Replace(op.Key, op.Value);
+         //   print(i.ToString() +":"+ op.Key + " " +op.Value);
+           // i++;
+            rulesString = rulesString.Replace(op.Key, op.Value);
         }
         rulesTxt.GetComponent<TextMeshProUGUI>().text = rulesString;
     }
@@ -153,6 +157,7 @@ public class ButtonLogicapOperator : MonoBehaviour
 
 
     }
+
     public List<string> getSelectedList()
     {
         return (toSend);
