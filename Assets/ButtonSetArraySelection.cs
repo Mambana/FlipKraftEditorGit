@@ -122,6 +122,8 @@ public class ButtonSetArraySelection : MonoBehaviour
         rulesTxt.GetComponent<TextMeshProUGUI>().text = rulesString;
         return (rulesString);
     }
+
+
     public void setSelection()
     {
         clearContent();
@@ -157,8 +159,8 @@ public class ButtonSetArraySelection : MonoBehaviour
 
     }
 
-    public List<string> getSelectedList()
+    public Dictionary<string, string> getSelectedList()
     {
-        return (toSend);
+        return (selectedOp);
     }
 }

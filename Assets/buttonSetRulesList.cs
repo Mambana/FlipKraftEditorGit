@@ -41,7 +41,7 @@ public class buttonSetRulesList : MonoBehaviour
         rulesSetList.Add("evaluateCardDuel", "for phases :p1-n if player 1 have the strongest ressource  beetween $r1-2 and $r2-3 do to $j1-0 : $p3-6 $o1-4 $v1-5 " +
             "if player 2 have the strongest ressource beetween $r1-2 and $r2-3 do to $j2-1 : $p3-6 $o1-4 $v1-5" +
             "");
-        rulesSetList.Add("determineWinner", "for phases :p1-n if player 1 's ressources is $ol-0 $r1-1 than the player 2, then player 1 win other wise," +
+        rulesSetList.Add("determineWinner", "for phases :p1-n if player 1 's ressources is $l-0 $r1-1 than the player 2, then player 1 win other wise," +
             "the player 2 win ");
         toSend = new List<string>();
         toggleList = new List<GameObject>();
@@ -71,6 +71,14 @@ public class buttonSetRulesList : MonoBehaviour
         }
     }
 
+    public string getSelectedRules()
+    {
+        return (selectedOne);
+    }
+    public Dictionary<string, string> getSelectedList()
+    {
+        return (selectedOp);
+    }
     public string updateRulesTextForOp()
     {
         string rulesString = originalRules;
@@ -166,8 +174,5 @@ public class buttonSetRulesList : MonoBehaviour
 
 
     }
-    public List<string> getSelectedList()
-    {
-        return (toSend);
-    }
+
 }

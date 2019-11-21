@@ -74,12 +74,7 @@ public class ConfirmCardRuleModificationButton : MonoBehaviour
         int n;
         string[] descs = new string[1];
         descs[0] = "null";
-        modelScr.updateField(ruleId.ToString(), cardId.ToString(), name, desc,
-            signals.GetComponent<ButtonSetArraySelection>().getSelectedList().ToArray(),
-            types.GetComponent<ButtonSetArraySelection>().getSelectedList().ToArray(),
-            instructions.GetComponent<ButtonSetArraySelection>().getSelectedList().ToArray(),
-            ressources.GetComponent<ButtonGetAllRessourcesName>().getSelectedList().ToArray(), descs,
-             "0", applyInServerResponse);
+      
 
     }
 }

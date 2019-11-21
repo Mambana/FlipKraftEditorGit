@@ -21,6 +21,7 @@ public class ButtonSetPhases : MonoBehaviour
     [SerializeField]
     GameObject rulesTxt;
 
+    private Dictionary<string, string> id_list;
     private Dictionary<string, string> phases;
     private List<GameObject> togList;
     private Dictionary<string, string> selectedOp;
@@ -34,6 +35,7 @@ public class ButtonSetPhases : MonoBehaviour
     int activeToggle = 0;
     void Start()
     {
+        id_list = new Dictionary<string, string>();
         phases = new Dictionary<string, string>();
         togList = new List<GameObject>();
         toSend = new List<string>();
@@ -52,6 +54,7 @@ public class ButtonSetPhases : MonoBehaviour
     {
 
     }
+
 
     public static T DeserializeJson<T>(string json)
     {
@@ -161,12 +164,10 @@ public class ButtonSetPhases : MonoBehaviour
         parseRulesOpText();
         foreach (string elem in stringList)
         {
-            print(elem);
             foreach (string str in opKeyList)
             {
                 GameObject t = Instantiate(m_toggle) as GameObject;
                 Toggle toggle = t.GetComponent<Toggle>();
-                print(str);
                 toggle.isOn = false;
                 t.GetComponentInChildren<Text>().text = elem;
 
@@ -207,9 +208,14 @@ public class ButtonSetPhases : MonoBehaviour
         modelRes.getAll(projectName, applyinResponse);
     }
 
-    public List<string> getSelectedList()
+    public Dictionary<string, string> getSelectedList()
     {
-        return (toSend);
+        Dictionary<string, string> toReturn = new Dictionary<string, string>();
+        foreach (KeyValuePair<string, string> sel in selectedOp)
+        {
+            toReturn.Add(sel.Key, phases[sel.Value]);
+        }
+        return (toReturn);
     }
 
     public void setSelectedList(List<string> l)

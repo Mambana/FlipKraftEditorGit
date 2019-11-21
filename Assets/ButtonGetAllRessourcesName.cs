@@ -23,6 +23,7 @@ public class ButtonGetAllRessourcesName : MonoBehaviour
 
 
     private List<GameObject> togList;
+    private Dictionary<string, string> id_list;
     private Dictionary<string, string> selectedOp;
     private List<string> opKeyList;
     private int maxOpKey = 0;
@@ -34,6 +35,7 @@ public class ButtonGetAllRessourcesName : MonoBehaviour
     int activeToggle = 0;
     void Start()
     {
+        id_list = new Dictionary<string, string>();
         togList = new List<GameObject>();
         toSend = new List<string>();
         stringList = new List<string>();
@@ -141,18 +143,33 @@ public class ButtonGetAllRessourcesName : MonoBehaviour
             Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(obj.ToString());
             if (playerRessources)
             {
-               
+
                 if (!resp["player_value"].ToString().Equals("0") && !resp["player_value"].ToString().Equals(""))
+                {
                     stringList.Add(resp["name"].ToString());
+                    id_list.Add(resp["name"].ToString(), resp["id"].ToString());
+                }
 
             }
             else
-            stringList.Add(resp["name"].ToString());
+            {            
+                  stringList.Add(resp["name"].ToString());
+                  id_list.Add(resp["name"].ToString(), resp["id"].ToString());
+            }
           
         }
         print(stringList);
     }
 
+    public Dictionary<string, string> getSelectedList()
+    {
+        Dictionary<string, string> toReturn = new Dictionary<string, string>();
+        foreach(KeyValuePair<string, string> sel in selectedOp)
+        {
+            toReturn.Add(sel.Key, id_list[sel.Value]);
+        }
+        return (toReturn);
+    }
     public void clearContent()
     {
         foreach (Transform c in objList.transform.GetChildren())
@@ -219,10 +236,6 @@ public class ButtonGetAllRessourcesName : MonoBehaviour
         modelRes.getAll(projectName, applyinResponse);
     }
 
-    public List<string> getSelectedList()
-    {
-        return (toSend);
-    }
 
     public void setSelectedList(List<string> l)
     {

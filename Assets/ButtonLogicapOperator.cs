@@ -38,7 +38,10 @@ public class ButtonLogicapOperator : MonoBehaviour
 
     }
 
-
+    public Dictionary<string, string> getSelectedList()
+    {
+        return (selectedOp);
+    }
     public void clearContent()
     {
         foreach (Transform c in objList.transform.GetChildren())
@@ -63,12 +66,12 @@ public class ButtonLogicapOperator : MonoBehaviour
         string key;
         int lastIdx = 0;
 
-        while ((lastIdx = rulesString.IndexOf("$ol", lastIdx)) != -1)
+        while ((lastIdx = rulesString.IndexOf("$l", lastIdx)) != -1)
         {
             if (lastIdx >= 0)
             {
-                key = rulesString.Substring(lastIdx, 6);
-                lastIdx += 6;
+                key = rulesString.Substring(lastIdx, 5);
+                lastIdx += 5;
                 if (!opKeyList.Contains(key))
                     opKeyList.Add(key);
             }
@@ -152,9 +155,5 @@ public class ButtonLogicapOperator : MonoBehaviour
         }
 
 
-    }
-    public List<string> getSelectedList()
-    {
-        return (toSend);
     }
 }

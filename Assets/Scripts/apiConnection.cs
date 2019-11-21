@@ -142,10 +142,10 @@ public class apiConnection : MonoBehaviour
         string json =  JsonConvert.SerializeObject(fields, Formatting.Indented);
 
 
-        if (askParse)
+        /*if (askParse)
         {
             json = parseDictionary(fields);
-        }
+        }*/
         print(route);
         using (UnityWebRequest www = UnityWebRequest.Put(scrData.access("api_address") + route, json))
         {

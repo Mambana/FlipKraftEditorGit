@@ -72,12 +72,7 @@ public class ConfirmCardRuleCreationButton : MonoBehaviour
         string desc = inputDesc.GetComponent<TMP_InputField>().text;
         int n;
         string[] descs = new string[1];
-        modelScr.addCollections(cardId.ToString(), projectName, name, desc,
-            signals.GetComponent<ButtonSetArraySelection>().getSelectedList().ToArray(),
-            types.GetComponent<ButtonSetArraySelection>().getSelectedList().ToArray(),
-            instructions.GetComponent<ButtonSetArraySelection>().getSelectedList().ToArray(),
-            ressources.GetComponent<ButtonGetAllRessourcesName>().getSelectedList().ToArray(), descs,
-             "0", applyInServerResponse);
+    
 
 
     }

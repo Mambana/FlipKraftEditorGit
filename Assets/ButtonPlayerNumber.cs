@@ -110,7 +110,10 @@ public class ButtonPlayerNumber : MonoBehaviour
 
     }
 
-
+    public Dictionary<string, string> getSelectedList()
+    {
+        return (selectedOp);
+    }
     public void updateRulesTextForOp()
     {
         string rulesString = originalRules;
@@ -158,8 +161,4 @@ public class ButtonPlayerNumber : MonoBehaviour
 
     }
 
-    public List<string> getSelectedList()
-    {
-        return (toSend);
-    }
 }

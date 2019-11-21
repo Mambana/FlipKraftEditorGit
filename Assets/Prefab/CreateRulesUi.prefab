@@ -494,8 +494,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objList: {fileID: 7446531727318417064}
   stringList:
-  - Player 1
-  - Player 2
+  - 1
+  - 2
   m_toggle: {fileID: 2425037147531266531, guid: f782badb8aa6ccc4b9729909be0c541e,
     type: 3}
   rulesTxt: {fileID: 3691814484797284338}
@@ -4248,12 +4248,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e87adf6cfc9a76f469859953ebe3eb8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputName: {fileID: 0}
-  inputDesc: {fileID: 0}
-  signals: {fileID: 7446531727888736062}
-  types: {fileID: 7446531727080092785}
-  instructions: {fileID: 7446531728851335415}
   ressources: {fileID: 7446531727992423235}
+  rules: {fileID: 7446531727888736062}
+  operators: {fileID: 7446531727080092785}
+  opLogic: {fileID: 6957966885311712016}
+  playerRes: {fileID: 7446531728851335415}
+  res: {fileID: 7446531727992423235}
+  playerNb: {fileID: 2168043198571685996}
+  phases: {fileID: 3433139143081697319}
 --- !u!1 &8903802886195732228
 GameObject:
   m_ObjectHideFlags: 0

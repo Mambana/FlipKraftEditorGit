@@ -73,12 +73,7 @@ public class ConfirmRuleModificationButton : MonoBehaviour
         int n;
         string[] descs = new string[1];
         descs[0] = "null";
-        modelScr.updateField(ruleId.ToString(), projectName, name, desc,
-            signals.GetComponent<ButtonSetArraySelection>().getSelectedList().ToArray(),
-            types.GetComponent<ButtonSetArraySelection>().getSelectedList().ToArray(),
-            instructions.GetComponent<ButtonSetArraySelection>().getSelectedList().ToArray(),
-            ressources.GetComponent<ButtonGetAllRessourcesName>().getSelectedList().ToArray(), descs,
-             "0", applyInServerResponse);
+  
 
     }
 }
