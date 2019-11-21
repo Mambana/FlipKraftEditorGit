@@ -2244,8 +2244,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 537367905519050595}
   m_HandleRect: {fileID: 537367905519050592}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 0.99999994
+  m_Value: 0
+  m_Size: 0.9999998
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2453,6 +2453,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e67ce6ab7204cff4b83d351b15a7907e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputValue: {fileID: 7312593411972029740, guid: 1f2d3a6c48d684a418bdc1545836daeb,
+    type: 3}
   rulesSetText: {fileID: 3691814484797284338}
   objList: {fileID: 7446531727318417064}
   stringList:
@@ -2462,6 +2464,7 @@ MonoBehaviour:
   - determineWinner
   m_toggle: {fileID: 2425037147531266531, guid: f782badb8aa6ccc4b9729909be0c541e,
     type: 3}
+  Layout: {fileID: 4680306669437296865}
 --- !u!1 &7446531727992423235
 GameObject:
   m_ObjectHideFlags: 0
@@ -2843,7 +2846,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8977026011774927214}
   m_HandleRect: {fileID: 8977026011774927213}
   m_Direction: 2
-  m_Value: 0.9999999
+  m_Value: 1
   m_Size: 0.42408988
   m_NumberOfSteps: 0
   m_OnValueChanged:

@@ -10,6 +10,8 @@ using TMPro;
 public class buttonSetRulesList : MonoBehaviour
 {
     [SerializeField]
+    GameObject inputValue;
+    [SerializeField]
     private GameObject rulesSetText;
     private List<GameObject> toggleList;
     [SerializeField]
@@ -19,12 +21,20 @@ public class buttonSetRulesList : MonoBehaviour
     Dictionary<string, string> rulesSetList;
     [SerializeField]
     GameObject m_toggle;
+    [SerializeField]
+    GameObject Layout;
     private List<string> toSend;
     private string selectedOne;
-
+    private string originalRules;
+    private Dictionary<string, GameObject> selectedInput;
+    private Dictionary<string, string> selectedOp;
+    private List<string> opKeyList;
     // Start is called before the first frame update
     void Start()
     {
+        opKeyList = new List<string>();
+        selectedOp = new Dictionary<string, string>();
+        selectedInput = new Dictionary<string, GameObject>();
         rulesSetList = new Dictionary<string, string>();
         rulesSetList.Add("playFirstCardFromPhase", "Play the first card from the phase :p1-0");
         rulesSetList.Add("playAnyCardFromPhase", "Play any card from phase number :p1-0");
@@ -40,9 +50,56 @@ public class buttonSetRulesList : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        foreach(KeyValuePair<string, GameObject> select in selectedInput)
+        {
+            if (!select.Value.GetComponent<InputField>().text.Equals(""))
+            {
+                if (selectedOp.ContainsKey(select.Key))
+                {
+                    if (!selectedOp[select.Key].Equals(select.Value.GetComponent<InputField>().text))
+                    {
+                        selectedOp[select.Key] = select.Value.GetComponent<InputField>().text;
+                        updateRulesTextForOp();
+                    }
+                }
+                else
+                    selectedOp.Add(select.Key, select.Value.GetComponent<InputField>().text);
+            }
 
+
+
+        }
     }
 
+    public string updateRulesTextForOp()
+    {
+        string rulesString = originalRules;
+        foreach (KeyValuePair<string, string> op in selectedOp)
+        {
+
+            rulesString = rulesString.Replace(op.Key, op.Value);
+        }
+        rulesSetText.GetComponent<TextMeshProUGUI>().text = rulesString;
+        return (rulesString);
+    }
+    private void parseRulesOpText()
+    {
+        string rulesString = rulesSetText.GetComponent<TextMeshProUGUI>().text;
+        string key;
+        int lastIdx = 0;
+
+        while ((lastIdx = rulesString.IndexOf("$v", lastIdx)) != -1)
+        {
+            if (lastIdx >= 0)
+            {
+                key = rulesString.Substring(lastIdx, 5);
+                lastIdx += 5;
+                if (!opKeyList.Contains(key))
+                    opKeyList.Add(key);
+            }
+
+        }
+    }
 
     public void clearContent()
     {
@@ -89,8 +146,16 @@ public class buttonSetRulesList : MonoBehaviour
                 {
                     unCheckAll(togString);      
                     selectedOne = togString;
-                    print(selectedOne);
                     rulesSetText.GetComponent<TextMeshProUGUI>().text = rulesSetList[selectedOne];
+                    originalRules = rulesSetList[selectedOne];
+                   parseRulesOpText();
+                    foreach(string str in opKeyList)
+                    {
+                        GameObject input = Instantiate(inputValue) as GameObject;
+                        input.transform.SetParent(Layout.transform, false);
+                        selectedInput.Add(str, input);
+                       
+                    }
                 }
                 else
                     toSend.RemoveAll(x => x.Contains(togString));
