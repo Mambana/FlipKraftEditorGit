@@ -132,7 +132,6 @@ public class ButtonGetAllRessourcesName : MonoBehaviour
 
     public void applyinResponse(string json)
     {
-        print(json);
         Dictionary<int, Dictionary<string, string>> allRessource = new Dictionary<int, Dictionary<string, string>>();
         List<object> respList = DeserializeJson<List<object>>(json);
      
@@ -141,24 +140,31 @@ public class ButtonGetAllRessourcesName : MonoBehaviour
         foreach (object obj in respList)
         {
             Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(obj.ToString());
-            if (playerRessources)
-            {
 
-                if (!resp["player_value"].ToString().Equals("0") && !resp["player_value"].ToString().Equals(""))
+            if (resp != null)
+            {
+                if (playerRessources)
+                {
+                    if (resp.ContainsKey("player_value"))
+                    {
+                        if (resp["player_value"] != null)
+                        {
+                            if (!resp["player_value"].ToString().Equals("0") && !resp["player_value"].ToString().Equals(""))
+                            {
+                                stringList.Add(resp["name"].ToString());
+                                id_list.Add(resp["name"].ToString(), resp["id"].ToString());
+                            }
+                        }
+                    }
+                }
+                else
                 {
                     stringList.Add(resp["name"].ToString());
                     id_list.Add(resp["name"].ToString(), resp["id"].ToString());
                 }
-
-            }
-            else
-            {            
-                  stringList.Add(resp["name"].ToString());
-                  id_list.Add(resp["name"].ToString(), resp["id"].ToString());
             }
           
         }
-        print(stringList);
     }
 
     public Dictionary<string, string> getSelectedList()

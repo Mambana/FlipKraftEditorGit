@@ -87,7 +87,7 @@ public class apiConnection : MonoBehaviour
        
         using (UnityWebRequest www = UnityWebRequest.Post(scrData.access("api_address") + route, form))
         {
-            print(scrData.access("api_address") + route);
+          
             www.SetRequestHeader("AUTHORIZATION", authorization);
 
             yield return www.SendWebRequest();
@@ -159,7 +159,7 @@ public class apiConnection : MonoBehaviour
             {
                 print(www.error);
                 print(scrData.access("api_address") + route);
-                print(json);
+           
                 instantiateErrorPopup();
             }
             else

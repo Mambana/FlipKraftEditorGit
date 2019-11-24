@@ -66,13 +66,10 @@ public class ModelPhases : MonoBehaviour
         api.request(toAdd, "/api/project/" + projectName + "/phase/" + id + "/", "PUT", callback);
     }
 
-    public void addRulesToPhases(string id, string projectId, string projectName, string jsonPack, Action<string> callback = null)
+    public void addRulesToPhases(string id, string projectName, string jsonPack, Action<string> callback = null)
     {
         Dictionary<string, string> toAdd = new Dictionary<string, string>();
 
-        toAdd.Add("name", name);
-        toAdd.Add("fk_id_project", projectId);
-        toAdd.Add("playable", "true");
         toAdd.Add("pack", jsonPack);
         api.request(toAdd, "/api/project/" + projectName + "/phase/" + id + "/", "PUT", callback, null, null, true);
     }

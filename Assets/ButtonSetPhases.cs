@@ -27,6 +27,7 @@ public class ButtonSetPhases : MonoBehaviour
     private Dictionary<string, string> selectedOp;
     private List<string> opKeyList;
     private int maxOpKey = 0;
+    private Dictionary<string,List<pack>> phasesRules; 
     Toggle LastToggle;
     string originalRules;
 
@@ -35,6 +36,7 @@ public class ButtonSetPhases : MonoBehaviour
     int activeToggle = 0;
     void Start()
     {
+        phasesRules = new Dictionary<string, List<pack>>();
         id_list = new Dictionary<string, string>();
         phases = new Dictionary<string, string>();
         togList = new List<GameObject>();
@@ -127,16 +129,23 @@ public class ButtonSetPhases : MonoBehaviour
 
     public void applyinResponse(string json)
     {
-        print(json);
         Dictionary<int, Dictionary<string, string>> allRessource = new Dictionary<int, Dictionary<string, string>>();
         List<object> respList = DeserializeJson<List<object>>(json);
+        List<pack> packList;
 
-        print("in apply");
+        print(json);
         //   destroyList(ressources);
         foreach (object obj in respList)
         {
             Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(obj.ToString());
-             stringList.Add(resp["name"].ToString());
+            if (resp.ContainsKey("name"))
+                stringList.Add(resp["name"].ToString());
+            if (resp.ContainsKey("pack"))
+            {
+                packList = DeserializeJson<List<pack>>(resp["pack"].ToString());
+                packList.ToString();
+                phasesRules.Add(resp["id"].ToString(), packList);
+            }
             phases.Add(resp["name"].ToString(), resp["id"].ToString());
 
         }
@@ -157,6 +166,15 @@ public class ButtonSetPhases : MonoBehaviour
 
     }
 
+    public Dictionary<string, List<pack>> getPackList()
+    {
+        return(phasesRules);
+    }
+
+    public List<pack> getPhasesPackList(string id)
+    {
+        return (phasesRules[id]);
+    }
     public void setSelection()
     {
         string strRules = null;

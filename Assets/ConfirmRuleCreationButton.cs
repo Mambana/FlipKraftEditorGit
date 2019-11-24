@@ -31,7 +31,10 @@ public class ConfirmRuleCreationButton : MonoBehaviour
     GameObject playerNb;
     [SerializeField]
     GameObject phases;
+    [SerializeField]
+    GameObject phasesRules;
     Dictionary<int, string> selParam;
+    List<pack> p;
     string selectedRules;
     string relatedPhases;
     string idphases;
@@ -79,11 +82,15 @@ public class ConfirmRuleCreationButton : MonoBehaviour
         
         foreach(KeyValuePair<string, string> par in toMerge)
         {
-            if (int.TryParse(par.Key.Substring(4), out idx ))
-             selParam.Add(idx, par.Value);
+            if (int.TryParse(par.Key.Substring(4), out idx))
+            {
+                selParam.Add(idx, par.Value);
+                if (par.Key.Contains(":p"))
+                    idphases = par.Value;
+            }
             else
             {
-               idphases = par.Value;
+                idphases = par.Value;
             }
         }
     }
@@ -126,8 +133,9 @@ public class ConfirmRuleCreationButton : MonoBehaviour
     {
         model = GameObject.Find("ModelPhases");
         pack rules = new pack();
-        List<pack> tab = new List<pack>();
-        tab.Add(rules);
+
+
+      
         ModelPhases modelScr = model.GetComponent<ModelPhases>();
        // string name = inputName.GetComponent<TMP_InputField>().text;
         //string desc = inputDesc.GetComponent<TMP_InputField>().text;
@@ -135,12 +143,15 @@ public class ConfirmRuleCreationButton : MonoBehaviour
         string[] descs = new string[1];
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
         appendAllParams();
+        p = phases.GetComponent<ButtonSetPhases>().getPhasesPackList(idphases);
+        p.Add(rules);
         List<string> param = getOrderdList();
+        
         rules.vars = param;
         rules.name = selectedRules;
-        string output = JsonConvert.SerializeObject(tab);
+        string output = JsonConvert.SerializeObject(p);
         print(output);
-        modelScr.addRulesToPhases(idphases, projectId, projectName, output, applyInServerResponse);
+        modelScr.addRulesToPhases(idphases, projectName,  output, applyInServerResponse);
 
 
     }
