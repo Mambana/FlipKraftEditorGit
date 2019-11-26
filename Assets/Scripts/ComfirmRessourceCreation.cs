@@ -82,6 +82,8 @@ public class ComfirmRessourceCreation : MonoBehaviour
         string name = inputName.GetComponent<TMP_InputField>().text;
         string desc = inputDesc.GetComponent<TMP_InputField>().text;
         string pvalue = inputPlayerValue.GetComponent<TMP_InputField>().text;
+        if (pvalue.Equals(""))
+            pvalue = null;
         modelScr.addCollections(name, desc, projectId, projectName, applyInServerResponse, imgId.ToString(), pvalue);
       
     }

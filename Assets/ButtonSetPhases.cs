@@ -133,7 +133,7 @@ public class ButtonSetPhases : MonoBehaviour
         List<object> respList = DeserializeJson<List<object>>(json);
         List<pack> packList;
 
-        print(json);
+        
         //   destroyList(ressources);
         foreach (object obj in respList)
         {
@@ -142,6 +142,7 @@ public class ButtonSetPhases : MonoBehaviour
                 stringList.Add(resp["name"].ToString());
             if (resp.ContainsKey("pack"))
             {
+                print(resp["pack"].ToString() + "frome : " + json);
                 packList = DeserializeJson<List<pack>>(resp["pack"].ToString());
                 packList.ToString();
                 phasesRules.Add(resp["id"].ToString(), packList);

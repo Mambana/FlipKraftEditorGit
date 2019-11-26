@@ -23,7 +23,7 @@ public class ModelRessource : MonoBehaviour {
         return JsonConvert.DeserializeObject<T>(json);
     }
 
-    public void addCollections(string name, string desc, string projectId, string projectName,  Action<string> callback, string imgId = "0", string playerVal = "0")
+    public void addCollections(string name, string desc, string projectId, string projectName,  Action<string> callback, string imgId = "0", string playerVal = null)
     {
         Dictionary<string, string> toAdd = new Dictionary<string, string>();
 
@@ -31,7 +31,8 @@ public class ModelRessource : MonoBehaviour {
         toAdd.Add("description", desc);
         toAdd.Add("fk_id_project", projectId);
         toAdd.Add("img_id", imgId);
-        toAdd.Add("player_value", playerVal);
+        if (playerVal != null)
+         toAdd.Add("player_value", playerVal);
         api.request(toAdd, "/api/project/" + projectName + "/ressource", "POST", callback);
         
     }

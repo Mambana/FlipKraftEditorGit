@@ -33,6 +33,7 @@ public class ModelPhases : MonoBehaviour
         toAdd.Add("description", desc);
         toAdd.Add("playable", "true");
         toAdd.Add("priority", priority);
+            toAdd.Add("pack", "[]");
         api.request(toAdd, "/api/project/" + projectName + "/phase", "POST", callback);
 
     }
@@ -54,7 +55,7 @@ public class ModelPhases : MonoBehaviour
 
     }
 
-    public void updateField(string id, string projectId, string projectName ,string name, string desc, string priority, Action<string> callback = null)
+    public void updateField(string id, string projectId, string projectName ,string name, string desc, string priority, string jsonPack = null, Action<string> callback = null)
     {
         Dictionary<string, string> toAdd = new Dictionary<string, string>();
 
@@ -63,6 +64,8 @@ public class ModelPhases : MonoBehaviour
         toAdd.Add("fk_id_project", projectId);
         toAdd.Add("priority", priority);
         toAdd.Add("playable", "true");
+        if (jsonPack != null)
+            toAdd.Add("pack", jsonPack);
         api.request(toAdd, "/api/project/" + projectName + "/phase/" + id + "/", "PUT", callback);
     }
 

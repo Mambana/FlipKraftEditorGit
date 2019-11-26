@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
+using Newtonsoft.Json;
 public class ConfirmModifyPhaseButton : MonoBehaviour
 {
     int idToModify;
@@ -16,7 +16,8 @@ public class ConfirmModifyPhaseButton : MonoBehaviour
     GameObject inputDesc;
     [SerializeField]
     GameObject inputPriority;
-
+    [SerializeField]
+    GameObject parent;
     void Start()
     {
         gameObject.GetComponent<Button>().onClick.AddListener(click);
@@ -66,7 +67,14 @@ public class ConfirmModifyPhaseButton : MonoBehaviour
         bool isNumeric = int.TryParse(priority, out n);
         if (isNumeric == false)
             return;
-        modelScr.updateField(idToModify.ToString(), projectId, projectName,  name, desc, priority, CallDispatcher);
+        List<pack> packList = parent.GetComponent<ModifyPhaseController>().getPackList();
+        string json;
+        if (packList.Count == 0)
+             json = JsonConvert.SerializeObject(new List<pack>());
+         json = JsonConvert.SerializeObject(packList);
+        print(json);
+      
+        modelScr.updateField(idToModify.ToString(), projectId, projectName,  name, desc, priority, json, CallDispatcher);
 
     }
 }

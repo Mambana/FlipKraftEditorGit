@@ -149,7 +149,7 @@ public class ButtonGetAllRessourcesName : MonoBehaviour
                     {
                         if (resp["player_value"] != null)
                         {
-                            if (!resp["player_value"].ToString().Equals("0") && !resp["player_value"].ToString().Equals(""))
+                            if (!resp["player_value"].ToString().Equals(""))
                             {
                                 stringList.Add(resp["name"].ToString());
                                 id_list.Add(resp["name"].ToString(), resp["id"].ToString());

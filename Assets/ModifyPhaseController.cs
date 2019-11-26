@@ -18,10 +18,15 @@ public class ModifyPhaseController : BasicController
     GameObject confirmButton;
     [SerializeField]
     GameObject removeButton;
+    [SerializeField]
+    GameObject LastRulesTxt;
+    [SerializeField]
+    GameObject btnRmPack;
     int projectId;
     GameObject model;
     int idToModify;
     string projectName;
+    List<pack> packList;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +39,22 @@ public class ModifyPhaseController : BasicController
 
     }
 
+    public void popLastRule()
+    {
+        if (packList.Count > 0)
+        {
+            packList.RemoveAt(packList.Count - 1);
+            if (packList.Count != 0)
+                LastRulesTxt.GetComponent<TextMeshProUGUI>().text = packList[packList.Count - 1].name;
+        }
+        else 
+            LastRulesTxt.GetComponent<TextMeshProUGUI>().text = "no more rules ...";
+    }
+
+    public List<pack> getPackList()
+    {
+        return (packList);
+    }
     public static T DeserializeJson<T>(string json)
     {
         return JsonConvert.DeserializeObject<T>(json);
@@ -47,6 +68,13 @@ public class ModifyPhaseController : BasicController
         phaseData.Add("description", resp["description"].ToString());
         phaseData.Add("fk_id_project", resp["fk_id_project"].ToString());
         phaseData.Add("priority", resp["priority"].ToString());
+        if (resp.ContainsKey("pack"))
+        {
+            packList = DeserializeJson<List<pack>>(resp["pack"].ToString());
+            if (packList.Count > 0)
+                LastRulesTxt.GetComponent<TextMeshProUGUI>().text = packList[packList.Count - 1].name;
+
+        }
         inputName.GetComponent<TMP_InputField>().text = phaseData["name"];
         inputDesc.GetComponent<TMP_InputField>().text = phaseData["description"];
         inputPriority.GetComponent<TMP_InputField>().text = phaseData["priority"];
