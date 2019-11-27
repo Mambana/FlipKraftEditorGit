@@ -117,6 +117,18 @@ public class buttonSetRulesList : MonoBehaviour
         }
     }
 
+    public void clearInputList()
+    {
+        if (selectedInput != null)
+        {
+            foreach (KeyValuePair<string, GameObject> input in selectedInput)
+            {
+                Destroy(input.Value);
+            }
+            selectedInput.Clear();
+        }
+    }
+
     public void setSelectedList(List<string> selection)
     {
         toSend = selection;
@@ -152,6 +164,9 @@ public class buttonSetRulesList : MonoBehaviour
                 string togString = toggle.GetComponentInChildren<Text>().text;
                 if (toggle.isOn)
                 {
+                    if (opKeyList != null)
+                        opKeyList.Clear();
+                    clearInputList();
                     unCheckAll(togString);      
                     selectedOne = togString;
                     rulesSetText.GetComponent<TextMeshProUGUI>().text = rulesSetList[selectedOne];

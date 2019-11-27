@@ -22,7 +22,7 @@ public class ModelCard : MonoBehaviour {
 
     }
 
-    public void addCollections(string name, string desc, string projectId, string projectName, Action<string> callback, string phasesId = "0")
+    public void addCollections(string name, string desc, string projectId, string projectName, Action<string> callback, string phasesId = null)
     {
         Dictionary<string, string> toAdd = new Dictionary<string, string>();
 
@@ -54,13 +54,14 @@ public class ModelCard : MonoBehaviour {
        api.request(null, "/api/project/" + projectName + "/card", "GET", callback); 
     }
 
-    public void updateField(string id, string name, string desc, string projectId, string projectName, Action<string> callback = null)
+    public void updateField(string id, string name, string desc, string projectId, string projectName, Action<string> callback = null, string phasesId = null)
     {
         Dictionary<string, string> toAdd = new Dictionary<string, string>();
 
         toAdd.Add("name", name);
         toAdd.Add("description", desc);
         toAdd.Add("fk_id_project", projectId);
+        toAdd.Add("fk_id_phase", phasesId);
         api.request(toAdd, "/api/project/" + projectName +"/card/" + id + "/", "PUT", callback);
     }
 

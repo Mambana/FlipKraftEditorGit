@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Newtonsoft.Json;
+using System.Linq;
 
 public class ModifyVisualCardController : BasicController
 {
@@ -48,12 +49,19 @@ public class ModifyVisualCardController : BasicController
 
     [SerializeField]
     GameObject RulesListButton;
+
+    [SerializeField]
+    GameObject PhasesDropDown;
+
+    [SerializeField]
+    GameObject txtPhases;
+    Dictionary<string, string> phases;
     // Start is called before the first frame update
    
     List<object> lastAssoc;
     void Start()
     {
-       
+        phases = new Dictionary<string, string>();
         //listOfProj = GameObject.FindWithTag("Container");
         imageHandler = GameObject.Find("ImageHandler").GetComponent<ImageHandler>();
     }
@@ -80,6 +88,43 @@ public class ModifyVisualCardController : BasicController
         
     }
 
+    public string getSelectedPhases()
+    {
+        int idx = PhasesDropDown.GetComponent<Dropdown>().value;
+        List<Dropdown.OptionData> menuOptions = PhasesDropDown.GetComponent<Dropdown>().options;
+        return (phases[menuOptions[idx].text]);
+    }
+    public void applyForPhases(string json)
+    {
+        Dictionary<int, Dictionary<string, string>> allRessource = new Dictionary<int, Dictionary<string, string>>();
+        List<object> respList = DeserializeJson<List<object>>(json);
+        Dropdown dropdownEventIDs = PhasesDropDown.GetComponent<Dropdown>();
+        int i = 0;
+
+        foreach (object obj in respList)
+        {
+            Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(obj.ToString());
+            Dictionary<string, string> ressourceData = new Dictionary<string, string>();
+
+            ressourceData.Add("name", resp["name"].ToString());
+            ressourceData.Add("id", resp["id"].ToString());
+            allRessource.Add(i, ressourceData);
+            i++;
+        }
+
+        foreach (KeyValuePair<int, Dictionary<string, string>> res in allRessource)
+        {
+            phases.Add(res.Value["name"], res.Value["id"]);
+        }
+        foreach (KeyValuePair<string, string> p in phases)
+        {
+            dropdownEventIDs.AddOptions(new List<string> { p.Key });
+        }
+        GameObject modelCard;
+        modelCard = GameObject.Find("ModelCard");
+        ModelCard modelCardScr = modelCard.GetComponent<ModelCard>();
+        modelCardScr.find(cardId, projectName, applyOnCard);
+    }
     public void applyOnCard(string json)
     {
         print(json);
@@ -90,6 +135,7 @@ public class ModifyVisualCardController : BasicController
         cardData.Add("name", resp["name"].ToString());
         cardData.Add("description", resp["description"].ToString());
         cardData.Add("fk_id_project", resp["fk_id_project"].ToString());
+        //txtPhases.GetComponent<TextMeshProUGUI>().text = phases.FirstOrDefault(x => x.Value == resp["fk_id_phase"].ToString()).Key;
         List<object>assocData = DeserializeJson<List<object>>(resp["associations"].ToString());
         inputName.GetComponent<TMP_InputField>().text = cardData["name"];
         inputDesc.GetComponent<TMP_InputField>().text = cardData["description"];
@@ -170,20 +216,22 @@ public class ModifyVisualCardController : BasicController
     public override void apply()
     {
         GameObject modelRessource;
-        GameObject modelCard;
-
+     //   GameObject modelCard;
+        GameObject modelPhases;
         projectId = int.Parse(args["project_id"]);
         cardId = int.Parse(args["id"]);
         projectName = args["project_name"];
         modelRessource = GameObject.Find("ModelRessource");
-        modelCard = GameObject.Find("ModelCard");
+      //  modelCard = GameObject.Find("ModelCard");
+        modelPhases = GameObject.Find("ModelPhases");
         ModelRessource modelResScr = modelRessource.GetComponent<ModelRessource>();
-        ModelCard modelCardScr = modelCard.GetComponent<ModelCard>();
-        modelCardScr.find(cardId, projectName, applyOnCard);
+       // ModelCard modelCardScr = modelCard.GetComponent<ModelCard>();
+        modelPhases.GetComponent<ModelPhases>().getAll(projectName, applyForPhases);
+     //   modelCardScr.find(cardId, projectName, applyOnCard);
      
         modelResScr.getAll(projectName, applyInRessource);
-    
        
+
         ConfirmVisualCard butScr = confirmButton.GetComponent<ConfirmVisualCard>();
         butScr.setIdToModify(cardId);
         butScr.setProjectId(projectId.ToString());

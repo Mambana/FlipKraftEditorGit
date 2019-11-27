@@ -18,7 +18,10 @@ public class PlayerValueOrNot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(inputValue.activeSelf)
+            btnTxt.GetComponent<Text>().text = "No";
+        else
+            btnTxt.GetComponent<Text>().text = "Yes";
     }
 
     public void click()

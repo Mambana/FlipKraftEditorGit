@@ -126,6 +126,7 @@ public class OverviewController : BasicController
         Dictionary<int, Dictionary<string, string>> allCard = new Dictionary<int, Dictionary<string, string>>();
         List<object> respList = DeserializeJson<List<object>>(json);
         int i = 0;
+        print(json);
         cardListScr = cardList.GetComponent<DeckListHandler>();
         cardListScr.RemoveAllDeck();
         foreach (object obj in respList)

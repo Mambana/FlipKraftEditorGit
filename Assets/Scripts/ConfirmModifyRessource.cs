@@ -15,6 +15,8 @@ public class ConfirmModifyRessource : MonoBehaviour {
     GameObject inputName;
     [SerializeField]
     GameObject inputDesc;
+    [SerializeField]
+    GameObject inputPlayerValue;
     ImageHandler imageHandler;
     int imgId;
   
@@ -58,13 +60,17 @@ public class ConfirmModifyRessource : MonoBehaviour {
         but.SendToDispatch();
     }
 
+
     void click()
     {
         model = GameObject.Find("ModelRessource");
         ModelRessource modelScr = model.GetComponent<ModelRessource>();
         string name = inputName.GetComponent<TMP_InputField>().text;
         string desc = inputDesc.GetComponent<TMP_InputField>().text;
-        modelScr.updateField(idToModify.ToString(), projectName, name, desc, imgId.ToString(), CallDispatcher);
+        string playerValue = null;
+        if (inputPlayerValue.activeSelf)
+            playerValue = inputPlayerValue.GetComponent<TMP_InputField>().text;
+        modelScr.updateField(idToModify.ToString(), projectName, name, desc, imgId.ToString(), playerValue,  CallDispatcher);
         
     }
 }

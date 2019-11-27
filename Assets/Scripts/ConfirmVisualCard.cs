@@ -128,7 +128,7 @@ public class ConfirmVisualCard : MonoBehaviour
         if (idToModify == -1)
             modelScr.addCollections(name, desc, projectId, projectName, sendList, parent.GetComponent<ModifyCardController>().getSelectedPhases());
         else
-          modelScr.updateField(idToModify.ToString(), name, desc, projectId, projectName, sendList);
+          modelScr.updateField(idToModify.ToString(), name, desc, projectId, projectName, sendList, parent.GetComponent<ModifyVisualCardController>().getSelectedPhases());
         
       
      

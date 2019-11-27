@@ -141,7 +141,7 @@ public class apiConnection : MonoBehaviour
         string authorization = authenticate(scrData.access("email"), scrData.access("pwd"));
         string json =  JsonConvert.SerializeObject(fields, Formatting.Indented);
 
-
+        print(json);
         /*if (askParse)
         {
             json = parseDictionary(fields);
