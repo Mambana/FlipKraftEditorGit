@@ -47,8 +47,6 @@ public class OverviewController : BasicController
     [SerializeField]
     GameObject createRuleBut;
     [SerializeField]
-    GameObject rulesListBut;
-    [SerializeField]
     GameObject newResBut;
     [SerializeField]
     GameObject elemInList;
@@ -249,7 +247,6 @@ public class OverviewController : BasicController
         createCardBut.GetComponent<CreateCardButton>().setProjectId(id);
         createCardBut.GetComponent<CreateCardButton>().setProjectName(projectName);
         createRuleBut.GetComponent<CreateCardButton>().setProjectName(projectName);
-        rulesListBut.GetComponent<CreateCardButton>().setProjectName(projectName);
         ModelTest ModelScript = Model.GetComponent<ModelTest>();
         ModelScript.find(projectName, applyInServerResponse);
         ModelCard modelCardScript = ModelCards.GetComponent<ModelCard>();

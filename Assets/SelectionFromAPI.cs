@@ -131,7 +131,9 @@ public class SelectionFromAPI : MonoBehaviour
 
     public List<pack> getPackList(string pId)
     {
-        return (allPack[pId]);
+        if (allPack.ContainsKey(pId))
+            return (allPack[pId]);
+        else return (new List<pack>());
     }
     public string getPhasesId(string name)
     {
