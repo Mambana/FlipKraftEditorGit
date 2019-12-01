@@ -59,10 +59,13 @@ public class ModelPhases : MonoBehaviour
     {
         Dictionary<string, string> toAdd = new Dictionary<string, string>();
 
-        toAdd.Add("name", name);
-        toAdd.Add("description", desc);
+        if (name != null)
+         toAdd.Add("name", name);
+        if (desc != null)
+         toAdd.Add("description", desc);
         toAdd.Add("fk_id_project", projectId);
-        toAdd.Add("priority", priority);
+        if(priority != null)
+            toAdd.Add("priority", priority);
         toAdd.Add("playable", "true");
         if (jsonPack != null)
             toAdd.Add("pack", jsonPack);

@@ -55,24 +55,35 @@ public class ConfirmModifyPhaseButton : MonoBehaviour
 
     void click()
     {
-        print ("phase id = " + idToModify.ToString());
         model = GameObject.Find("ModelPhases");
         ModelPhases modelScr = model.GetComponent<ModelPhases>();
-        string name = inputName.GetComponent<TMP_InputField>().text;
-        string desc = inputDesc.GetComponent<TMP_InputField>().text;
-        string priority = inputPriority.GetComponent<TMP_InputField>().text;
-        int n;
-        print(name);
-        print(priority);
-        bool isNumeric = int.TryParse(priority, out n);
-        if (isNumeric == false)
-            return;
+        string name, desc, priority;
+        if (inputPriority.activeSelf && inputName.activeSelf && inputDesc.activeSelf)
+        {
+             name = inputName.GetComponent<TMP_InputField>().text;
+             desc = inputDesc.GetComponent<TMP_InputField>().text;
+             priority = inputPriority.GetComponent<TMP_InputField>().text;
+            int n;
+            bool isNumeric = int.TryParse(priority, out n);
+            if (isNumeric == false)
+                return;
+        }
+        else
+        {
+            name = null;
+            desc = null;
+            priority = null;
+        }
+    
+
+    
         List<pack> packList = parent.GetComponent<ModifyPhaseController>().getPackList();
         string json;
+     
         if (packList.Count == 0)
              json = JsonConvert.SerializeObject(new List<pack>());
          json = JsonConvert.SerializeObject(packList);
-        print(json);
+        print("jeez" + json);
       
         modelScr.updateField(idToModify.ToString(), projectId, projectName,  name, desc, priority, json, CallDispatcher);
 

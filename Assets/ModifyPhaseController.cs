@@ -22,6 +22,8 @@ public class ModifyPhaseController : BasicController
     GameObject LastRulesTxt;
     [SerializeField]
     GameObject btnRmPack;
+    [SerializeField]
+    List<GameObject> txtList;
     int projectId;
     GameObject model;
     int idToModify;
@@ -30,7 +32,7 @@ public class ModifyPhaseController : BasicController
     // Start is called before the first frame update
     void Start()
     {
-
+        packList = null;
     }
 
     // Update is called once per frame
@@ -53,7 +55,9 @@ public class ModifyPhaseController : BasicController
 
     public List<pack> getPackList()
     {
-        return (packList);
+        if (packList != null)
+            return (packList);
+        return (new List<pack>());
     }
     public static T DeserializeJson<T>(string json)
     {
@@ -62,22 +66,38 @@ public class ModifyPhaseController : BasicController
 
     public void applyInServerResponse(string json)
     {
+        print(json);
         Dictionary<string, string> phaseData = new Dictionary<string, string>();
         Dictionary<string, object> resp = DeserializeJson<Dictionary<string, object>>(json);
         phaseData.Add("name", resp["name"].ToString());
         phaseData.Add("description", resp["description"].ToString());
         phaseData.Add("fk_id_project", resp["fk_id_project"].ToString());
         phaseData.Add("priority", resp["priority"].ToString());
+        phaseData.Add("is_editable", resp["is_editable"].ToString());
         if (resp.ContainsKey("pack"))
         {
-            packList = DeserializeJson<List<pack>>(resp["pack"].ToString());
-            if (packList.Count > 0)
-                LastRulesTxt.GetComponent<TextMeshProUGUI>().text = packList[packList.Count - 1].name;
+            if (!resp["pack"].ToString().Equals("{}"))
+            {
+                packList = DeserializeJson<List<pack>>(resp["pack"].ToString());
+                if (packList.Count > 0)
+                    LastRulesTxt.GetComponent<TextMeshProUGUI>().text = packList[packList.Count - 1].name;
+            }
 
         }
-        inputName.GetComponent<TMP_InputField>().text = phaseData["name"];
-        inputDesc.GetComponent<TMP_InputField>().text = phaseData["description"];
-        inputPriority.GetComponent<TMP_InputField>().text = phaseData["priority"];
+        if (phaseData["is_editable"].Equals("true"))
+        {
+            inputName.GetComponent<TMP_InputField>().text = phaseData["name"];
+            inputDesc.GetComponent<TMP_InputField>().text = phaseData["description"];
+            inputPriority.GetComponent<TMP_InputField>().text = phaseData["priority"];
+        }
+        else
+        {
+            foreach (GameObject txt in txtList)
+                txt.SetActive(false);
+            inputName.SetActive(false);
+            inputDesc.SetActive(false);
+            inputPriority.SetActive(false);
+        }
     }
 
     public override void apply()

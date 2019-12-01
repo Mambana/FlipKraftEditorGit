@@ -3355,6 +3355,10 @@ MonoBehaviour:
   removeButton: {fileID: 2008410850353347509}
   LastRulesTxt: {fileID: 3784758529821538589}
   btnRmPack: {fileID: 6433621052408912077}
+  txtList:
+  - {fileID: 2143650597452802146}
+  - {fileID: 3086529736935671935}
+  - {fileID: 214444115570060505}
 --- !u!1 &7588316922236301890
 GameObject:
   m_ObjectHideFlags: 0
