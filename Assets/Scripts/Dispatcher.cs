@@ -65,6 +65,16 @@ public class Dispatcher : MonoBehaviour {
 
     [SerializeField]
     private GameObject ModifyCardRuleUi;
+    [SerializeField]
+    private GameObject playFirstCardFromPhase;
+    [SerializeField]
+    private GameObject playAnyCardFromPhase;
+    [SerializeField]
+    private GameObject evaluateCardDuel;
+    [SerializeField]
+    private GameObject determineWinner;
+    [SerializeField]
+    private GameObject drawNCard;
     private Dictionary<string, GameObject> UiMap;
 	// Use this for initialization
 	void Start () {
@@ -90,6 +100,11 @@ public class Dispatcher : MonoBehaviour {
         UiMap["CreateCardRulesUi"] = CreateCardRuleUi;
         UiMap["CardRulesListUi"] = CardRulesListUi;
         UiMap["ModifyCardRuleUi"] = ModifyCardRuleUi;
+        UiMap["playFirstCardFromPhase"] = playFirstCardFromPhase;
+        UiMap["playAnyCardFromPhase"] = playAnyCardFromPhase;
+        UiMap["evaluateCardDuel"] = evaluateCardDuel;
+        UiMap["determineWinner"] = determineWinner;
+        UiMap["drawNCard"] = drawNCard;
         dispatch("LoginUi", "LoginController", new Dictionary<string, string>());
         //dispatch("NewProjUi", "NewProjController", new List<string>());
 

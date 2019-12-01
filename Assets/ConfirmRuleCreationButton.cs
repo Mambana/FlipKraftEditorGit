@@ -15,33 +15,19 @@ public class ConfirmRuleCreationButton : MonoBehaviour
     string projectId;
     string projectName;
     GameObject model;
-    [SerializeField]
-    GameObject ressources;
-    [SerializeField]
-    GameObject rules;
-    [SerializeField]
-    GameObject operators;
-    [SerializeField]
-    GameObject opLogic;
-    [SerializeField]
-    GameObject playerRes;
-    [SerializeField]
-    GameObject res;
-    [SerializeField]
-    GameObject playerNb;
-    [SerializeField]
-    GameObject phases;
-    [SerializeField]
-    GameObject phasesRules;
-    Dictionary<int, string> selParam;
+    List<string> rulVar;
     List<pack> p;
+    [SerializeField]
+    GameObject relatedPhases;
+    [SerializeField]
     string selectedRules;
-    string relatedPhases;
+    [SerializeField]
+    List<GameObject> dropDowns;
     string idphases;
     // Start is called before the first frame update
     void Start()
     {
-        selParam = new Dictionary<int, string>();
+        rulVar = new List<string>();
         gameObject.GetComponent<Button>().onClick.AddListener(click);
     }
 
@@ -51,6 +37,10 @@ public class ConfirmRuleCreationButton : MonoBehaviour
         
     }
 
+    void setListDropDown(List<GameObject> var)
+    {
+        dropDowns = var;
+    }
     public void setProjectId(string id)
     {
         projectId = id;
@@ -76,58 +66,25 @@ public class ConfirmRuleCreationButton : MonoBehaviour
         but.SendToDispatch();
     }
 
-    void mergeToParam(Dictionary<string, string> toMerge)
-    {
-        int idx;
-        
-        foreach(KeyValuePair<string, string> par in toMerge)
+
+
+ 
+    List<string> appendAllParams()
+    { 
+        foreach(GameObject drop in dropDowns)
         {
-            if (int.TryParse(par.Key.Substring(4), out idx))
-            {
-                selParam.Add(idx, par.Value);
-                if (par.Key.Contains(":p"))
-                    idphases = par.Value;
-            }
-            else
-            {
-                idphases = par.Value;
-            }
+            int idx = drop.GetComponent<Dropdown>().value;
+            List<Dropdown.OptionData> menuOptions = drop.GetComponent<Dropdown>().options;
+            rulVar.Add(menuOptions[idx].text);
         }
+        return (rulVar);
     }
 
-    List<string> getOrderdList()
+    string getRelatedPhases()
     {
-        List<string> orderdList = new List<string>();
-        int idx = 0;
-
-        while (idx != selParam.Count)
-        {
-            foreach (KeyValuePair<int, string> val in selParam)
-            {
-                if (idx == val.Key)
-                    orderdList.Add(val.Value);
-            }
-            idx++;
-        }
-        return (orderdList);
-    }
-    void appendAllParams()
-    {
-        Dictionary<string, string> res = ressources.GetComponent<ButtonGetAllRessourcesName>().getSelectedList();
-        Dictionary<string, string> pres = playerRes.GetComponent<ButtonGetAllRessourcesName>().getSelectedList();
-        Dictionary<string, string> op = operators.GetComponent<ButtonSetArraySelection>().getSelectedList();
-        Dictionary<string, string> opl = opLogic.GetComponent<ButtonLogicapOperator>().getSelectedList();
-        Dictionary<string, string> pnb = playerNb.GetComponent<ButtonPlayerNumber>().getSelectedList();
-        Dictionary<string, string> phas = phases.GetComponent<ButtonSetPhases>().getSelectedList();
-        Dictionary<string, string> val = rules.GetComponent<buttonSetRulesList>().getSelectedList();
-        mergeToParam(res);
-        mergeToParam(pres);
-        mergeToParam(op);
-        mergeToParam(opl);
-        mergeToParam(pnb);
-        mergeToParam(phas);
-        mergeToParam(val);
-        selectedRules = rules.GetComponent<buttonSetRulesList>().getSelectedRules();
+        int idx = relatedPhases.GetComponent<Dropdown>().value;
+        List<Dropdown.OptionData> menuOptions = relatedPhases.GetComponent<Dropdown>().options;
+        return (relatedPhases.GetComponent<SelectionFromAPI>().getPhasesId(menuOptions[idx].text));
     }
     void click()
     {
@@ -142,13 +99,14 @@ public class ConfirmRuleCreationButton : MonoBehaviour
         int n;
         string[] descs = new string[1];
         ButtonListener but = gameObject.GetComponent<ButtonListener>();
-        appendAllParams();
-        p = phases.GetComponent<ButtonSetPhases>().getPhasesPackList(idphases);
-        p.Add(rules);
-        List<string> param = getOrderdList();
+        idphases = getRelatedPhases();
+        p = relatedPhases.GetComponent<SelectionFromAPI>().getPackList(idphases);
+       
+        List<string> param =appendAllParams();
         
         rules.vars = param;
         rules.name = selectedRules;
+        p.Add(rules);
         string output = JsonConvert.SerializeObject(p);
         print(output);
         modelScr.addRulesToPhases(idphases, projectName,  output, applyInServerResponse);

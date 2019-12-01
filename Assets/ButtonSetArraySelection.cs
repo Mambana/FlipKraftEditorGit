@@ -14,6 +14,8 @@ public class ButtonSetArraySelection : MonoBehaviour
     GameObject m_toggle;
     [SerializeField]
     GameObject rulesTxt;
+    [SerializeField]
+    private GameObject displayedRulest;
     private List<string> toSend;
     private Dictionary<string, string> selectedOp;
     private List<string> opKeyList;
@@ -114,12 +116,37 @@ public class ButtonSetArraySelection : MonoBehaviour
     public string updateRulesTextForOp()
     {
         string rulesString = originalRules;
+        string to_display = originalRules;
+
+        
+            bool first = true;
+            foreach (string key in opKeyList)
+            {
+                if (!selectedOp.ContainsKey(key))
+                {
+                    if (first == true)
+                        to_display = to_display.Replace(key, "<color=#FFEB03>Operator n°" + key[2] + "</color>");
+                    else
+                    to_display = to_display.Replace(key, "<color=#EE281B>Operator n°" + key[2] + "</color>");
+                    first = false;
+                }
+            }
+        first = true;
         foreach (KeyValuePair<string, string> op in selectedOp)
         {
-
-            rulesString = rulesString.Replace(op.Key, op.Value);
+            if (first == true)
+                to_display = rulesString.Replace(op.Key, "<color=#EE281B>" + op.Value + "</color>");
+            else
+            to_display = rulesString.Replace(op.Key, "<color=green>" + op.Value + "</color>");
+            // rulesString = rulesString.Replace(op.Key, "<color=green>" + op.Value + "</color>");
+            first = false;
         }
+     
+
+  
+        print(to_display);
         rulesTxt.GetComponent<TextMeshProUGUI>().text = rulesString;
+        displayedRulest.GetComponent<TextMeshProUGUI>().text = to_display;
         return (rulesString);
     }
 
@@ -155,8 +182,7 @@ public class ButtonSetArraySelection : MonoBehaviour
                 togList.Add(t);
             }
         }
-
-
+        updateRulesTextForOp();
     }
 
     public Dictionary<string, string> getSelectedList()

@@ -6,15 +6,14 @@ public class CreateRuleController : BasicController
 {
     // Start is called before the first frame update
     [SerializeField]
-    GameObject resButton;
+    GameObject dropdown;
+
     [SerializeField]
     GameObject confirmButton;
     [SerializeField]
     GameObject cancelButton;
     [SerializeField]
-    GameObject presButton;
-    [SerializeField]
-    GameObject phasesButton;
+    List<GameObject> dropDowns;
 
     void Start()
     {
@@ -32,16 +31,18 @@ public class CreateRuleController : BasicController
         print("applyed");
         int id = int.Parse(args["project_id"]);
         string projectName = args["project_name"];
-        ButtonGetAllRessourcesName butScr = resButton.GetComponent<ButtonGetAllRessourcesName>();
-        ButtonGetAllRessourcesName prbutScr = presButton.GetComponent<ButtonGetAllRessourcesName>();
-        ButtonSetPhases phButScr = phasesButton.GetComponent<ButtonSetPhases>();
-        phButScr.setProjectName(projectName);
-        butScr.setProjectName(projectName);
-        prbutScr.setProjectName(projectName);
+        dropdown.GetComponent<SelectionFromAPI>().setProjectName(projectName);
+        dropdown.GetComponent<SelectionFromAPI>().apply();
+        foreach (GameObject drop in dropDowns)
+        {
+            drop.GetComponent<SelectionFromAPI>().setProjectName(projectName);
+            drop.GetComponent<SelectionFromAPI>().apply();
+        }
         confirmButton.GetComponent<ConfirmRuleCreationButton>().setProjectId(id.ToString());
         confirmButton.GetComponent<ConfirmRuleCreationButton>().setProjectName(projectName);
         cancelButton.GetComponent<CancelRessourceCreation>().setProjectId(id.ToString());
         cancelButton.GetComponent<CancelRessourceCreation>().setRessourceId(id.ToString());
         cancelButton.GetComponent<CancelRessourceCreation>().setProjectName(projectName);
-    }
+    
+            }
 }
