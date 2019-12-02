@@ -28,6 +28,7 @@ public class CreatePhaseController : BasicController
         butScr.setProjectName(args["project_name"]);
         CancelRessourceCreation cancelBut = cancelButton.GetComponent<CancelRessourceCreation>();
         cancelBut.setProjectId(args["project_id"]);
+        cancelBut.setProjectName(args["project_name"]);
         cancelBut.setRessourceId(args["project_id"]);
     }
 }

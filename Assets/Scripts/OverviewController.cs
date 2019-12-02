@@ -10,7 +10,8 @@ public class OverviewController : BasicController
 
     int id;
     string projectName;
-
+    [SerializeField]
+    GameObject scr;
     [SerializeField]
     GameObject Model;
     [SerializeField]
@@ -188,7 +189,7 @@ public class OverviewController : BasicController
         Dictionary<int, Dictionary<string, string>> allPhases = new Dictionary<int, Dictionary<string, string>>();
         List<object> respList = DeserializeJson<List<object>>(json);
         int i = 0;
-        destroyChilds(phaseItemContainer);
+       // destroyChilds(phaseItemContainer);
    //     destroyList(phases);
         foreach (object obj in respList)
         {
@@ -220,6 +221,7 @@ public class OverviewController : BasicController
             toAdd.transform.SetParent(phaseItemContainer.transform, false);
           //  phases.Add(toAdd);
         }
+        scr.SetActive(true);
     }
 
     public override void apply()
