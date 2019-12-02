@@ -84,7 +84,8 @@ public class ModifyPhaseController : BasicController
             }
 
         }
-        if (phaseData["is_editable"].Equals("true"))
+        print(phaseData["is_editable"].ToString());
+        if (phaseData["is_editable"].ToString().Equals("True"))
         {
             inputName.GetComponent<TMP_InputField>().text = phaseData["name"];
             inputDesc.GetComponent<TMP_InputField>().text = phaseData["description"];
