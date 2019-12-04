@@ -4441,7 +4441,7 @@ GameObject:
   - component: {fileID: 8705634582034049369}
   - component: {fileID: 8705634582034049368}
   m_Layer: 0
-  m_Name: DropdownFromAPI (1)
+  m_Name: keys
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5640,7 +5640,7 @@ GameObject:
   - component: {fileID: 8705634583263817009}
   - component: {fileID: 8705634583263817008}
   m_Layer: 0
-  m_Name: DropdownFromAPI (7)
+  m_Name: keys
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

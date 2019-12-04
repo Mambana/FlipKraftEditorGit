@@ -24,6 +24,7 @@ public class ConfirmRuleCreationButton : MonoBehaviour
     [SerializeField]
     List<GameObject> dropDowns;
     string idphases;
+    Dictionary<string, string> keyMap;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +38,10 @@ public class ConfirmRuleCreationButton : MonoBehaviour
         
     }
 
+    void setParamKeys(Dictionary<string,string> keys)
+    {
+        keyMap = keys;
+    }
     void setListDropDown(List<GameObject> var)
     {
         dropDowns = var;
@@ -75,7 +80,8 @@ public class ConfirmRuleCreationButton : MonoBehaviour
         {
             int idx = drop.GetComponent<Dropdown>().value;
             List<Dropdown.OptionData> menuOptions = drop.GetComponent<Dropdown>().options;
-            rulVar.Add(menuOptions[idx].text);
+            print(menuOptions[idx].text);
+            rulVar.Add(drop.GetComponent<SelectionFromAPI>().getObjectId(menuOptions[idx].text));
         }
         return (rulVar);
     }

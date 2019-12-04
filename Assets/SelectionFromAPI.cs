@@ -129,6 +129,16 @@ public class SelectionFromAPI : MonoBehaviour
         
     }
 
+    public string getObjectId(string key)
+    {
+        if (gameObject.name.Equals("keys"))
+        {
+            if (phases.ContainsKey(key))
+                return (phases[key]);
+        }
+            return (key);
+    }
+
     public List<pack> getPackList(string pId)
     {
         if (allPack.ContainsKey(pId))
