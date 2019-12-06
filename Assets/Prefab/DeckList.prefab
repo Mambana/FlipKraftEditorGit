@@ -1882,16 +1882,12 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7890960437501027004, guid: d2a732e842d83ad48b3e7001433929ad,
+    - target: {fileID: 5518497055958951913, guid: d2a732e842d83ad48b3e7001433929ad,
         type: 3}
-      propertyPath: m_ignoreRectMaskCulling
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7890960437501027004, guid: d2a732e842d83ad48b3e7001433929ad,
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a1e9dae75bc088843a28fafd31c1dcb0,
         type: 3}
-      propertyPath: m_inputSource
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2a732e842d83ad48b3e7001433929ad, type: 3}
 --- !u!224 &6050525317002501347 stripped

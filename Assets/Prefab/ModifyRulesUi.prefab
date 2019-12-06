@@ -1861,7 +1861,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: d66788acebe86a04f9d556e07cf4a0e3, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2452,7 +2452,7 @@ RectTransform:
   m_GameObject: {fileID: 5491093960327236784}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.4125, y: 1.4497736, z: 1}
   m_Children:
   - {fileID: 3470449334521329738}
   m_Father: {fileID: 6469594253336333553}
@@ -2460,7 +2460,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -543, y: 15}
+  m_AnchoredPosition: {x: -582.6, y: 15}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5491093960327237344
@@ -2491,8 +2491,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: a1e9dae75bc088843a28fafd31c1dcb0, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -3351,7 +3351,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: d66788acebe86a04f9d556e07cf4a0e3, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3492,7 +3492,7 @@ RectTransform:
   m_GameObject: {fileID: 5491093960327237061}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.4125, y: 1.5432812, z: 1}
   m_Children:
   - {fileID: 3470449334521329772}
   m_Father: {fileID: 6469594253336333553}
@@ -3500,7 +3500,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -299, y: 15}
+  m_AnchoredPosition: {x: -271.3, y: 15}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5491093960327237135
@@ -3531,8 +3531,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: a1e9dae75bc088843a28fafd31c1dcb0, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -3775,6 +3775,8 @@ MonoBehaviour:
   - stackable
   m_toggle: {fileID: 2425037147531266531, guid: f782badb8aa6ccc4b9729909be0c541e,
     type: 3}
+  rulesTxt: {fileID: 0}
+  displayedRulest: {fileID: 0}
 --- !u!1 &6469594253027526048
 GameObject:
   m_ObjectHideFlags: 0
@@ -3979,8 +3981,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6469594253365242196}
   m_HandleRect: {fileID: 6469594253365242199}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 0.9999997
+  m_Value: 0.16666667
+  m_Size: 0.99999964
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4020,7 +4022,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00001047486, y: 0.000023098262}
+  m_AnchoredPosition: {x: -0.00004090287, y: 0.000023098262}
   m_SizeDelta: {x: 0.00012207, y: 1450.4}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &6469594253078921442
@@ -4199,6 +4201,8 @@ MonoBehaviour:
   - All
   m_toggle: {fileID: 2425037147531266531, guid: f782badb8aa6ccc4b9729909be0c541e,
     type: 3}
+  rulesTxt: {fileID: 0}
+  displayedRulest: {fileID: 0}
 --- !u!1 &6469594253209828622
 GameObject:
   m_ObjectHideFlags: 0
@@ -4344,6 +4348,8 @@ MonoBehaviour:
   objList: {fileID: 6469594253078921445}
   m_toggle: {fileID: 2425037147531266531, guid: f782badb8aa6ccc4b9729909be0c541e,
     type: 3}
+  playerRessources: 0
+  rulesTxt: {fileID: 0}
 --- !u!1 &6469594253336333552
 GameObject:
   m_ObjectHideFlags: 0
@@ -4852,6 +4858,8 @@ MonoBehaviour:
   - Compare
   m_toggle: {fileID: 2425037147531266531, guid: f782badb8aa6ccc4b9729909be0c541e,
     type: 3}
+  rulesTxt: {fileID: 0}
+  displayedRulest: {fileID: 0}
 --- !u!1 &7498866110164454512
 GameObject:
   m_ObjectHideFlags: 0

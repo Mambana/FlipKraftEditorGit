@@ -601,9 +601,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fadb46abe96b5d2499dd600b8b7f221c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rp: 0
   projectName: 
   modelName: ModelPhases
   PhasesDropDown: {fileID: 1037921308573201062}
+  hardParam: []
 --- !u!1 &1212927195381116917
 GameObject:
   m_ObjectHideFlags: 0
@@ -3321,8 +3323,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 537367905519050595}
   m_HandleRect: {fileID: 537367905519050592}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 0.99999994
+  m_Value: 0
+  m_Size: 0.9999996
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3362,7 +3364,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00001047486, y: 0.000023098262}
+  m_AnchoredPosition: {x: -0.00007135886, y: 0.000023098262}
   m_SizeDelta: {x: 0.00012207, y: 1450.4}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &7446531727318417071
@@ -3924,7 +3926,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8131847294992138484}
   m_HandleRect: {fileID: 8131847294992138487}
   m_Direction: 2
-  m_Value: 0.9999999
+  m_Value: 1
   m_Size: 0.42408988
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4977,11 +4979,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dropdown: {fileID: 1037921308573201062}
-  resButton: {fileID: 7446531727992423235}
   confirmButton: {fileID: 8262891765519479688}
   cancelButton: {fileID: 8262891765519479549}
-  presButton: {fileID: 7446531728851335415}
-  phasesButton: {fileID: 3433139143081697319}
+  dropDowns: []
 --- !u!1 &8262891765519479500
 GameObject:
   m_ObjectHideFlags: 0
@@ -5520,8 +5520,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: a1e9dae75bc088843a28fafd31c1dcb0, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -6078,8 +6078,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: a1e9dae75bc088843a28fafd31c1dcb0, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -6166,15 +6166,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e87adf6cfc9a76f469859953ebe3eb8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ressources: {fileID: 7446531727992423235}
-  rules: {fileID: 7446531727888736062}
-  operators: {fileID: 7446531727080092785}
-  opLogic: {fileID: 6957966885311712016}
-  playerRes: {fileID: 7446531728851335415}
-  res: {fileID: 7446531727992423235}
-  playerNb: {fileID: 2168043198571685996}
-  phases: {fileID: 3433139143081697319}
-  phasesRules: {fileID: 0}
+  relatedPhases: {fileID: 0}
+  selectedRules: 
+  dropDowns: []
 --- !u!1 &8637415985201569438
 GameObject:
   m_ObjectHideFlags: 0
